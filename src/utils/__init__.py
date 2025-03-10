@@ -8,5 +8,7 @@ IGNORED_PATTERNS = [
     "venv",
 ]
 
+SCRIPT_EXTENSIONS = [".py", ".ipynb", ".java", ".js", ".ts", ".cpp"]
+
 
 __all__ = ["IGNORED_PATTERNS"]

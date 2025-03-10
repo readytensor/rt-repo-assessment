@@ -1,0 +1,187 @@
+Code Quality:
+  General Structure:
+    functions_and_classes:
+      name: Modular Code Organization
+      description: Code organized into functions/methods rather than monolithic scripts
+      essential: true
+      professional: true
+      elite: true
+    script_length:
+      name: Script Length Control
+      description: Individual scripts/modules have reasonable length (< 500 lines)
+      essential: true
+      professional: true
+      elite: true
+    function_length:
+      name: Function Length Control
+      description: Functions and methods are reasonably sized (< 50 lines)
+      essential: true
+      professional: true
+      elite: true
+    code_duplication:
+      name: Code Duplication Check
+      description: Limited code duplication (< 10% duplicate code)
+      essential: true
+      professional: true
+      elite: true
+  Configuration:
+    centralized_config:
+      name: Configuration File Presence
+      description: Dedicated configuration files exist (e.g., config.py, config.json,
+        .env)
+      essential: true
+      professional: true
+      elite: true
+    no_hardcoded_constants:
+      name: Hardcoded Value Detection
+      description: Limited hardcoded constants in core code
+      essential: true
+      professional: true
+      elite: true
+    env_variables:
+      name: Environment Variable Usage
+      description: References to environment variables for sensitive configurations
+      essential: true
+      professional: true
+      elite: true
+  Logging:
+    logging_basic:
+      name: Logging Import Detection
+      description: Evidence of logging library usage
+      essential: true
+      professional: true
+      elite: true
+    logging_advanced:
+      name: Logging Configuration
+      description: Presence of logging configuration (levels, formats)
+      essential: true
+      professional: true
+      elite: true
+  Error Handling:
+    error_handling_basic:
+      name: Exception Usage
+      description: Presence of try/except blocks in the codebase
+      essential: true
+      professional: true
+      elite: true
+    error_handling_advanced:
+      name: Custom Exception Classes
+      description: Definition of project-specific exception classes
+      essential: true
+      professional: true
+      elite: true
+  Testing:
+    testing_basic:
+      name: Test File Presence
+      description: Existence of test files (test_*.py or *_test.py)
+      essential: true
+      professional: true
+      elite: true
+    testing_comprehensive:
+      name: Test Coverage
+      description: Test coverage metrics available (e.g., .coverage file)
+      essential: true
+      professional: true
+      elite: true
+    testing_framework:
+      name: Test Framework Usage
+      description: Evidence of test framework (pytest, unittest)
+      essential: true
+      professional: true
+      elite: true
+  Documentation:
+    uses_docstrings:
+      name: Docstring Presence
+      description: Functions, classes, modules have docstrings
+      essential: true
+      professional: true
+      elite: true
+    complete_docstrings:
+      name: Docstring Completeness
+      description: Docstrings include parameters and return sections
+      essential: true
+      professional: true
+      elite: true
+    type_hints:
+      name: Type Hint Usage
+      description: Presence of type hints in function signatures
+      essential: true
+      professional: true
+      elite: true
+  Style:
+    code_style_tools:
+      name: Style Checker Configuration
+      description: Presence of style checker configuration files
+      essential: true
+      professional: true
+      elite: true
+    code_style_consistency:
+      name: Consistent Formatting
+      description: Evidence of consistent indentation and formatting
+      essential: true
+      professional: true
+      elite: true
+  Complexity:
+    code_complexity_management:
+      name: Cyclomatic Complexity
+      description: Functions maintain reasonable cyclomatic complexity (< 10)
+      essential: true
+      professional: true
+      elite: true
+    class_size:
+      name: Class Size Control
+      description: Classes have reasonable number of methods (< 20)
+      essential: true
+      professional: true
+      elite: true
+  AI/ML Specific:
+    seed_setting:
+      name: Random Seed Setting
+      description: Explicit random seed setting in code
+      essential: true
+      professional: true
+      elite: true
+    data_quality_checks:
+      name: Data Validation Code
+      description: Input data validation logic present
+      essential: true
+      professional: true
+      elite: true
+    model_organization:
+      name: Model File Organization
+      description: ML models in dedicated modules/classes
+      essential: true
+      professional: true
+      elite: true
+  Notebook Specific:
+    notebook_cell_size:
+      name: Notebook Code Structure
+      description: Cells organized with fewer than 100 lines per cell
+      essential: true
+      professional: true
+      elite: true
+    notebook_documentation:
+      name: Notebook Documentation
+      description: Notebooks include markdown cells (>10% of cells)
+      essential: true
+      professional: true
+      elite: true
+    notebook_imports:
+      name: Notebook Imports
+      description: Evidence of importing custom modules (not just standard libraries)
+      essential: true
+      professional: true
+      elite: true
+    notebook_output_management:
+      name: Clean Notebook Outputs
+      description: Either consistently cleared outputs or only relevant outputs retained
+      essential: true
+      professional: true
+      elite: true
+  Package Structure:
+    package_structure:
+      name: Package Organization
+      description: Proper package structure with init.py files
+      essential: true
+      professional: true
+      elite: true

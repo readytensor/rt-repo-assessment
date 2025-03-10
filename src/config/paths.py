@@ -12,6 +12,18 @@ OUTPUTS_DIR = os.path.join(DATA_DIR, "outputs")
 
 CONFIG_DIR = os.path.join(SRC_DIR, "config")
 
+CONFIG_FPATH = os.path.join(CONFIG_DIR, "config.json")
+
 SCORING_DIR = os.path.join(CONFIG_DIR, "scoring")
 
-SCORING_CRITERIA_FPATH = os.path.join(SCORING_DIR, "scoring_criteria.yaml")
+PROMPTS_FPATH = os.path.join(CONFIG_DIR, "prompts.yaml")
+
+CODE_QUALITY_CRITERIA_FPATH = os.path.join(SCORING_DIR, "code_quality_criteria.yaml")
+
+DEPENDANCIES_CRITERIA_FPATH = os.path.join(SCORING_DIR, "dependancies_criteria.yaml")
+
+LICENSE_CRITERIA_FPATH = os.path.join(SCORING_DIR, "license_criteria.yaml")
+
+STRUCTURE_CRITERIA_FPATH = os.path.join(SCORING_DIR, "structure_criteria.yaml")
+
+DOCUMENTATION_CRITERIA_FPATH = os.path.join(SCORING_DIR, "documentation_criteria.yaml")

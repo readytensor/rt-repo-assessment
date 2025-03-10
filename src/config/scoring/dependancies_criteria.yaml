@@ -1,0 +1,64 @@
+
+
+Environment and Dependencies:
+  Dependency Management:
+    dependencies_listed:
+      name: Dependencies Listed
+      description: Repository clearly lists all project dependencies in standard formats
+        (requirements.txt, setup.py, pyproject.toml, etc.).
+      essential: true
+      professional: true
+      elite: true
+    pinned_dependencies:
+      name: Pinned Dependencies
+      description: "Dependencies have specific versions to ensure reproducibility\
+        \ (preferably production dependencies pinned).\t"
+      essential: true
+      professional: true
+      elite: true
+    dependency_groups:
+      name: Dependency Groups
+      description: Dependencies organized into logical groups (core, dev, test) via
+        separate requirement files (e.g., requirements-dev.txt) or in configuration
+        files (e.g., pyproject.toml, setup.py extras_require).
+      essential: true
+      professional: true
+      elite: true
+  Environment Configuration:
+    python_version_specified:
+      name: Python Version Specified
+      description: Required Python version(s) specified in configuration files like
+        pyproject.toml, setup.py, runtime.txt, or .python-version.
+      essential: true
+      professional: true
+      elite: true
+    environment_managed:
+      name: Environment Management
+      description: Repository contains configuration for virtual environments such
+        as environment.yml (conda), Pipfile (pipenv), poetry.lock (poetry), .venv
+        configurations, or similar environment management files.
+      essential: true
+      professional: true
+      elite: true
+    reproducible_environment:
+      name: Reproducible Environment
+      description: Lockfiles or exact environment specifications provided (poetry.lock,
+        conda-lock, etc.).
+      essential: true
+      professional: true
+      elite: true
+    gpu_requirements_documented:
+      name: GPU Requirements Documented
+      description: GPU-specific dependencies or requirements indicated in configuration
+        files (e.g., tensorflow-gpu in requirements.txt, CUDA versions in environment
+        files, GPU constraints in Dockerfiles).
+      essential: true
+      professional: true
+      elite: true
+  Advanced Configuration:
+    containerization:
+      name: Containerization
+      description: Provides Dockerfile or equivalent containerization.
+      essential: true
+      professional: true
+      elite: true

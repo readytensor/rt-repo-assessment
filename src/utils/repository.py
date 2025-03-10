@@ -8,14 +8,14 @@ from fnmatch import fnmatch
 
 
 def clone_and_extract_repo(
-    repo_url: str, target_dir: str, zip_path: str = None
+    repo_url: str, output_dir: str, zip_path: str = None
 ) -> bool:
     """
     Clone a git repository and optionally extract a zip file.
 
     Args:
         repo_url (str): URL of the git repository to clone
-        target_dir (str): Directory where to clone the repository
+        output_dir (str): Directory where to clone the repository
         zip_path (str, optional): Path to zip file to extract after cloning
 
     Returns:
@@ -26,13 +26,20 @@ def clone_and_extract_repo(
         zipfile.BadZipFile: If the zip file is corrupted
         OSError: If there are file system related errors
     """
+
+    if os.path.exists(output_dir):
+        logging.info(f"Repository already cloned in {output_dir}")
+        return True
+
     try:
         # Create target directory if it doesn't exist
-        os.makedirs(target_dir, exist_ok=True)
+        os.makedirs(output_dir, exist_ok=True)
 
         # Clone the repository
-        logging.info(f"Cloning repository from {repo_url} to {target_dir}")
-        Repo.clone_from(repo_url, target_dir)
+        logging.info(f"Cloning repository from {repo_url} to {output_dir}")
+
+        # Clone the repository
+        Repo.clone_from(repo_url, output_dir)
 
         # Extract zip file if provided
         if zip_path:
@@ -42,15 +49,15 @@ def clone_and_extract_repo(
 
             logging.info(f"Extracting zip file: {zip_path}")
             with zipfile.ZipFile(zip_path, "r") as zip_ref:
-                zip_ref.extractall(target_dir)
+                zip_ref.extractall(output_dir)
 
         return True
 
     except GitCommandError as e:
         logging.error(f"Git clone failed: {str(e)}")
         # Clean up target directory if it exists
-        if os.path.exists(target_dir):
-            shutil.rmtree(target_dir)
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
         return False
 
     except zipfile.BadZipFile as e:
@@ -67,10 +74,15 @@ def clone_and_extract_repo(
 
 
 def get_readme_content(repo_path: str) -> str:
+    # Try README.md first
     readme_path = os.path.join(repo_path, "README.md")
     if not os.path.exists(readme_path):
-        logging.error(f"README.md not found in {repo_path}")
-        return None
+        # Try readme.md if README.md not found
+        readme_path = os.path.join(repo_path, "readme.md")
+        if not os.path.exists(readme_path):
+            logging.error(f"No README.md or readme.md found in {repo_path}")
+            return None
+
     with open(readme_path, "r") as file:
         return file.read()
 

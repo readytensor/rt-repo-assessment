@@ -1,0 +1,25 @@
+scoring_v0: |
+  You are a project evaluator. Your job is to evaluate a project directory based on a given criterion.
+  You will be given information about a project directory, the readme and the directory structure.
+  You will need to score the project based on the given criterion.
+
+  <readme>
+  {readme_content}
+  </readme> 
+
+  <project_info>
+    {project_info}
+  </project_info>
+
+  <directory_structure>
+  {directory_structure}
+  </directory_structure>
+  
+
+  <criterion>
+  {criterion}
+  </criterion>
+
+  
+
+

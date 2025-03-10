@@ -1,0 +1,136 @@
+Repository Structure:
+  Core Organization:
+    basic_modular_organization:
+      name: Basic Modular Organization
+      description: Repository has basic organizational structure with some logical
+        separation of files (not all files in root directory)
+      essential: true
+      professional: false
+      elite: false
+    specific_code_separation:
+      name: Specific Code Separation
+      description: Modeling/application code is organized in dedicated module structure
+        (e.g., src/ directory with submodules)
+      essential: false
+      professional: true
+      elite: true
+    specific_data_separation:
+      name: Specific Data Separation
+      description: Data is organized in dedicated directory (e.g., /data, /inputs,
+        etc.)
+      essential: false
+      professional: true
+      elite: true
+    specific_config_separation:
+      name: Specific Config Separation
+      description: Configuration is properly separated from code in dedicated files/directories
+      essential: false
+      professional: true
+      elite: true
+    organized_notebooks:
+      name: Organized Notebooks
+      description: If Jupyter notebooks are present, they are organized in a logical
+        manner (e.g., in dedicated directories) with names that reflect their purpose
+        and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb")
+      essential: false
+      professional: true
+      elite: true
+    docs_refs_separation:
+      name: Documentation and References Separation
+      description: Documents and external materials such as pdfs, papers, etc. are
+        properly organized in dedicated locations (e.g., docs/ directory)
+      essential: false
+      professional: true
+      elite: true
+    asset_organization:
+      name: Asset Organization
+      description: Non-code assets (images, models, etc.) are organized in dedicated
+        directories with clear purpose
+      essential: false
+      professional: true
+      elite: true
+    test_directory_structure:
+      name: Test Directory Structure
+      description: Tests are organized in a dedicated structure (e.g., tests/ directory
+        mirroring the main code structure)
+      essential: false
+      professional: true
+      elite: true
+    logical_repository_root:
+      name: Logical Repository Root
+      description: Repository root is clean with only essential files (README, license,
+        .gitignore, setup files) with detailed content in subdirectories
+      essential: false
+      professional: true
+      elite: true
+    appropriate_gitignore:
+      name: Appropriate .gitignore
+      description: Repository includes a .gitignore file appropriate for the project
+        type/language
+      essential: true
+      professional: true
+      elite: true
+  Naming Practices:
+    consistent_file_dir_naming_convention:
+      name: Consistent File and Dir Naming Convention
+      description: Files and directories follow a single, consistent naming convention
+        (snake_case, camelCase, etc.)
+      essential: true
+      professional: true
+      elite: true
+    descriptive_file_dir_naming:
+      name: Descriptive File and Dir Naming
+      description: Files and directories have descriptive names that clearly indicate
+        their purpose or content (no generic names like notebook1.ipynb)
+      essential: true
+      professional: true
+      elite: true
+    unambiguous_related_items_naming:
+      name: Unambiguous Related Item Naming
+      description: Related files and directories use a consistent, clear naming scheme
+        that avoids ambiguity (e.g., avoid "experiment.py", "experiment_new.py", "experiment_final.py"
+        or "temp_models/", "models_new/", "final_models/")
+      essential: true
+      professional: true
+      elite: true
+  Directory Design:
+    appropriate_directory_density:
+      name: Appropriate Directory Density
+      description: Directories contain a reasonable number of files and dirs (should
+        be under 15 directories and files in single directories); does not apply to
+        data directories
+      essential: false
+      professional: true
+      elite: true
+    reasonable_directory_depth:
+      name: Reasonable Directory Depth
+      description: Repository structure avoids excessive nesting of directories (typically
+        no more than 5 levels deep)
+      essential: false
+      professional: true
+      elite: true
+    clear_entry_points:
+      name: Clear Entry Points
+      description: Main execution entry points are clearly identified (e.g., main.py,
+        app.py, or documentation pointing to them)
+      essential: true
+      professional: true
+      elite: true
+  Environment & Dependencies:
+    environment_config_isolation:
+      name: Environment Configuration Isolation
+      description: Environment-specific configuration files (.env, .env.example, .env.template,
+        .gitconfig, docker-compose.yml, etc.) are properly placed and organized
+      essential: false
+      professional: true
+      elite: true
+    dependency_management_structure:
+      name: Dependency Management Structure
+      description: Package dependency files (requirements.txt, pyproject.toml, etc.)
+        are properly placed at repository root or in designated dependency directories.
+        Multiple dependency files (if present) follow logical organization (e.g.,
+        base_requirements.txt, dev_requirements.txt).
+      essential: false
+      professional: true
+      elite: true
+
