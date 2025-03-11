@@ -6,24 +6,37 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
     script_length:
       name: Script Length Control
       description: Individual scripts/modules have reasonable length (< 500 lines)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+      requires_llm: false
+
     function_length:
       name: Function Length Control
-      description: Functions and methods are reasonably sized (< 50 lines)
+      description: Functions and methods are reasonably sized (< 100 lines)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
     code_duplication:
       name: Code Duplication Check
       description: Limited code duplication (< 10% duplicate code)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
   Configuration:
     centralized_config:
       name: Configuration File Presence
@@ -32,18 +45,26 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".json", ".yaml"]
+
     no_hardcoded_constants:
       name: Hardcoded Value Detection
-      description: Limited hardcoded constants in core code
+      description: Limited hardcoded constants in core code. Default values for methods and constructors are allowed and should not be scored as hardcoded constants.
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
     env_variables:
       name: Environment Variable Usage
       description: References to environment variables for sensitive configurations
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+
   Logging:
     logging_basic:
       name: Logging Import Detection
@@ -51,12 +72,18 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
     logging_advanced:
       name: Logging Configuration
       description: Presence of logging configuration (levels, formats)
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
   Error Handling:
     error_handling_basic:
       name: Exception Usage
@@ -64,12 +91,18 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
     error_handling_advanced:
       name: Custom Exception Classes
       description: Definition of project-specific exception classes
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
   Testing:
     testing_basic:
       name: Test File Presence
@@ -77,18 +110,26 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
     testing_comprehensive:
       name: Test Coverage
       description: Test coverage metrics available (e.g., .coverage file)
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+
     testing_framework:
       name: Test Framework Usage
       description: Evidence of test framework (pytest, unittest)
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
   Documentation:
     uses_docstrings:
       name: Docstring Presence
@@ -96,18 +137,27 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
     complete_docstrings:
       name: Docstring Completeness
       description: Docstrings include parameters and return sections
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
     type_hints:
       name: Type Hint Usage
       description: Presence of type hints in function signatures
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
   Style:
     code_style_tools:
       name: Style Checker Configuration
@@ -115,12 +165,17 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+
+
     code_style_consistency:
       name: Consistent Formatting
       description: Evidence of consistent indentation and formatting
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+
   Complexity:
     code_complexity_management:
       name: Cyclomatic Complexity
@@ -128,12 +183,17 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+
     class_size:
       name: Class Size Control
       description: Classes have reasonable number of methods (< 20)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".py", ".ipynb"]
+
   AI/ML Specific:
     seed_setting:
       name: Random Seed Setting
@@ -141,43 +201,65 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
     data_quality_checks:
       name: Data Validation Code
       description: Input data validation logic present
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
     model_organization:
       name: Model File Organization
       description: ML models in dedicated modules/classes
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".py", ".ipynb"]
+
   Notebook Specific:
     notebook_cell_size:
       name: Notebook Code Structure
-      description: Cells organized with fewer than 100 lines per cell
+      description: Cells organized with fewer than 100 lines per cell (In the case of a file that is not a notebook, this should be scored 1)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".ipynb"]
+
     notebook_documentation:
       name: Notebook Documentation
-      description: Notebooks include markdown cells (>10% of cells)
+      description: Notebooks include markdown cells (>10% of cells) (In the case of a file that is not a notebook, this should be scored 1)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".ipynb"]
+
     notebook_imports:
       name: Notebook Imports
-      description: Evidence of importing custom modules (not just standard libraries)
+      description: Evidence of importing custom modules (not just standard libraries) (In the case of a file that is not a notebook, this should be scored 1)
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"
+      include_extensions: [".ipynb"]
+
+
     notebook_output_management:
       name: Clean Notebook Outputs
-      description: Either consistently cleared outputs or only relevant outputs retained
+      description: Either consistently cleared outputs or only relevant outputs retained (In the case of a file that is not a notebook, this should be scored 1)
       essential: true
       professional: true
       elite: true
+      aggregation: "AND"
+      include_extensions: [".ipynb"]
+
   Package Structure:
     package_structure:
       name: Package Organization
@@ -185,3 +267,4 @@ Code Quality:
       essential: true
       professional: true
       elite: true
+      aggregation: "OR"

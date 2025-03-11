@@ -1,6 +1,6 @@
 {
     "urls": [
-        "https://github.com/readytensor/rt-multi-agent-assessment"
+        "https://github.com/readytensor/rt-publication-generator"
     ],
-    "max_workers": 10
+    "max_workers": 12
 }
