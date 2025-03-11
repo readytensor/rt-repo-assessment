@@ -17,4 +17,4 @@ llms = {
 def get_llm(llm: str) -> BaseChatModel:
     if llm not in llms:
         raise ValueError(f"LLM not found for ID: {llm}")
-    return llms[llm]
+    return llms[llm].model_copy()

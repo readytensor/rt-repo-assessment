@@ -1,0 +1,24 @@
+tracked_extensions:
+  - .py
+  - .ipynb
+  - .json
+  - .yaml
+
+text_extensions:
+  - .txt
+  - .md
+  - .csv
+  - .tsv
+  - .json
+  - .yaml
+  - .py
+  - .ipynb
+
+ignored_names:
+  - .venv
+  - venv
+  - model_inputs_outputs
+  - .git
+  - .ipynb_checkpoints
+  - __pycache__
+  - __init__.py

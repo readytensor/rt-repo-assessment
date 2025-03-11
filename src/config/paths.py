@@ -27,3 +27,5 @@ LICENSE_CRITERIA_FPATH = os.path.join(SCORING_DIR, "license_criteria.yaml")
 STRUCTURE_CRITERIA_FPATH = os.path.join(SCORING_DIR, "structure_criteria.yaml")
 
 DOCUMENTATION_CRITERIA_FPATH = os.path.join(SCORING_DIR, "documentation_criteria.yaml")
+
+TRACKED_FILES_FPATH = os.path.join(CONFIG_DIR, "tracked_files.yaml")

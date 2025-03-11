@@ -5,7 +5,6 @@ from utils.llm import get_llm, GPT_4O_MINI
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import get_readme_content, get_repo_tree, clone_and_extract_repo
 from config.scoring.generators import (
-    code_quality_criterion_generator,
     dependancies_criterion_generator,
     license_criterion_generator,
     structure_criterion_generator,
@@ -18,7 +17,10 @@ from utils.project_validators import (
     has_license_file,
     has_gitignore_file,
     has_ignored_files,
+    get_script_lengths,
 )
+from code_scorer.code_scorer import score_directory_based_on_files
+from config.scoring.generators import get_code_criteria_aggregation_logic
 
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
@@ -38,6 +40,7 @@ def get_repo_info(repo_url: str) -> Dict[str, Any]:
     gitignore_file_exists = has_gitignore_file(repo_dir_path)
     ignored_files_exist = has_ignored_files(repo_dir_path)
     directory_structure = get_repo_tree(repo_dir_path)
+    script_lengths = get_script_lengths(repo_dir_path)
 
     readme_content = (
         get_readme_content(repo_dir_path) if has_readme(repo_dir_path) else None
@@ -51,6 +54,7 @@ def get_repo_info(repo_url: str) -> Dict[str, Any]:
         "license_file_exists": license_file_exists,
         "gitignore_file_exists": gitignore_file_exists,
         "ignored_files_exist": ignored_files_exist,
+        "script_lengths": script_lengths,
         "readme_content": readme_content,
         "directory_structure": directory_structure,
     }
@@ -103,8 +107,16 @@ if __name__ == "__main__":
                 readme_content=readme_content,
                 criterion=format_criterion(criterion),
             )
+
             response = llm.invoke(prompt).model_dump()
             return criterion_id, response
+
+        aggregation_logic = get_code_criteria_aggregation_logic()
+        dir_score, file_scores = score_directory_based_on_files(
+            os.path.join(paths.INPUTS_DIR, os.path.basename(repo_url)),
+            llm=get_llm(llm=GPT_4O_MINI),
+            aggregation_logic=aggregation_logic,
+        )
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
             process_fn = partial(
@@ -117,7 +129,6 @@ if __name__ == "__main__":
             )
 
             for generator in [
-                code_quality_criterion_generator,
                 dependancies_criterion_generator,
                 license_criterion_generator,
                 structure_criterion_generator,
@@ -130,4 +141,7 @@ if __name__ == "__main__":
                         os.path.join(output_dir, "assessment.json"), results
                     )
 
+        results["code_quality_scores"] = dir_score
+
         write_json_file(os.path.join(output_dir, "assessment.json"), results)
+        write_json_file(os.path.join(output_dir, "file_scores.json"), file_scores)

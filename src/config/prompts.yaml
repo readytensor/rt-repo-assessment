@@ -20,6 +20,12 @@ scoring_v0: |
   {criterion}
   </criterion>
 
-  
+score_file: |
+  Score the following file based on the given criterion.
 
+  <file>
+  {file_content}
+  </file>
+
+  
 
