@@ -31,7 +31,8 @@ Repository Structure:
       name: Organized Notebooks
       description: If Jupyter notebooks are present, they are organized in a logical
         manner (e.g., in dedicated directories) with names that reflect their purpose
-        and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb")
+        and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb").
+        If no notebooks are present, this criterion should be satisfied.
       essential: true
       professional: true
       elite: true
@@ -45,7 +46,7 @@ Repository Structure:
     asset_organization:
       name: Asset Organization
       description: Non-code assets (images, models, etc.) are organized in dedicated
-        directories with clear purpose
+        directories with clear purpose. If no assets are present, this criterion should be satisfied. If assets are scattered across the repository, this criterion should not be satisfied.
       essential: true
       professional: true
       elite: true

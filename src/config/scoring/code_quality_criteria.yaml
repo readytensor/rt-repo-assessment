@@ -187,16 +187,9 @@ Code Quality:
       elite: true
       aggregation: OR
   Complexity:
-    code_complexity_management:
-      name: Cyclomatic Complexity
-      description: Functions maintain reasonable cyclomatic complexity (< 10)
-      essential: false
-      professional: true
-      elite: true
-      aggregation: AND
     class_size:
       name: Class Size Control
-      description: Classes have reasonable number of methods (< 20)
+      description: Classes have reasonable number of methods (< 20). If no classes are present, this criterion should be satisfied.
       essential: false
       professional: true
       elite: true

@@ -13,9 +13,11 @@ def generate_markdown_report(
     Generate a Markdown report summarizing criteria satisfaction.
 
     Args:
-        assessment_file: Path to the assessment.json file
+        assessment: Dictionary containing assessment results with criteria IDs as keys
         output_file: Path where to save the Markdown report
         criteria_categories: Dictionary mapping category names to lists of criteria IDs
+        criteria_names: Dictionary mapping criteria IDs to their display names
+        category_criteria: Dictionary mapping category names to lists of criteria IDs
     """
 
     total_criteria = len(assessment)
@@ -24,11 +26,13 @@ def generate_markdown_report(
     # Calculate statistics by category
     category_stats = {}
     for category, criteria_list in criteria_categories.items():
-        total_in_category = len(criteria_list)
+        # Only count criteria that exist in the assessment
+        criteria_in_assessment = [crit for crit in criteria_list if crit in assessment]
+        total_in_category = len(criteria_in_assessment)
         met_in_category = sum(
             1
-            for crit in criteria_list
-            if crit in assessment and assessment[crit].get("score", 0) == 1
+            for crit in criteria_in_assessment
+            if assessment[crit].get("score", 0) == 1
         )
         category_stats[category] = {
             "total": total_in_category,
@@ -69,17 +73,23 @@ def generate_markdown_report(
         # Detailed criteria breakdown
         f.write("## Detailed Criteria Breakdown\n\n")
 
-        # Create non-overlapping criteria lists
-        essential_criteria = criteria_categories.get("Essential", [])
+        # Create non-overlapping criteria lists, only including criteria that exist in assessment
+        essential_criteria = [
+            crit
+            for crit in criteria_categories.get("Essential", [])
+            if crit in assessment
+        ]
         professional_criteria = [
             crit
             for crit in criteria_categories.get("Professional", [])
-            if crit not in essential_criteria
+            if crit not in essential_criteria and crit in assessment
         ]
         elite_criteria = [
             crit
             for crit in criteria_categories.get("Elite", [])
-            if crit not in essential_criteria and crit not in professional_criteria
+            if crit not in essential_criteria
+            and crit not in professional_criteria
+            and crit in assessment
         ]
 
         # Use the filtered lists for each category
@@ -105,22 +115,13 @@ def generate_markdown_report(
                         criterion_category = cat
                         break
 
-                if criterion in assessment:
-                    status = (
-                        "✅ Met"
-                        if assessment[criterion].get("score", 0) == 1
-                        else "❌ Not Met"
-                    )
-                    explanation = assessment[criterion].get(
-                        "explanation", "No explanation provided"
-                    )
-                    f.write(
-                        f"| {criterion_category} | {criteria_names[criterion]} | {status} | {explanation} |\n"
-                    )
-                else:
-                    f.write(
-                        f"| {criterion_category} | {criteria_names[criterion]} | ❓ Not Evaluated | - |\n"
-                    )
+                status = "✅" if assessment[criterion].get("score", 0) == 1 else "❌"
+                explanation = assessment[criterion].get(
+                    "explanation", "No explanation provided"
+                )
+                f.write(
+                    f"| {criterion_category} | {criteria_names[criterion]} | {status} | {explanation} |\n"
+                )
 
             f.write("\n")
 

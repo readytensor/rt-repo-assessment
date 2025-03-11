@@ -9,6 +9,10 @@ from generators import (
     license_criterion_generator,
     structure_criterion_generator,
     documentation_criterion_generator,
+    get_code_criteria_aggregation_logic,
+    get_criteria_by_type,
+    get_criteria_names,
+    get_category_criteria,
 )
 from utils.project_validators import (
     has_readme,
@@ -21,13 +25,6 @@ from utils.project_validators import (
     get_script_lengths,
 )
 from code_scorer.code_scorer import score_directory_based_on_files
-from generators import (
-    get_code_criteria_aggregation_logic,
-    get_criteria_by_type,
-    get_criteria_names,
-    get_category_criteria,
-)
-
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
