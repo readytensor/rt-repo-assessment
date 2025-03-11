@@ -1,5 +1,3 @@
-
-
 License and Legal:
   License:
     license_presence:
@@ -25,15 +23,15 @@ License and Legal:
       description: "The repository includes explicit copyright statements in source\
         \ files and documentation, indicating ownership and rights. This helps prevent\
         \ ambiguity in legal rights and attribution.\t"
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
     data_usage_rights:
       name: Data Usage Rights
       description: "For repositories handling datasets, clear documentation must state\
         \ data ownership, licensing, usage rights, compliance requirements, and any\
         \ restrictions.\t"
-      essential: true
+      essential: false
       professional: true
       elite: true
     model_usage_rights:
@@ -41,7 +39,7 @@ License and Legal:
       description: "If the repository includes or references ML models, documentation\
         \ must specify model ownership, licensing, usage terms, and redistribution\
         \ policies.\t"
-      essential: true
+      essential: false
       professional: true
       elite: true
   Community:
@@ -50,6 +48,6 @@ License and Legal:
       description: "The repository includes a Code of Conduct, outlining contributor\
         \ behavior expectations, enforcement mechanisms, and reporting guidelines\
         \ to foster an inclusive and respectful environment.\t"
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true

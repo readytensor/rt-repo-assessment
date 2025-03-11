@@ -2,23 +2,20 @@ import os
 import tiktoken
 import concurrent.futures
 from config import paths
+from dotenv import load_dotenv
 from typing import List, Dict, Any, Tuple
 from utils.general import read_yaml_file
 from langchain_core.documents import Document
 from output_parsers import get_code_quality_scoring_model
+from code_scorer.tree import build_tree, post_order_generator
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.language_models.chat_models import BaseChatModel
-
-from dotenv import load_dotenv
-
 from langchain_community.document_loaders import (
     NotebookLoader,
     PyPDFLoader,
     Docx2txtLoader,
     TextLoader,
 )
-
-from code_scorer.tree import build_tree, post_order_generator
 
 load_dotenv()
 

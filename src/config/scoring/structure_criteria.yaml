@@ -5,26 +5,26 @@ Repository Structure:
       description: Repository has basic organizational structure with some logical
         separation of files (not all files in root directory)
       essential: true
-      professional: false
-      elite: false
+      professional: true
+      elite: true
     specific_code_separation:
       name: Specific Code Separation
       description: Modeling/application code is organized in dedicated module structure
         (e.g., src/ directory with submodules)
-      essential: false
+      essential: true
       professional: true
       elite: true
     specific_data_separation:
       name: Specific Data Separation
       description: Data is organized in dedicated directory (e.g., /data, /inputs,
         etc.)
-      essential: false
+      essential: true
       professional: true
       elite: true
     specific_config_separation:
       name: Specific Config Separation
       description: Configuration is properly separated from code in dedicated files/directories
-      essential: false
+      essential: true
       professional: true
       elite: true
     organized_notebooks:
@@ -32,35 +32,35 @@ Repository Structure:
       description: If Jupyter notebooks are present, they are organized in a logical
         manner (e.g., in dedicated directories) with names that reflect their purpose
         and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb")
-      essential: false
+      essential: true
       professional: true
       elite: true
     docs_refs_separation:
       name: Documentation and References Separation
       description: Documents and external materials such as pdfs, papers, etc. are
         properly organized in dedicated locations (e.g., docs/ directory)
-      essential: false
+      essential: true
       professional: true
       elite: true
     asset_organization:
       name: Asset Organization
       description: Non-code assets (images, models, etc.) are organized in dedicated
         directories with clear purpose
-      essential: false
+      essential: true
       professional: true
       elite: true
     test_directory_structure:
       name: Test Directory Structure
       description: Tests are organized in a dedicated structure (e.g., tests/ directory
         mirroring the main code structure)
-      essential: false
+      essential: true
       professional: true
       elite: true
     logical_repository_root:
       name: Logical Repository Root
       description: Repository root is clean with only essential files (README, license,
         .gitignore, setup files) with detailed content in subdirectories
-      essential: false
+      essential: true
       professional: true
       elite: true
     appropriate_gitignore:
@@ -99,14 +99,14 @@ Repository Structure:
       description: Directories contain a reasonable number of files and dirs (should
         be under 15 directories and files in single directories); does not apply to
         data directories
-      essential: false
+      essential: true
       professional: true
       elite: true
     reasonable_directory_depth:
       name: Reasonable Directory Depth
       description: Repository structure avoids excessive nesting of directories (typically
         no more than 5 levels deep)
-      essential: false
+      essential: true
       professional: true
       elite: true
     clear_entry_points:
@@ -121,7 +121,7 @@ Repository Structure:
       name: Environment Configuration Isolation
       description: Environment-specific configuration files (.env, .env.example, .env.template,
         .gitconfig, docker-compose.yml, etc.) are properly placed and organized
-      essential: false
+      essential: true
       professional: true
       elite: true
     dependency_management_structure:
@@ -130,7 +130,6 @@ Repository Structure:
         are properly placed at repository root or in designated dependency directories.
         Multiple dependency files (if present) follow logical organization (e.g.,
         base_requirements.txt, dev_requirements.txt).
-      essential: false
+      essential: true
       professional: true
       elite: true
-

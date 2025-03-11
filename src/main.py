@@ -8,6 +8,7 @@ from config.scoring.generators import (
     dependancies_criterion_generator,
     license_criterion_generator,
     structure_criterion_generator,
+    documentation_criterion_generator,
 )
 from utils.project_validators import (
     has_readme,
@@ -25,6 +26,7 @@ from config.scoring.generators import get_code_criteria_aggregation_logic
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
+from report import generate_markdown_report
 
 
 def get_repo_info(repo_url: str) -> Dict[str, Any]:
@@ -116,6 +118,7 @@ if __name__ == "__main__":
             os.path.join(paths.INPUTS_DIR, os.path.basename(repo_url)),
             llm=get_llm(llm=GPT_4O_MINI),
             aggregation_logic=aggregation_logic,
+            max_workers=max_workers,
         )
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -129,9 +132,10 @@ if __name__ == "__main__":
             )
 
             for generator in [
+                documentation_criterion_generator,
+                structure_criterion_generator,
                 dependancies_criterion_generator,
                 license_criterion_generator,
-                structure_criterion_generator,
             ]:
                 for criterion_id, response in executor.map(
                     lambda x: process_fn(x[0], x[1]), generator()
@@ -141,7 +145,13 @@ if __name__ == "__main__":
                         os.path.join(output_dir, "assessment.json"), results
                     )
 
-        results["code_quality_scores"] = dir_score
+        results = {**results, **dir_score}
 
         write_json_file(os.path.join(output_dir, "assessment.json"), results)
         write_json_file(os.path.join(output_dir, "file_scores.json"), file_scores)
+
+        # generate_markdown_report(
+        #     assessment=results,
+        #     file_scores=file_scores,
+        #     output_file=os.path.join(output_dir, "report.md"),
+        # )
