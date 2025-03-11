@@ -2,23 +2,20 @@ import os
 import tiktoken
 import concurrent.futures
 from config import paths
+from dotenv import load_dotenv
 from typing import List, Dict, Any, Tuple
 from utils.general import read_yaml_file
 from langchain_core.documents import Document
 from output_parsers import get_code_quality_scoring_model
+from code_scorer.tree import build_tree, post_order_generator
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.language_models.chat_models import BaseChatModel
-
-from dotenv import load_dotenv
-
 from langchain_community.document_loaders import (
     NotebookLoader,
     PyPDFLoader,
     Docx2txtLoader,
     TextLoader,
 )
-
-from code_scorer.tree import build_tree, post_order_generator
 
 load_dotenv()
 
@@ -212,7 +209,10 @@ def combine_scores(
 
     # Initialize combined scores with all criteria set to 0
     combined_scores = {
-        criterion: {"score": 0, "explanation": "Not satisfied by any file."}
+        criterion: {
+            "score": 0,
+            "explanation": "Not satisfied by any files in the project.",
+        }
         for criterion in all_criteria
     }
 
@@ -222,21 +222,27 @@ def combine_scores(
 
         if logic == "OR":
             # OR logic: If any file satisfies the criterion, update the combined score
+            satisfied_files = []
             for file_score in file_scores:
                 # Skip if this file doesn't have this criterion
                 if criterion not in file_score["scores"]:
                     continue
 
                 if file_score["scores"][criterion]["score"] == 1:
+                    satisfied_files.append(
+                        file_score["scores"][criterion]["explanation"]
+                    )
                     combined_scores[criterion] = {
                         "score": 1,
-                        "explanation": f"Satisfied by file: {file_score['file_path']}",
+                        "explanation": f"This criterion is satisfied in the project. {file_score['scores'][criterion]['explanation']}",
                     }
                     break  # No need to check further if one file satisfies
         elif logic == "AND":
             # Initialize the score to 1, assuming all files satisfy the criterion
             combined_scores[criterion]["score"] = 1
-            combined_scores[criterion]["explanation"] = "Satisfied by all files."
+            combined_scores[criterion][
+                "explanation"
+            ] = "This criterion is consistently satisfied throughout the project."
 
             # Collect explanations for files that do not satisfy the criterion
             failure_explanations = []
@@ -248,15 +254,25 @@ def combine_scores(
                     continue
 
                 if file_score["scores"][criterion]["score"] == 0:
+                    file_name = os.path.basename(file_score["file_path"])
                     failure_explanations.append(
-                        f"File: {file_score['file_path']} - {file_score['scores'][criterion]['explanation']}"
+                        f"{file_name}: {file_score['scores'][criterion]['explanation']}"
                     )
                     combined_scores[criterion]["score"] = 0
 
             # If there are any failures, update the explanation
             if failure_explanations:
-                combined_scores[criterion]["explanation"] = " AND ".join(
-                    failure_explanations
+                combined_scores[criterion]["explanation"] = (
+                    "This criterion is not consistently satisfied. Issues include: "
+                    + "; ".join(
+                        failure_explanations[
+                            :3
+                        ]  # Limit to first 3 explanations to avoid overly long text
+                    )
                 )
+                if len(failure_explanations) > 3:
+                    combined_scores[criterion][
+                        "explanation"
+                    ] += f" and {len(failure_explanations) - 3} more issues."
 
     return combined_scores

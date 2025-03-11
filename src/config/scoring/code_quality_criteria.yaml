@@ -6,37 +6,40 @@ Code Quality:
       essential: true
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
     script_length:
       name: Script Length Control
       description: Individual scripts/modules have reasonable length (< 500 lines)
       essential: true
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-      requires_llm: false
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
     function_length:
       name: Function Length Control
-      description: Functions and methods are reasonably sized (< 100 lines)
-      essential: true
+      description: Functions and methods are reasonably sized (< 50 lines)
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
     code_duplication:
       name: Code Duplication Check
       description: Limited code duplication (< 10% duplicate code)
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
   Configuration:
     centralized_config:
       name: Configuration File Presence
@@ -45,45 +48,49 @@ Code Quality:
       essential: true
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".json", ".yaml"]
-
+      include_extensions:
+      - .py
+      - .json
+      - .yaml
+      aggregation: OR
     no_hardcoded_constants:
       name: Hardcoded Value Detection
-      description: Limited hardcoded constants in core code. Default values for methods and constructors are allowed and should not be scored as hardcoded constants.
-      essential: true
+      description: Limited hardcoded constants in core code
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
     env_variables:
       name: Environment Variable Usage
       description: References to environment variables for sensitive configurations
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-
+      aggregation: OR
   Logging:
     logging_basic:
       name: Logging Import Detection
       description: Evidence of logging library usage
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
     logging_advanced:
       name: Logging Configuration
       description: Presence of logging configuration (levels, formats)
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
   Error Handling:
     error_handling_basic:
       name: Exception Usage
@@ -91,109 +98,112 @@ Code Quality:
       essential: true
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
     error_handling_advanced:
       name: Custom Exception Classes
       description: Definition of project-specific exception classes
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
   Testing:
     testing_basic:
       name: Test File Presence
       description: Existence of test files (test_*.py or *_test.py)
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
     testing_comprehensive:
       name: Test Coverage
       description: Test coverage metrics available (e.g., .coverage file)
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
-      aggregation: "OR"
-
+      aggregation: OR
     testing_framework:
       name: Test Framework Usage
       description: Evidence of test framework (pytest, unittest)
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
   Documentation:
     uses_docstrings:
       name: Docstring Presence
       description: Functions, classes, modules have docstrings
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
     complete_docstrings:
       name: Docstring Completeness
       description: Docstrings include parameters and return sections
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
     type_hints:
       name: Type Hint Usage
       description: Presence of type hints in function signatures
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
   Style:
     code_style_tools:
       name: Style Checker Configuration
       description: Presence of style checker configuration files
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-
-
+      aggregation: OR
     code_style_consistency:
       name: Consistent Formatting
       description: Evidence of consistent indentation and formatting
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-
+      aggregation: OR
   Complexity:
     code_complexity_management:
       name: Cyclomatic Complexity
       description: Functions maintain reasonable cyclomatic complexity (< 10)
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-
+      aggregation: AND
     class_size:
       name: Class Size Control
       description: Classes have reasonable number of methods (< 20)
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: AND
   AI/ML Specific:
     seed_setting:
       name: Random Seed Setting
@@ -201,70 +211,72 @@ Code Quality:
       essential: true
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
     data_quality_checks:
       name: Data Validation Code
       description: Input data validation logic present
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
     model_organization:
       name: Model File Organization
       description: ML models in dedicated modules/classes
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".py", ".ipynb"]
-
+      include_extensions:
+      - .py
+      - .ipynb
+      aggregation: OR
   Notebook Specific:
     notebook_cell_size:
       name: Notebook Code Structure
-      description: Cells organized with fewer than 100 lines per cell (In the case of a file that is not a notebook, this should be scored 1)
+      description: Cells organized with fewer than 100 lines per cell
       essential: true
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".ipynb"]
-
+      include_extensions:
+      - .ipynb
+      aggregation: AND
     notebook_documentation:
       name: Notebook Documentation
-      description: Notebooks include markdown cells (>10% of cells) (In the case of a file that is not a notebook, this should be scored 1)
+      description: Notebooks include markdown cells (>10% of cells)
       essential: true
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".ipynb"]
-
+      include_extensions:
+      - .ipynb
+      aggregation: AND
     notebook_imports:
       name: Notebook Imports
-      description: Evidence of importing custom modules (not just standard libraries) (In the case of a file that is not a notebook, this should be scored 1)
-      essential: true
+      description: Evidence of importing custom modules (not just standard libraries)
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
-      include_extensions: [".ipynb"]
-
-
+      include_extensions:
+      - .ipynb
+      aggregation: OR
     notebook_output_management:
       name: Clean Notebook Outputs
-      description: Either consistently cleared outputs or only relevant outputs retained (In the case of a file that is not a notebook, this should be scored 1)
-      essential: true
+      description: Either consistently cleared outputs or only relevant outputs retained
+      essential: false
       professional: true
       elite: true
-      aggregation: "AND"
-      include_extensions: [".ipynb"]
-
+      include_extensions:
+      - .ipynb
+      aggregation: AND
   Package Structure:
     package_structure:
       name: Package Organization
       description: Proper package structure with init.py files
-      essential: true
+      essential: false
       professional: true
       elite: true
-      aggregation: "OR"
+      aggregation: OR

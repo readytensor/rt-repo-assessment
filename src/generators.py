@@ -6,6 +6,7 @@ CODE_QUALITY_CRITERIA = read_yaml_file(paths.CODE_QUALITY_CRITERIA_FPATH)
 DEPENDENCIES_CRITERIA = read_yaml_file(paths.DEPENDANCIES_CRITERIA_FPATH)
 LICENSE_CRITERIA = read_yaml_file(paths.LICENSE_CRITERIA_FPATH)
 STRUCTURE_CRITERIA = read_yaml_file(paths.STRUCTURE_CRITERIA_FPATH)
+DOCUMENTATION_CRITERIA = read_yaml_file(paths.DOCUMENTATION_CRITERIA_FPATH)
 
 
 def code_quality_criterion_generator(input_file_extension: str = None):
@@ -33,6 +34,15 @@ def code_quality_criterion_generator(input_file_extension: str = None):
                     continue
 
                 yield criterion_id, CODE_QUALITY_CRITERIA[category][sub_category][
+                    criterion_id
+                ]
+
+
+def documentation_criterion_generator():
+    for category in DOCUMENTATION_CRITERIA.keys():
+        for sub_category in DOCUMENTATION_CRITERIA[category].keys():
+            for criterion_id in DOCUMENTATION_CRITERIA[category][sub_category].keys():
+                yield criterion_id, DOCUMENTATION_CRITERIA[category][sub_category][
                     criterion_id
                 ]
 
@@ -74,3 +84,67 @@ def get_code_criteria_aggregation_logic():
                 ]
                 aggregation_logic[criterion_id] = logic
     return aggregation_logic
+
+
+def get_criteria_by_type():
+    result = {
+        "Essential": [],
+        "Professional": [],
+        "Elite": [],
+    }
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+        STRUCTURE_CRITERIA,
+    ]:
+        for category in criteria.keys():
+            for sub_category in criteria[category].keys():
+                for criterion_id in criteria[category][sub_category].keys():
+                    if criteria[category][sub_category][criterion_id].get(
+                        "essential", False
+                    ):
+                        result["Essential"].append(criterion_id)
+                    if criteria[category][sub_category][criterion_id].get(
+                        "professional", False
+                    ):
+                        result["Professional"].append(criterion_id)
+                    if criteria[category][sub_category][criterion_id].get(
+                        "elite", False
+                    ):
+                        result["Elite"].append(criterion_id)
+    return result
+
+
+def get_criteria_names():
+    result = {}
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+        STRUCTURE_CRITERIA,
+        DOCUMENTATION_CRITERIA,
+    ]:
+        for category in criteria.keys():
+            for sub_category in criteria[category].keys():
+                for criterion_id in criteria[category][sub_category].keys():
+                    result[criterion_id] = criteria[category][sub_category][
+                        criterion_id
+                    ]["name"]
+    return result
+
+
+def get_category_criteria():
+    result = {}
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+        STRUCTURE_CRITERIA,
+        DOCUMENTATION_CRITERIA,
+    ]:
+        for category in criteria.keys():
+            result[category] = []
+            for sub_category in criteria[category].keys():
+                result[category].extend(list(criteria[category][sub_category].keys()))
+    return result

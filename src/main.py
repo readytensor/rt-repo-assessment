@@ -4,10 +4,11 @@ from config import paths
 from utils.llm import get_llm, GPT_4O_MINI
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import get_readme_content, get_repo_tree, clone_and_extract_repo
-from config.scoring.generators import (
+from generators import (
     dependancies_criterion_generator,
     license_criterion_generator,
     structure_criterion_generator,
+    documentation_criterion_generator,
 )
 from utils.project_validators import (
     has_readme,
@@ -20,11 +21,17 @@ from utils.project_validators import (
     get_script_lengths,
 )
 from code_scorer.code_scorer import score_directory_based_on_files
-from config.scoring.generators import get_code_criteria_aggregation_logic
+from generators import (
+    get_code_criteria_aggregation_logic,
+    get_criteria_by_type,
+    get_criteria_names,
+    get_category_criteria,
+)
 
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
+from report import generate_markdown_report
 
 
 def get_repo_info(repo_url: str) -> Dict[str, Any]:
@@ -70,6 +77,7 @@ def format_criterion(criterion: dict) -> str:
 if __name__ == "__main__":
     prompts = read_yaml_file(paths.PROMPTS_FPATH)
     config = read_json_file(paths.CONFIG_FPATH)
+    criteria_categories = get_criteria_by_type()
 
     prompt_template = prompts["scoring_v0"]
 
@@ -116,6 +124,7 @@ if __name__ == "__main__":
             os.path.join(paths.INPUTS_DIR, os.path.basename(repo_url)),
             llm=get_llm(llm=GPT_4O_MINI),
             aggregation_logic=aggregation_logic,
+            max_workers=max_workers,
         )
 
         with ThreadPoolExecutor(max_workers=max_workers) as executor:
@@ -129,9 +138,10 @@ if __name__ == "__main__":
             )
 
             for generator in [
+                documentation_criterion_generator,
+                structure_criterion_generator,
                 dependancies_criterion_generator,
                 license_criterion_generator,
-                structure_criterion_generator,
             ]:
                 for criterion_id, response in executor.map(
                     lambda x: process_fn(x[0], x[1]), generator()
@@ -141,7 +151,15 @@ if __name__ == "__main__":
                         os.path.join(output_dir, "assessment.json"), results
                     )
 
-        results["code_quality_scores"] = dir_score
+        results = {**results, **dir_score}
 
         write_json_file(os.path.join(output_dir, "assessment.json"), results)
         write_json_file(os.path.join(output_dir, "file_scores.json"), file_scores)
+
+        generate_markdown_report(
+            assessment=results,
+            output_file=os.path.join(output_dir, "report.md"),
+            criteria_categories=criteria_categories,
+            criteria_names=get_criteria_names(),
+            category_criteria=get_category_criteria(),
+        )

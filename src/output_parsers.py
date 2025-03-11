@@ -1,6 +1,6 @@
 from typing import List, Dict
 from pydantic import BaseModel, Field, create_model
-from config.scoring.generators import code_quality_criterion_generator
+from generators import code_quality_criterion_generator
 
 
 class CriterionScoring(BaseModel):
