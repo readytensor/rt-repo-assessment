@@ -34,7 +34,14 @@ from report import generate_markdown_report
 def get_repo_info(repo_url: str) -> Dict[str, Any]:
     repo_dir_name = os.path.basename(repo_url)
     repo_dir_path = os.path.join(paths.INPUTS_DIR, repo_dir_name)
-    clone_and_extract_repo(repo_url=repo_url, output_dir=repo_dir_path)
+    retry_attempts = 0
+    while retry_attempts < 3:
+        try:
+            clone_and_extract_repo(repo_url=repo_url, output_dir=repo_dir_path)
+            break
+        except Exception as e:
+            print(f"Error cloning and extracting repo {repo_url}: {e}")
+            retry_attempts += 1
 
     readme_exists = has_readme(repo_dir_path)
     requirements_txt_exists = has_requirements_txt(repo_dir_path)
