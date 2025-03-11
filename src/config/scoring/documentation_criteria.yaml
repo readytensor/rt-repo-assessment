@@ -143,7 +143,7 @@ Documentation:
       professional: true
       elite: true
   License Identification:
-    "license_in_readme\t":
+    license_in_readme:
       name: License Identification
       description: README includes a clear mention of the project's license(s).
       essential: true

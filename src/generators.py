@@ -114,3 +114,37 @@ def get_criteria_by_type():
                     ):
                         result["Elite"].append(criterion_id)
     return result
+
+
+def get_criteria_names():
+    result = {}
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+        STRUCTURE_CRITERIA,
+        DOCUMENTATION_CRITERIA,
+    ]:
+        for category in criteria.keys():
+            for sub_category in criteria[category].keys():
+                for criterion_id in criteria[category][sub_category].keys():
+                    result[criterion_id] = criteria[category][sub_category][
+                        criterion_id
+                    ]["name"]
+    return result
+
+
+def get_category_criteria():
+    result = {}
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+        STRUCTURE_CRITERIA,
+        DOCUMENTATION_CRITERIA,
+    ]:
+        for category in criteria.keys():
+            result[category] = []
+            for sub_category in criteria[category].keys():
+                result[category].extend(list(criteria[category][sub_category].keys()))
+    return result

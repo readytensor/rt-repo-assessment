@@ -4,16 +4,16 @@ from typing import Dict, List, Any
 
 def generate_markdown_report(
     assessment: Dict[str, Any],
-    file_scores: Dict[str, Any],
     output_file: str,
     criteria_categories: Dict[str, List[str]],
+    criteria_names: Dict[str, str],
+    category_criteria: Dict[str, List[str]],
 ):
     """
     Generate a Markdown report summarizing criteria satisfaction.
 
     Args:
         assessment_file: Path to the assessment.json file
-        file_scores_file: Path to the file_scores.json file
         output_file: Path where to save the Markdown report
         criteria_categories: Dictionary mapping category names to lists of criteria IDs
     """
@@ -94,10 +94,17 @@ def generate_markdown_report(
                 continue
 
             f.write(f"### {category} Criteria\n\n")
-            f.write("| Criterion | Status | Explanation |\n")
-            f.write("|-----------|--------|-------------|\n")
+            f.write("| Category | Criterion | Status | Explanation |\n")
+            f.write("|------------|------------|----------|------------------------|\n")
 
             for criterion in criteria_list:
+                # Find which category this criterion belongs to
+                criterion_category = None
+                for cat, criteria in category_criteria.items():
+                    if criterion in criteria:
+                        criterion_category = cat
+                        break
+
                 if criterion in assessment:
                     status = (
                         "✅ Met"
@@ -107,30 +114,14 @@ def generate_markdown_report(
                     explanation = assessment[criterion].get(
                         "explanation", "No explanation provided"
                     )
-                    f.write(f"| {criterion} | {status} | {explanation} |\n")
+                    f.write(
+                        f"| {criterion_category} | {criteria_names[criterion]} | {status} | {explanation} |\n"
+                    )
                 else:
-                    f.write(f"| {criterion} | ❓ Not Evaluated | - |\n")
+                    f.write(
+                        f"| {criterion_category} | {criteria_names[criterion]} | ❓ Not Evaluated | - |\n"
+                    )
 
             f.write("\n")
-
-        # File-specific scores
-        f.write("## File-Specific Scores\n\n")
-        for file_score in file_scores:
-            file_path = file_score["file_path"]
-            file_name = os.path.basename(file_path)
-
-            # Count met criteria for this file
-            met_in_file = sum(
-                1
-                for score_info in file_score["scores"].values()
-                if score_info.get("score", 0) == 1
-            )
-            total_in_file = len(file_score["scores"])
-
-            f.write(f"### {file_name}\n\n")
-            f.write(f"- **Path**: `{file_path}`\n")
-            f.write(
-                f"- **Criteria Met**: {met_in_file}/{total_in_file} ({round(met_in_file/total_in_file*100, 1)}%)\n\n"
-            )
 
     print(f"Report generated successfully at {output_file}")

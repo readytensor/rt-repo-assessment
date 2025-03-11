@@ -4,7 +4,7 @@ from config import paths
 from utils.llm import get_llm, GPT_4O_MINI
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import get_readme_content, get_repo_tree, clone_and_extract_repo
-from config.scoring.generators import (
+from generators import (
     dependancies_criterion_generator,
     license_criterion_generator,
     structure_criterion_generator,
@@ -21,7 +21,12 @@ from utils.project_validators import (
     get_script_lengths,
 )
 from code_scorer.code_scorer import score_directory_based_on_files
-from config.scoring.generators import get_code_criteria_aggregation_logic
+from generators import (
+    get_code_criteria_aggregation_logic,
+    get_criteria_by_type,
+    get_criteria_names,
+    get_category_criteria,
+)
 
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
@@ -72,6 +77,7 @@ def format_criterion(criterion: dict) -> str:
 if __name__ == "__main__":
     prompts = read_yaml_file(paths.PROMPTS_FPATH)
     config = read_json_file(paths.CONFIG_FPATH)
+    criteria_categories = get_criteria_by_type()
 
     prompt_template = prompts["scoring_v0"]
 
@@ -150,8 +156,10 @@ if __name__ == "__main__":
         write_json_file(os.path.join(output_dir, "assessment.json"), results)
         write_json_file(os.path.join(output_dir, "file_scores.json"), file_scores)
 
-        # generate_markdown_report(
-        #     assessment=results,
-        #     file_scores=file_scores,
-        #     output_file=os.path.join(output_dir, "report.md"),
-        # )
+        generate_markdown_report(
+            assessment=results,
+            output_file=os.path.join(output_dir, "report.md"),
+            criteria_categories=criteria_categories,
+            criteria_names=get_criteria_names(),
+            category_criteria=get_category_criteria(),
+        )
