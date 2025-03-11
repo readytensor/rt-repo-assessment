@@ -1,5 +1,6 @@
 import os
 import tiktoken
+import concurrent.futures
 from config import paths
 from typing import List, Dict, Any, Tuple
 from utils.general import read_yaml_file
@@ -127,6 +128,7 @@ def score_directory_based_on_files(
     tracked_extensions: List[str] = tracked_extensions,
     ignored_names: List[str] = ignored_names,
     global_context: str = "",
+    max_workers: int = 4,
 ) -> Tuple[Dict[str, Any], List[Dict[str, Any]]]:
     """
     Score all files in a directory based on code quality criteria.
@@ -141,12 +143,14 @@ def score_directory_based_on_files(
         tracked_extensions (List[str]): File extensions to analyze.
         ignored_names (List[str]): File/directory names to ignore.
         global_context (str): Additional context about the codebase to help inform scoring.
+        max_workers (int): Maximum number of parallel workers to use.
 
     Returns:
         Tuple[Dict[str, Any], List[Dict[str, Any]]]: A tuple containing:
             - Combined scores across all files
             - List of individual file scores
     """
+
     root = build_tree(
         directory_path,
         ignored_names=ignored_names,
@@ -158,20 +162,38 @@ def score_directory_based_on_files(
         print(f"Skipping directory as it is empty {directory_path}")
         raise ValueError("Cannot summarize an empty directory.")
 
+    # Collect all non-directory nodes to process
+    files_to_score = []
+    for node in post_order_generator(root):
+        if not node.is_dir:
+            files_to_score.append(node)
+
     all_scores = []
 
-    for node in post_order_generator(root):
+    # Define a worker function to score a single file
+    def score_file_worker(node):
         print(f"Scoring {node.name}")
-        if not node.is_dir:
-            score = score_file(
-                node.full_path,
-                llm=llm,
-                chunk_size=chunk_size,
-                chunk_overlap=chunk_overlap,
-                max_token_count=max_token_count,
-                global_context=node.global_context,
-            )
-            all_scores.append(score)
+        return score_file(
+            node.full_path,
+            llm=llm,
+            chunk_size=chunk_size,
+            chunk_overlap=chunk_overlap,
+            max_token_count=max_token_count,
+            global_context=node.global_context,
+        )
+
+    # Process files in parallel
+    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+        future_to_file = {
+            executor.submit(score_file_worker, node): node for node in files_to_score
+        }
+        for future in concurrent.futures.as_completed(future_to_file):
+            try:
+                score = future.result()
+                all_scores.append(score)
+            except Exception as exc:
+                node = future_to_file[future]
+                print(f"Error scoring {node.name}: {exc}")
 
     directory_scores = combine_scores(all_scores, aggregation_logic)
     return directory_scores, all_scores
