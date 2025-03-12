@@ -25,14 +25,39 @@ def generate_markdown_report(
 
     # Calculate statistics by category
     category_stats = {}
-    for category, criteria_list in criteria_categories.items():
-        # Only count criteria that exist in the assessment
-        criteria_in_assessment = [crit for crit in criteria_list if crit in assessment]
-        total_in_category = len(criteria_in_assessment)
+
+    # First get essential criteria
+    essential_criteria = [
+        crit for crit in criteria_categories.get("Essential", []) if crit in assessment
+    ]
+
+    # Professional excludes essential
+    professional_criteria = [
+        crit
+        for crit in criteria_categories.get("Professional", [])
+        if crit in assessment and crit not in essential_criteria
+    ]
+
+    # Elite excludes both essential and professional
+    elite_criteria = [
+        crit
+        for crit in criteria_categories.get("Elite", [])
+        if crit in assessment
+        and crit not in essential_criteria
+        and crit not in professional_criteria
+    ]
+
+    # Calculate stats for each filtered category
+    filtered_categories = {
+        "Essential": essential_criteria,
+        "Professional": professional_criteria,
+        "Elite": elite_criteria,
+    }
+
+    for category, criteria_list in filtered_categories.items():
+        total_in_category = len(criteria_list)
         met_in_category = sum(
-            1
-            for crit in criteria_in_assessment
-            if assessment[crit].get("score", 0) == 1
+            1 for crit in criteria_list if assessment[crit].get("score", 0) == 1
         )
         category_stats[category] = {
             "total": total_in_category,
@@ -73,26 +98,7 @@ def generate_markdown_report(
         # Detailed criteria breakdown
         f.write("## Detailed Criteria Breakdown\n\n")
 
-        # Create non-overlapping criteria lists, only including criteria that exist in assessment
-        essential_criteria = [
-            crit
-            for crit in criteria_categories.get("Essential", [])
-            if crit in assessment
-        ]
-        professional_criteria = [
-            crit
-            for crit in criteria_categories.get("Professional", [])
-            if crit not in essential_criteria and crit in assessment
-        ]
-        elite_criteria = [
-            crit
-            for crit in criteria_categories.get("Elite", [])
-            if crit not in essential_criteria
-            and crit not in professional_criteria
-            and crit in assessment
-        ]
-
-        # Use the filtered lists for each category
+        # Use the already filtered lists for each category
         category_filtered_criteria = {
             "Essential": essential_criteria,
             "Professional": professional_criteria,
