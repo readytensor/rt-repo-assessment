@@ -6,8 +6,9 @@ from dotenv import load_dotenv
 from typing import List, Dict, Any, Tuple
 from utils.general import read_yaml_file
 from langchain_core.documents import Document
-from output_parsers import get_code_quality_scoring_model
-from code_scorer.tree import build_tree, post_order_generator
+from generators import get_instructions
+from output_parsers import get_content_based_scoring_model
+from directory_scorer.tree import build_tree, post_order_generator
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain_core.language_models.chat_models import BaseChatModel
 from langchain_community.document_loaders import (
@@ -26,6 +27,8 @@ scoring_file_prompt = read_yaml_file(paths.PROMPTS_FPATH)["score_file"]
 tracked_extensions = extensions["tracked_extensions"]
 text_extensions = extensions["text_extensions"]
 ignored_names = extensions["ignored_names"]
+
+instructions = get_instructions(content_based_only=True)
 
 
 def count_tokens(text: str, model_name: str = "gpt-4") -> int:
@@ -77,12 +80,15 @@ def score_file(
 
     # Define custom prompts for map and reduce steps
     prompts = [
-        scoring_file_prompt.format(file_content=split.page_content) for split in splits
+        scoring_file_prompt.format(
+            file_content=split.page_content, instructions=instructions
+        )
+        for split in splits
     ]
 
     file_extension = os.path.splitext(file_path)[-1].lower()
 
-    CodeQualityFileScoring = get_code_quality_scoring_model(file_extension)
+    CodeQualityFileScoring = get_content_based_scoring_model(file_extension)
 
     results = (
         llm.with_structured_output(CodeQualityFileScoring).invoke(prompts).model_dump()
@@ -229,12 +235,13 @@ def combine_scores(
                     continue
 
                 if file_score["scores"][criterion]["score"] == 1:
+                    file_name = os.path.basename(file_score["file_path"])
                     satisfied_files.append(
                         file_score["scores"][criterion]["explanation"]
                     )
                     combined_scores[criterion] = {
                         "score": 1,
-                        "explanation": f"This criterion is satisfied in the project. {file_score['scores'][criterion]['explanation']}",
+                        "explanation": f"This criterion is satisfied in the project by file '{file_name}'. {file_score['scores'][criterion]['explanation']}",
                     }
                     break  # No need to check further if one file satisfies
         elif logic == "AND":

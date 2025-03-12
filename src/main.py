@@ -9,10 +9,11 @@ from generators import (
     license_criterion_generator,
     structure_criterion_generator,
     documentation_criterion_generator,
-    get_code_criteria_aggregation_logic,
+    get_aggregation_logic,
     get_criteria_by_type,
     get_criteria_names,
     get_category_criteria,
+    get_instructions,
 )
 from utils.project_validators import (
     has_readme,
@@ -24,7 +25,7 @@ from utils.project_validators import (
     has_ignored_files,
     get_script_lengths,
 )
-from code_scorer.code_scorer import score_directory_based_on_files
+from directory_scorer.content_based_scorer import score_directory_based_on_files
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
@@ -118,12 +119,12 @@ if __name__ == "__main__":
                 directory_structure=directory_structure,
                 readme_content=readme_content,
                 criterion=format_criterion(criterion),
+                instructions=get_instructions(criterion_id=criterion_id),
             )
-
             response = llm.invoke(prompt).model_dump()
             return criterion_id, response
 
-        aggregation_logic = get_code_criteria_aggregation_logic()
+        aggregation_logic = get_aggregation_logic()
         dir_score, file_scores = score_directory_based_on_files(
             os.path.join(paths.INPUTS_DIR, os.path.basename(repo_url)),
             llm=get_llm(llm=GPT_4O_MINI),

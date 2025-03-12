@@ -10,6 +10,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
     script_length:
       name: Script Length Control
       description: Individual scripts/modules have reasonable length (< 500 lines)
@@ -20,6 +21,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
     function_length:
       name: Function Length Control
       description: Functions and methods are reasonably sized (< 50 lines)
@@ -30,6 +32,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
     code_duplication:
       name: Code Duplication Check
       description: Limited code duplication (< 10% duplicate code)
@@ -40,6 +43,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
   Configuration:
     centralized_config:
       name: Configuration File Presence
@@ -53,6 +57,7 @@ Code Quality:
       - .json
       - .yaml
       aggregation: OR
+      content_based: true
     no_hardcoded_constants:
       name: Hardcoded Value Detection
       description: Limited hardcoded constants in core code
@@ -63,6 +68,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
     env_variables:
       name: Environment Variable Usage
       description: References to environment variables for sensitive configurations
@@ -70,6 +76,7 @@ Code Quality:
       professional: true
       elite: true
       aggregation: OR
+      content_based: true
   Logging:
     logging_basic:
       name: Logging Import Detection
@@ -81,6 +88,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
     logging_advanced:
       name: Logging Configuration
       description: Presence of logging configuration (levels, formats)
@@ -91,6 +99,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
   Error Handling:
     error_handling_basic:
       name: Exception Usage
@@ -102,6 +111,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
     error_handling_advanced:
       name: Custom Exception Classes
       description: Definition of project-specific exception classes
@@ -112,6 +122,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
   Testing:
     testing_basic:
       name: Test File Presence
@@ -123,6 +134,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
     testing_comprehensive:
       name: Test Coverage
       description: Test coverage metrics available (e.g., .coverage file)
@@ -130,6 +142,7 @@ Code Quality:
       professional: false
       elite: true
       aggregation: OR
+      content_based: true
     testing_framework:
       name: Test Framework Usage
       description: Evidence of test framework (pytest, unittest)
@@ -140,6 +153,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
   Documentation:
     uses_docstrings:
       name: Docstring Presence
@@ -151,6 +165,8 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
+      instructions: If the file does not contain functions and classes, this criterion should be satisfied.
     complete_docstrings:
       name: Docstring Completeness
       description: Docstrings include parameters and return sections
@@ -161,6 +177,8 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
+      instructions: If the file does not contain functions and classes, this criterion should be satisfied.
     type_hints:
       name: Type Hint Usage
       description: Presence of type hints in function signatures
@@ -171,6 +189,9 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
+      instructions: If the file does not contain functions and classes, this criterion should be satisfied.
+
   Style:
     code_style_tools:
       name: Style Checker Configuration
@@ -179,6 +200,7 @@ Code Quality:
       professional: true
       elite: true
       aggregation: OR
+      content_based: true
     code_style_consistency:
       name: Consistent Formatting
       description: Evidence of consistent indentation and formatting
@@ -186,6 +208,7 @@ Code Quality:
       professional: true
       elite: true
       aggregation: OR
+      content_based: true
   Complexity:
     class_size:
       name: Class Size Control
@@ -197,6 +220,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: AND
+      content_based: true
   AI/ML Specific:
     seed_setting:
       name: Random Seed Setting
@@ -208,6 +232,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
     data_quality_checks:
       name: Data Validation Code
       description: Input data validation logic present
@@ -218,6 +243,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
     model_organization:
       name: Model File Organization
       description: ML models in dedicated modules/classes
@@ -228,6 +254,7 @@ Code Quality:
       - .py
       - .ipynb
       aggregation: OR
+      content_based: true
   Notebook Specific:
     notebook_cell_size:
       name: Notebook Code Structure
@@ -238,6 +265,7 @@ Code Quality:
       include_extensions:
       - .ipynb
       aggregation: AND
+      content_based: true
     notebook_documentation:
       name: Notebook Documentation
       description: Notebooks include markdown cells (>10% of cells)
@@ -247,6 +275,7 @@ Code Quality:
       include_extensions:
       - .ipynb
       aggregation: AND
+      content_based: true
     notebook_imports:
       name: Notebook Imports
       description: Evidence of importing custom modules (not just standard libraries)
@@ -256,6 +285,7 @@ Code Quality:
       include_extensions:
       - .ipynb
       aggregation: OR
+      content_based: true
     notebook_output_management:
       name: Clean Notebook Outputs
       description: Either consistently cleared outputs or only relevant outputs retained
@@ -265,6 +295,7 @@ Code Quality:
       include_extensions:
       - .ipynb
       aggregation: AND
+      content_based: true
   Package Structure:
     package_structure:
       name: Package Organization
@@ -273,3 +304,4 @@ Code Quality:
       professional: true
       elite: true
       aggregation: OR
+      content_based: true

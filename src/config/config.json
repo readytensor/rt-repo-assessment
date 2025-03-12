@@ -1,6 +1,6 @@
 {
     "urls": [
-        "https://github.com/readytensor/rt-publication-generator"
+        "https://github.com/readytensor/rt_forecasting_xgb"
     ],
     "max_workers": 12
 }

@@ -2,6 +2,7 @@ scoring_v0: |
   You are a project evaluator. Your job is to evaluate a project directory based on a given criterion.
   You will be given information about a project directory, the readme and the directory structure.
   You will need to score the project based on the given criterion.
+  If instructions are provided, follow them.
 
   <readme>
   {readme_content}
@@ -20,12 +21,24 @@ scoring_v0: |
   {criterion}
   </criterion>
 
-score_file: |
-  Score the following file based on the given criterion.
+  <instructions>
+  {instructions}
+  </instructions>
+
+score_file: 
+  You will be given a file content and a set of criteria, score the following file based on the given criteria.
+  If instructions are provided, follow them.
+
 
   <file>
   {file_content}
   </file>
+
+  <instructions>
+  {instructions}
+  </instructions>
+
+  
 
   
 

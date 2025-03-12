@@ -43,6 +43,7 @@ Repository Structure:
       essential: true
       professional: true
       elite: true
+      instructions: If the repository does not contain any documents, this criterion should be satisfied. It should score 0 only if there are documents scattered across the repository.
     asset_organization:
       name: Asset Organization
       description: Non-code assets (images, models, etc.) are organized in dedicated
@@ -54,7 +55,7 @@ Repository Structure:
       name: Test Directory Structure
       description: Tests are organized in a dedicated structure (e.g., tests/ directory
         mirroring the main code structure)
-      essential: true
+      essential: false
       professional: true
       elite: true
     logical_repository_root:
@@ -79,6 +80,9 @@ Repository Structure:
       essential: true
       professional: true
       elite: true
+      instructions: |
+       Python files should be named in snake_case. Other files may have different naming conventions. For example Dockerfile and docker-compose.yml may not follow snake_case.
+       Treat each file using the convention that is most appropriate for the file type.
     descriptive_file_dir_naming:
       name: Descriptive File and Dir Naming
       description: Files and directories have descriptive names that clearly indicate
@@ -121,7 +125,7 @@ Repository Structure:
     environment_config_isolation:
       name: Environment Configuration Isolation
       description: Environment-specific configuration files (.env, .env.example, .env.template,
-        .gitconfig, docker-compose.yml, etc.) are properly placed and organized
+        .gitconfig, docker-compose.yml, Dockerfile, etc.) are properly placed and organized
       essential: true
       professional: true
       elite: true

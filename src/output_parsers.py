@@ -1,6 +1,6 @@
 from typing import List, Dict
 from pydantic import BaseModel, Field, create_model
-from generators import code_quality_criterion_generator
+from generators import content_based_criterion_generator
 
 
 class CriterionScoring(BaseModel):
@@ -10,10 +10,10 @@ class CriterionScoring(BaseModel):
     explanation: str = Field(description="The explanation for the score")
 
 
-def get_code_quality_scoring_model(input_file_extension: str = None):
+def get_content_based_scoring_model(input_file_extension: str = None):
 
     scores_fields = {}
-    for criterion_id, criterion in code_quality_criterion_generator(
+    for criterion_id, criterion in content_based_criterion_generator(
         input_file_extension
     ):
 

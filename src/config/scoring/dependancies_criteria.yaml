@@ -10,10 +10,14 @@ Environment and Dependencies:
     pinned_dependencies:
       name: Pinned Dependencies
       description: "Dependencies have specific versions to ensure reproducibility\
-        \ (preferably production dependencies pinned).\t"
+        \ (preferably production dependencies pinned)."
       essential: false
       professional: true
       elite: true
+      content_based: true
+      aggregation: OR
+      
+
     dependency_groups:
       name: Dependency Groups
       description: Dependencies organized into logical groups (core, dev, test) via

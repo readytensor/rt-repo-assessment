@@ -3,6 +3,9 @@ tracked_extensions:
   - .ipynb
   - .json
   - .yaml
+  - .txt
+  - .toml
+  
 
 text_extensions:
   - .txt
