@@ -72,9 +72,7 @@ def script_length(metadata: Dict[str, Any], max_script_length: int) -> Dict[str,
         if length > max_script_length:
             score = 0
             long_scripts.append(script)
-            explanation = (
-                f"The following scripts are longer than 500 lines: {long_scripts}"
-            )
+            explanation = f"The following scripts are longer than {max_script_length} lines: {long_scripts}"
 
     return {
         "score": score,
