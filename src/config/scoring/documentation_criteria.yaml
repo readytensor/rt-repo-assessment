@@ -6,6 +6,8 @@ Documentation:
       essential: true
       professional: true
       elite: true
+      based_on: custom_logic
+
     descriptive_title:
       name: Descriptive Project Title
       description: Repository has a clear, descriptive title near the top that accurately

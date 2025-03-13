@@ -7,6 +7,7 @@ Environment and Dependencies:
       essential: true
       professional: true
       elite: true
+
     pinned_dependencies:
       name: Pinned Dependencies
       description: "Dependencies have specific versions to ensure reproducibility\
@@ -14,9 +15,8 @@ Environment and Dependencies:
       essential: false
       professional: true
       elite: true
-      content_based: true
+      based_on: file_content
       aggregation: OR
-      
 
     dependency_groups:
       name: Dependency Groups

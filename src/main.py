@@ -5,15 +5,13 @@ from utils.llm import get_llm, GPT_4O_MINI
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import get_readme_content, get_repo_tree, clone_and_extract_repo
 from generators import (
-    dependancies_criterion_generator,
-    license_criterion_generator,
-    structure_criterion_generator,
-    documentation_criterion_generator,
     get_aggregation_logic,
     get_criteria_by_type,
     get_criteria_names,
     get_category_criteria,
     get_instructions,
+    logic_based_criterion_generator,
+    metadata_based_criterion_generator,
 )
 from utils.project_validators import (
     has_readme,
@@ -25,14 +23,18 @@ from utils.project_validators import (
     has_ignored_files,
     get_script_lengths,
 )
+from config.logic_based_scoring import logic_based_scoring
 from directory_scorer.content_based_scorer import score_directory_based_on_files
 from output_parsers import CriterionScoring
 from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from report import generate_markdown_report
+from generators import get_criteria_args
+
+criteria_args = get_criteria_args()
 
 
-def get_repo_info(repo_url: str) -> Dict[str, Any]:
+def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
     repo_dir_name = os.path.basename(repo_url)
     repo_dir_path = os.path.join(paths.INPUTS_DIR, repo_dir_name)
     retry_attempts = 0
@@ -93,29 +95,34 @@ if __name__ == "__main__":
         output_dir = os.path.join(paths.OUTPUTS_DIR, os.path.basename(repo_url))
         os.makedirs(output_dir, exist_ok=True)
 
-        repo_info = get_repo_info(repo_url=repo_url)
-        directory_structure = repo_info["directory_structure"]
-        readme_content = repo_info["readme_content"]
+        metadata = get_repo_metadata(repo_url=repo_url)
+        directory_structure = metadata["directory_structure"]
+        readme_content = metadata["readme_content"]
 
-        del repo_info["directory_structure"]
-        del repo_info["readme_content"]
+        del metadata["directory_structure"]
+        del metadata["readme_content"]
 
         llm = get_llm(llm=GPT_4O_MINI).with_structured_output(CriterionScoring)
 
         results = {}
 
+        for criterion_id, criterion in logic_based_criterion_generator():
+            results[criterion_id] = logic_based_scoring[criterion_id](
+                metadata, **criteria_args[criterion_id]
+            )
+
         def process_criterion(
             criterion_id,
             criterion,
             prompt_template,
-            repo_info,
+            metadata,
             directory_structure,
             readme_content,
             llm,
         ):
             print(f"Scoring criterion: {criterion_id}")
             prompt = prompt_template.format(
-                project_info=repo_info,
+                project_info=metadata,
                 directory_structure=directory_structure,
                 readme_content=readme_content,
                 criterion=format_criterion(criterion),
@@ -136,25 +143,17 @@ if __name__ == "__main__":
             process_fn = partial(
                 process_criterion,
                 prompt_template=prompt_template,
-                repo_info=repo_info,
+                metadata=metadata,
                 directory_structure=directory_structure,
                 readme_content=readme_content,
                 llm=llm,
             )
 
-            for generator in [
-                documentation_criterion_generator,
-                structure_criterion_generator,
-                dependancies_criterion_generator,
-                license_criterion_generator,
-            ]:
-                for criterion_id, response in executor.map(
-                    lambda x: process_fn(x[0], x[1]), generator()
-                ):
-                    results[criterion_id] = response
-                    write_json_file(
-                        os.path.join(output_dir, "assessment.json"), results
-                    )
+            for criterion_id, response in executor.map(
+                lambda x: process_fn(x[0], x[1]), metadata_based_criterion_generator()
+            ):
+                results[criterion_id] = response
+                write_json_file(os.path.join(output_dir, "assessment.json"), results)
 
         results = {**results, **dir_score}
 
