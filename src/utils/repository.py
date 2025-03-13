@@ -1,7 +1,6 @@
 import os
 import zipfile
 import shutil
-import logging
 from git import Repo
 from git.exc import GitCommandError
 from fnmatch import fnmatch
@@ -11,7 +10,7 @@ def clone_and_extract_repo(
     repo_url: str, output_dir: str, zip_path: str = None
 ) -> bool:
     """
-    Clone a git repository and optionally extract a zip file.
+    Clone a git repository or pull latest changes if it exists, and optionally extract a zip file.
 
     Args:
         repo_url (str): URL of the git repository to clone
@@ -27,49 +26,56 @@ def clone_and_extract_repo(
         OSError: If there are file system related errors
     """
 
-    if os.path.exists(output_dir):
-        logging.info(f"Repository already cloned in {output_dir}")
-        return True
-
     try:
-        # Create target directory if it doesn't exist
-        os.makedirs(output_dir, exist_ok=True)
+        if os.path.exists(output_dir):
+            print(f"Repository already exists in {output_dir}, pulling latest changes")
 
-        # Clone the repository
-        logging.info(f"Cloning repository from {repo_url} to {output_dir}")
+            try:
+                repo = Repo(output_dir)
+                origin = repo.remotes.origin
+                origin.pull()
+                print(f"Successfully pulled latest changes for {repo_url}")
+            except GitCommandError as e:
+                print(f"Failed to pull latest changes: {str(e)}")
+                return False
+        else:
+            # Create target directory if it doesn't exist
+            os.makedirs(output_dir, exist_ok=True)
 
-        # Clone the repository
-        Repo.clone_from(repo_url, output_dir)
+            # Clone the repository
+            print(f"Cloning repository from {repo_url} to {output_dir}")
+            Repo.clone_from(repo_url, output_dir)
 
         # Extract zip file if provided
         if zip_path:
             if not os.path.exists(zip_path):
-                logging.error(f"Zip file not found: {zip_path}")
+                print(f"Zip file not found: {zip_path}")
                 return False
 
-            logging.info(f"Extracting zip file: {zip_path}")
+            print(f"Extracting zip file: {zip_path}")
             with zipfile.ZipFile(zip_path, "r") as zip_ref:
                 zip_ref.extractall(output_dir)
 
         return True
 
     except GitCommandError as e:
-        logging.error(f"Git clone failed: {str(e)}")
-        # Clean up target directory if it exists
-        if os.path.exists(output_dir):
-            shutil.rmtree(output_dir)
+        print(f"Git operation failed: {str(e)}")
+        # Clean up target directory if it was just created
+        if not os.path.exists(output_dir) or not os.listdir(output_dir):
+            if os.path.exists(output_dir):
+                shutil.rmtree(output_dir)
         return False
 
     except zipfile.BadZipFile as e:
-        logging.error(f"Invalid zip file: {str(e)}")
+        print(f"Invalid zip file: {str(e)}")
         return False
 
     except OSError as e:
-        logging.error(f"OS error occurred: {str(e)}")
+        print(f"OS error occurred: {str(e)}")
         return False
 
     except Exception as e:
-        logging.error(f"Unexpected error occurred: {str(e)}")
+        print(f"Unexpected error occurred: {str(e)}")
         return False
 
 
@@ -80,7 +86,7 @@ def get_readme_content(repo_path: str) -> str:
         # Try readme.md if README.md not found
         readme_path = os.path.join(repo_path, "readme.md")
         if not os.path.exists(readme_path):
-            logging.error(f"No README.md or readme.md found in {repo_path}")
+            print(f"No README.md or readme.md found in {repo_path}")
             return None
 
     with open(readme_path, "r") as file:
@@ -138,5 +144,5 @@ def get_repo_tree(repo_path: str, ignore_patterns: list = None) -> str:
         tree_structure = generate_tree(repo_path)
         return f"{os.path.basename(repo_path)}\n{tree_structure}"
     except Exception as e:
-        logging.error(f"Error generating repository tree: {str(e)}")
+        print(f"Error generating repository tree: {str(e)}")
         return None
