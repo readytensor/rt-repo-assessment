@@ -24,11 +24,11 @@ def validate_scoring_result(result: Dict[str, Any]) -> None:
 F = TypeVar("F", bound=Callable[..., Dict[str, Any]])
 
 
-def scoring_function(func: F) -> F:
+def scoring_function(func: F) -> Callable[..., Dict[str, Any]]:
     """Decorator to ensure scoring functions return the expected structure."""
 
     @wraps(func)
-    def wrapper(*args, **kwargs) -> Dict[str, Any]:
+    def wrapper(*args: Any, **kwargs: Any) -> Dict[str, Any]:
         result = func(*args, **kwargs)
         validate_scoring_result(result)
         return result

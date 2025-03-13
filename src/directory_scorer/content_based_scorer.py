@@ -3,7 +3,7 @@ import tiktoken
 import concurrent.futures
 from config import paths
 from dotenv import load_dotenv
-from typing import List, Dict, Any, Tuple
+from typing import List, Dict, Any, Tuple, Union
 from utils.general import read_yaml_file
 from langchain_core.documents import Document
 from generators import get_instructions
@@ -103,21 +103,21 @@ def load_document(file_path) -> List[Document]:
     """
     ext = os.path.splitext(file_path)[-1].lower()
 
+    # Initialize loader variable with correct type
+    loader: Union[PyPDFLoader, Docx2txtLoader, NotebookLoader, TextLoader]
+
     if ext == ".pdf":
         loader = PyPDFLoader(file_path)
-        documents = loader.load()
     elif ext == ".docx":
         loader = Docx2txtLoader(file_path)
-        documents = loader.load()
     elif ext == ".ipynb":
         loader = NotebookLoader(file_path)
-        documents = loader.load()
     elif ext in text_extensions:
         loader = TextLoader(file_path)
-        documents = loader.load()
     else:
         raise ValueError(f"Unsupported file type: {ext}")
 
+    documents = loader.load()
     return documents
 
 

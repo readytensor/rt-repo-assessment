@@ -1,4 +1,4 @@
-from typing import List
+from typing import List, Optional
 from config import paths
 from utils.general import read_yaml_file
 
@@ -16,7 +16,7 @@ def criteria_generator(criteria: dict):
                 yield criterion_id, criteria[category][sub_category][criterion_id]
 
 
-def code_quality_criterion_generator(input_file_extension: str = None):
+def code_quality_criterion_generator(input_file_extension: Optional[str] = None):
     for criterion_id, criterion in criteria_generator(CODE_QUALITY_CRITERIA):
         included_file_extensions = criterion.get("include_extensions", None)
         excluded_file_extensions = criterion.get("exclude_extensions", None)
@@ -37,7 +37,7 @@ def code_quality_criterion_generator(input_file_extension: str = None):
         yield criterion_id, criterion
 
 
-def content_based_criterion_generator(input_file_extension: str = None):
+def content_based_criterion_generator(input_file_extension: Optional[str] = None):
     for criteria in [
         CODE_QUALITY_CRITERIA,
         DEPENDENCIES_CRITERIA,
@@ -186,7 +186,7 @@ def get_category_criteria():
 
 
 def get_instructions(
-    criterion_id: str = None,
+    criterion_id: Optional[str] = None,
     content_based_only: bool = False,
     metadata_based_only: bool = False,
 ):

@@ -1,6 +1,6 @@
 import os
 from pathlib import Path
-from typing import Generator, List
+from typing import Generator, List, Optional
 
 
 class TreeNode:
@@ -9,14 +9,14 @@ class TreeNode:
         name: str,
         full_path: str,
         is_dir: bool,
-        parent: "TreeNode" = None,
+        parent: Optional["TreeNode"] = None,
         global_context: str = "",
     ):
         self.name = name
         self.full_path = full_path
         self.is_dir = is_dir
         self.children: List["TreeNode"] = []
-        self.summary: str = None
+        self.summary: str = ""
         self.parent = parent
         self.global_context = global_context
 
@@ -27,7 +27,7 @@ class TreeNode:
     def __str__(self):
         return f"TreeNode: {self.name}"
 
-    def save_summary(self, output_dir: str = None):
+    def save_summary(self, output_dir: Optional[str] = None):
         if output_dir is None:
             raise ValueError("output_dir is required for saving summary")
 
@@ -60,10 +60,10 @@ def post_order_generator(node: TreeNode) -> Generator[TreeNode, None, None]:
 def build_tree(
     path: str,
     tracked_extensions: List[str],
-    parent: TreeNode = None,
+    parent: Optional[TreeNode] = None,
     ignored_names: List[str] = [],
     global_context: str = "",
-) -> TreeNode:
+) -> Optional[TreeNode]:
     name = os.path.basename(path)
     is_dir = os.path.isdir(path)
     node = TreeNode(name, path, is_dir, parent, global_context)

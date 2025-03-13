@@ -4,10 +4,11 @@ import shutil
 from git import Repo
 from git.exc import GitCommandError
 from fnmatch import fnmatch
+from typing import Optional, List
 
 
 def clone_and_extract_repo(
-    repo_url: str, output_dir: str, zip_path: str = None
+    repo_url: str, output_dir: str, zip_path: Optional[str] = None
 ) -> bool:
     """
     Clone a git repository or pull latest changes if it exists, and optionally extract a zip file.
@@ -79,7 +80,7 @@ def clone_and_extract_repo(
         return False
 
 
-def get_readme_content(repo_path: str) -> str:
+def get_readme_content(repo_path: str) -> Optional[str]:
     # Try README.md first
     readme_path = os.path.join(repo_path, "README.md")
     if not os.path.exists(readme_path):
@@ -93,7 +94,7 @@ def get_readme_content(repo_path: str) -> str:
         return file.read()
 
 
-def get_repo_tree(repo_path: str, ignore_patterns: list = None) -> str:
+def get_repo_tree(repo_path: str, ignore_patterns: Optional[List[str]] = None) -> str:
     """
     Generate a tree-like string representation of the repository structure.
 
@@ -145,4 +146,4 @@ def get_repo_tree(repo_path: str, ignore_patterns: list = None) -> str:
         return f"{os.path.basename(repo_path)}\n{tree_structure}"
     except Exception as e:
         print(f"Error generating repository tree: {str(e)}")
-        return None
+        return ""
