@@ -9,33 +9,32 @@ STRUCTURE_CRITERIA = read_yaml_file(paths.STRUCTURE_CRITERIA_FPATH)
 DOCUMENTATION_CRITERIA = read_yaml_file(paths.DOCUMENTATION_CRITERIA_FPATH)
 
 
+def criteria_generator(criteria: dict):
+    for category in criteria.keys():
+        for sub_category in criteria[category].keys():
+            for criterion_id in criteria[category][sub_category].keys():
+                yield criterion_id, criteria[category][sub_category][criterion_id]
+
+
 def code_quality_criterion_generator(input_file_extension: str = None):
-    for category in CODE_QUALITY_CRITERIA.keys():
-        for sub_category in CODE_QUALITY_CRITERIA[category].keys():
-            for criterion_id in CODE_QUALITY_CRITERIA[category][sub_category].keys():
-                included_file_extensions = CODE_QUALITY_CRITERIA[category][
-                    sub_category
-                ][criterion_id].get("include_extensions", None)
-                excluded_file_extensions = CODE_QUALITY_CRITERIA[category][
-                    sub_category
-                ][criterion_id].get("exclude_extensions", None)
+    for criterion_id, criterion in criteria_generator(CODE_QUALITY_CRITERIA):
+        included_file_extensions = criterion.get("include_extensions", None)
+        excluded_file_extensions = criterion.get("exclude_extensions", None)
 
-                if (
-                    input_file_extension
-                    and included_file_extensions
-                    and input_file_extension not in included_file_extensions
-                ):
-                    continue
-                if (
-                    input_file_extension
-                    and excluded_file_extensions
-                    and input_file_extension in excluded_file_extensions
-                ):
-                    continue
+        if (
+            input_file_extension
+            and included_file_extensions
+            and input_file_extension not in included_file_extensions
+        ):
+            continue
+        if (
+            input_file_extension
+            and excluded_file_extensions
+            and input_file_extension in excluded_file_extensions
+        ):
+            continue
 
-                yield criterion_id, CODE_QUALITY_CRITERIA[category][sub_category][
-                    criterion_id
-                ]
+        yield criterion_id, criterion
 
 
 def content_based_criterion_generator(input_file_extension: str = None):
@@ -46,71 +45,75 @@ def content_based_criterion_generator(input_file_extension: str = None):
         STRUCTURE_CRITERIA,
         DOCUMENTATION_CRITERIA,
     ]:
-        for category in criteria.keys():
-            for sub_category in criteria[category].keys():
-                for criterion_id in criteria[category][sub_category].keys():
-                    if not criteria[category][sub_category][criterion_id].get(
-                        "content_based", False
-                    ):
-                        continue
+        for criterion_id, criterion in criteria_generator(criteria):
+            if criterion.get("based_on") != "file_content":
+                continue
 
-                    included_file_extensions = criteria[category][sub_category][
-                        criterion_id
-                    ].get("include_extensions", None)
-                    excluded_file_extensions = criteria[category][sub_category][
-                        criterion_id
-                    ].get("exclude_extensions", None)
+            included_file_extensions = criterion.get("include_extensions", None)
+            excluded_file_extensions = criterion.get("exclude_extensions", None)
 
-                    if (
-                        input_file_extension
-                        and included_file_extensions
-                        and input_file_extension not in included_file_extensions
-                    ):
-                        continue
-                    if (
-                        input_file_extension
-                        and excluded_file_extensions
-                        and input_file_extension in excluded_file_extensions
-                    ):
-                        continue
+            if (
+                input_file_extension
+                and included_file_extensions
+                and input_file_extension not in included_file_extensions
+            ):
+                continue
+            if (
+                input_file_extension
+                and excluded_file_extensions
+                and input_file_extension in excluded_file_extensions
+            ):
+                continue
 
-                    yield criterion_id, criteria[category][sub_category][criterion_id]
+            yield criterion_id, criterion
+
+
+def metadata_based_criterion_generator():
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        STRUCTURE_CRITERIA,
+        DOCUMENTATION_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+    ]:
+        for criterion_id, criterion in criteria_generator(criteria):
+            if criterion.get("based_on", "metadata") != "metadata":
+                continue
+            yield criterion_id, criterion
+
+
+def logic_based_criterion_generator():
+    for criteria in [
+        CODE_QUALITY_CRITERIA,
+        STRUCTURE_CRITERIA,
+        DOCUMENTATION_CRITERIA,
+        DEPENDENCIES_CRITERIA,
+        LICENSE_CRITERIA,
+    ]:
+        for criterion_id, criterion in criteria_generator(criteria):
+            if criterion.get("based_on") != "custom_logic":
+                continue
+            yield criterion_id, criterion
 
 
 def documentation_criterion_generator():
-    for category in DOCUMENTATION_CRITERIA.keys():
-        for sub_category in DOCUMENTATION_CRITERIA[category].keys():
-            for criterion_id in DOCUMENTATION_CRITERIA[category][sub_category].keys():
-                yield criterion_id, DOCUMENTATION_CRITERIA[category][sub_category][
-                    criterion_id
-                ]
+    for criterion_id, criterion in criteria_generator(DOCUMENTATION_CRITERIA):
+        yield criterion_id, criterion
 
 
 def dependancies_criterion_generator():
-    for category in DEPENDENCIES_CRITERIA.keys():
-        for sub_category in DEPENDENCIES_CRITERIA[category].keys():
-            for criterion_id in DEPENDENCIES_CRITERIA[category][sub_category].keys():
-                yield criterion_id, DEPENDENCIES_CRITERIA[category][sub_category][
-                    criterion_id
-                ]
+    for criterion_id, criterion in criteria_generator(DEPENDENCIES_CRITERIA):
+        yield criterion_id, criterion
 
 
 def license_criterion_generator():
-    for category in LICENSE_CRITERIA.keys():
-        for sub_category in LICENSE_CRITERIA[category].keys():
-            for criterion_id in LICENSE_CRITERIA[category][sub_category].keys():
-                yield criterion_id, LICENSE_CRITERIA[category][sub_category][
-                    criterion_id
-                ]
+    for criterion_id, criterion in criteria_generator(LICENSE_CRITERIA):
+        yield criterion_id, criterion
 
 
 def structure_criterion_generator():
-    for category in STRUCTURE_CRITERIA.keys():
-        for sub_category in STRUCTURE_CRITERIA[category].keys():
-            for criterion_id in STRUCTURE_CRITERIA[category][sub_category].keys():
-                yield criterion_id, STRUCTURE_CRITERIA[category][sub_category][
-                    criterion_id
-                ]
+    for criterion_id, criterion in criteria_generator(STRUCTURE_CRITERIA):
+        yield criterion_id, criterion
 
 
 def get_aggregation_logic():
@@ -122,18 +125,11 @@ def get_aggregation_logic():
         STRUCTURE_CRITERIA,
         DOCUMENTATION_CRITERIA,
     ]:
-        for category in criteria.keys():
-            for sub_category in criteria[category].keys():
-                for criterion_id in criteria[category][sub_category].keys():
-                    if (
-                        "aggregation"
-                        not in criteria[category][sub_category][criterion_id]
-                    ):
-                        continue
-                    logic = criteria[category][sub_category][criterion_id][
-                        "aggregation"
-                    ]
-                    aggregation_logic[criterion_id] = logic
+        for criterion_id, criterion in criteria_generator(criteria):
+            if "aggregation" not in criterion:
+                continue
+            logic = criterion["aggregation"]
+            aggregation_logic[criterion_id] = logic
     return aggregation_logic
 
 
@@ -149,21 +145,13 @@ def get_criteria_by_type():
         LICENSE_CRITERIA,
         STRUCTURE_CRITERIA,
     ]:
-        for category in criteria.keys():
-            for sub_category in criteria[category].keys():
-                for criterion_id in criteria[category][sub_category].keys():
-                    if criteria[category][sub_category][criterion_id].get(
-                        "essential", False
-                    ):
-                        result["Essential"].append(criterion_id)
-                    if criteria[category][sub_category][criterion_id].get(
-                        "professional", False
-                    ):
-                        result["Professional"].append(criterion_id)
-                    if criteria[category][sub_category][criterion_id].get(
-                        "elite", False
-                    ):
-                        result["Elite"].append(criterion_id)
+        for criterion_id, criterion in criteria_generator(criteria):
+            if criterion.get("essential", False):
+                result["Essential"].append(criterion_id)
+            if criterion.get("professional", False):
+                result["Professional"].append(criterion_id)
+            if criterion.get("elite", False):
+                result["Elite"].append(criterion_id)
     return result
 
 
@@ -176,12 +164,8 @@ def get_criteria_names():
         STRUCTURE_CRITERIA,
         DOCUMENTATION_CRITERIA,
     ]:
-        for category in criteria.keys():
-            for sub_category in criteria[category].keys():
-                for criterion_id in criteria[category][sub_category].keys():
-                    result[criterion_id] = criteria[category][sub_category][
-                        criterion_id
-                    ]["name"]
+        for criterion_id, criterion in criteria_generator(criteria):
+            result[criterion_id] = criterion["name"]
     return result
 
 
@@ -218,37 +202,38 @@ def get_instructions(
         STRUCTURE_CRITERIA,
         DOCUMENTATION_CRITERIA,
     ]:
-        for category in criteria.keys():
-            for sub_category in criteria[category].keys():
-                for id in criteria[category][sub_category].keys():
-                    criterion = criteria[category][sub_category][id]
+        for criterion_id_iter, criterion in criteria_generator(criteria):
+            if criterion_id and criterion_id_iter != criterion_id:
+                continue
 
-                    if criterion_id and id != criterion_id:
-                        continue
+            if criterion_id and criterion_id_iter == criterion_id:
+                return {
+                    "criterion name": criterion["name"],
+                    "instructions": criterion.get("instructions", None),
+                }
 
-                    if criterion_id and id == criterion_id:
-                        return {
-                            "criterion name": criterion["name"],
-                            "instructions": criterion.get("instructions", None),
-                        }
+            # Filter based on content_based or logic_based parameters
+            is_content_based = criterion.get("content_based", False)
 
-                    # Filter based on content_based or logic_based parameters
+            # Skip if content_based_only is True but criterion is not content-based
+            if content_based_only and not is_content_based:
+                continue
 
-                    # Filter based on content_based or logic_based parameters
-                    is_content_based = criterion.get("content_based", False)
+            # Skip if logic_based_only is True but criterion is content-based
+            if metadata_based_only and is_content_based:
+                continue
 
-                    # Skip if content_based_only is True but criterion is not content-based
-                    if content_based_only and not is_content_based:
-                        continue
+            instructions = criterion.get("instructions", None)
+            if instructions:
+                result[criterion_id_iter] = {
+                    "criterion name": criterion["name"],
+                    "instructions": instructions,
+                }
+    return result
 
-                    # Skip if logic_based_only is True but criterion is content-based
-                    if metadata_based_only and is_content_based:
-                        continue
 
-                    instructions = criterion.get("instructions", None)
-                    if instructions:
-                        result[id] = {
-                            "criterion name": criterion["name"],
-                            "instructions": instructions,
-                        }
+def get_criteria_args():
+    result = {}
+    for criterion_id, criterion in logic_based_criterion_generator():
+        result[criterion_id] = criterion.get("args", {})
     return result
