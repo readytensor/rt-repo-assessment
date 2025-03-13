@@ -16,6 +16,7 @@ text_extensions:
   - .yaml
   - .py
   - .ipynb
+  - .toml
 
 ignored_names:
   - .venv
