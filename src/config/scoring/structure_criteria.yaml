@@ -65,6 +65,7 @@ Repository Structure:
       essential: true
       professional: true
       elite: true
+      instructions: Docker files can exist in the root
     appropriate_gitignore:
       name: Appropriate .gitignore
       description: Repository includes a .gitignore file appropriate for the project

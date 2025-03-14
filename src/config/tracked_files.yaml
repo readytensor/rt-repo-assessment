@@ -5,6 +5,8 @@ tracked_extensions:
   - .yaml
   - .txt
   - .toml
+  - pdf
+  - .md
   
 
 text_extensions:
@@ -19,6 +21,7 @@ text_extensions:
   - .toml
 
 ignored_names:
+  - .env
   - .venv
   - venv
   - model_inputs_outputs
