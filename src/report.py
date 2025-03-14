@@ -76,7 +76,7 @@ def generate_markdown_report(
 
     # Generate Markdown report
     with open(output_file, "w") as f:
-        f.write("# Code Quality Assessment Report\n\n")
+        f.write("# Quality Assessment Report\n\n")
 
         # Overall summary
         f.write("## Overall Summary\n\n")
