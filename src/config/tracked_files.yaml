@@ -7,6 +7,7 @@ tracked_extensions:
   - .toml
   -  pdf
   - .md
+  - .yml
   
 
 text_extensions:
@@ -23,7 +24,7 @@ text_extensions:
   - .gif
   - .png
   - .zip
-
+  - .yml
 
 ignored_names:
   - .env
