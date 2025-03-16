@@ -5,7 +5,7 @@ tracked_extensions:
   - .yaml
   - .txt
   - .toml
-  - pdf
+  -  pdf
   - .md
   
 
@@ -19,11 +19,17 @@ text_extensions:
   - .py
   - .ipynb
   - .toml
+  - .cfg
+  - .gif
+  - .png
+  - .zip
+
 
 ignored_names:
   - .env
   - .venv
   - venv
+  - env
   - model_inputs_outputs
   - .git
   - .ipynb_checkpoints
