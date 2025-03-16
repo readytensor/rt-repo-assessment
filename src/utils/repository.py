@@ -80,6 +80,7 @@ def clone_and_extract_repo(
         return False
 
 
+
 def get_readme_content(repo_path: str) -> Optional[str]:
     # Try README.md first
     readme_path = os.path.join(repo_path, "README.md")
@@ -90,8 +91,19 @@ def get_readme_content(repo_path: str) -> Optional[str]:
             print(f"No README.md or readme.md found in {repo_path}")
             return None
 
-    with open(readme_path, "r") as file:
-        return file.read()
+    ## Try multiple encodings
+    encodings_to_try = ["utf-8", "ISO-8859-1", "cp1252"]
+    
+    for encoding in encodings_to_try:
+        try:
+            with open(readme_path, "r", encoding=encoding) as file:
+                return file.read()
+        except UnicodeDecodeError:
+            print(f"Error decoding the file with {encoding} encoding. Trying next encoding.")
+    
+    # If all encodings fail, return None
+    print(f"Failed to decode the file with available encodings: {encodings_to_try}")
+    return None
 
 
 def get_repo_tree(repo_path: str, ignore_patterns: Optional[List[str]] = None) -> str:

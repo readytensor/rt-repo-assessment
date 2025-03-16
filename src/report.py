@@ -75,7 +75,7 @@ def generate_markdown_report(
         os.makedirs(output_dir)
 
     # Generate Markdown report
-    with open(output_file, "w") as f:
+    with open(output_file, "w", encoding="utf-8") as f:
         f.write("# Quality Assessment Report\n\n")
 
         # Overall summary
