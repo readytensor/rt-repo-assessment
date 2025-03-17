@@ -125,9 +125,9 @@ Repository Structure:
   Environment & Dependencies:
     environment_config_isolation:
       name: Environment Configuration Isolation
-      description: Environment-specific configuration files (.env, .env.example, .env.template,
+      description: Environment-specific configuration files (.env.example, .env.template,
         .gitconfig, docker-compose.yml, Dockerfile, etc.) are properly placed and organized
-      essential: true
+      essential: false
       professional: true
       elite: true
     dependency_management_structure:
@@ -136,6 +136,6 @@ Repository Structure:
         are properly placed at repository root or in designated dependency directories.
         Multiple dependency files (if present) follow logical organization (e.g.,
         base_requirements.txt, dev_requirements.txt).
-      essential: true
+      essential: false
       professional: true
       elite: true
