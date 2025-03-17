@@ -8,6 +8,7 @@ tracked_extensions:
   -  pdf
   - .md
   - .yml
+  - .lock
   
 
 text_extensions:
@@ -25,6 +26,7 @@ text_extensions:
   - .png
   - .zip
   - .yml
+  - .lock
 
 ignored_names:
   - .env

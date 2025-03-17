@@ -26,6 +26,9 @@ def clone_and_extract_repo(
         zipfile.BadZipFile: If the zip file is corrupted
         OSError: If there are file system related errors
     """
+    # Convert HTTPS URL to SSH URL if necessary
+    if repo_url.startswith("https://github.com/"):
+        repo_url = repo_url.replace("https://github.com/", "git@github.com:")
 
     try:
         if os.path.exists(output_dir):
