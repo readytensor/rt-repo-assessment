@@ -8,6 +8,14 @@ LICENSE_CRITERIA = read_yaml_file(paths.LICENSE_CRITERIA_FPATH)
 STRUCTURE_CRITERIA = read_yaml_file(paths.STRUCTURE_CRITERIA_FPATH)
 DOCUMENTATION_CRITERIA = read_yaml_file(paths.DOCUMENTATION_CRITERIA_FPATH)
 
+ALL_CRITERIA = [
+    CODE_QUALITY_CRITERIA,
+    DEPENDENCIES_CRITERIA,
+    LICENSE_CRITERIA,
+    STRUCTURE_CRITERIA,
+    DOCUMENTATION_CRITERIA,
+]
+
 
 def criteria_generator(criteria: dict):
     for category in criteria.keys():
@@ -38,13 +46,7 @@ def code_quality_criterion_generator(input_file_extension: Optional[str] = None)
 
 
 def content_based_criterion_generator(input_file_extension: Optional[str] = None):
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id, criterion in criteria_generator(criteria):
             if criterion.get("based_on") != "file_content":
                 continue
@@ -69,13 +71,7 @@ def content_based_criterion_generator(input_file_extension: Optional[str] = None
 
 
 def metadata_based_criterion_generator():
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id, criterion in criteria_generator(criteria):
             if criterion.get("based_on", "metadata") != "metadata":
                 continue
@@ -83,13 +79,7 @@ def metadata_based_criterion_generator():
 
 
 def logic_based_criterion_generator():
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id, criterion in criteria_generator(criteria):
             if criterion.get("based_on") != "custom_logic":
                 continue
@@ -118,13 +108,7 @@ def structure_criterion_generator():
 
 def get_aggregation_logic():
     aggregation_logic = {}
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id, criterion in criteria_generator(criteria):
             if "aggregation" not in criterion:
                 continue
@@ -139,12 +123,7 @@ def get_criteria_by_type():
         "Professional": [],
         "Elite": [],
     }
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-        STRUCTURE_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id, criterion in criteria_generator(criteria):
             if criterion.get("essential", False):
                 result["Essential"].append(criterion_id)
@@ -157,13 +136,7 @@ def get_criteria_by_type():
 
 def get_criteria_names():
     result = {}
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id, criterion in criteria_generator(criteria):
             result[criterion_id] = criterion["name"]
     return result
@@ -171,17 +144,12 @@ def get_criteria_names():
 
 def get_category_criteria():
     result = {}
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for category in criteria.keys():
             result[category] = []
             for sub_category in criteria[category].keys():
                 result[category].extend(list(criteria[category][sub_category].keys()))
+
     return result
 
 
@@ -195,13 +163,7 @@ def get_instructions(
             "content_based_only and metadata_based_only cannot both be True"
         )
     result = {}
-    for criteria in [
-        CODE_QUALITY_CRITERIA,
-        DEPENDENCIES_CRITERIA,
-        LICENSE_CRITERIA,
-        STRUCTURE_CRITERIA,
-        DOCUMENTATION_CRITERIA,
-    ]:
+    for criteria in ALL_CRITERIA:
         for criterion_id_iter, criterion in criteria_generator(criteria):
             if criterion_id and criterion_id_iter != criterion_id:
                 continue

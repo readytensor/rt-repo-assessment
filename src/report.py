@@ -5,7 +5,7 @@ from typing import Dict, List, Any
 def generate_markdown_report(
     assessment: Dict[str, Any],
     output_file: str,
-    criteria_categories: Dict[str, List[str]],
+    criteria_types: Dict[str, List[str]],
     criteria_names: Dict[str, str],
     category_criteria: Dict[str, List[str]],
 ):
@@ -15,7 +15,7 @@ def generate_markdown_report(
     Args:
         assessment: Dictionary containing assessment results with criteria IDs as keys
         output_file: Path where to save the Markdown report
-        criteria_categories: Dictionary mapping category names to lists of criteria IDs
+        criteria_types: Dictionary mapping category names to lists of criteria IDs
         criteria_names: Dictionary mapping criteria IDs to their display names
         category_criteria: Dictionary mapping category names to lists of criteria IDs
     """
@@ -28,20 +28,20 @@ def generate_markdown_report(
 
     # First get essential criteria
     essential_criteria = [
-        crit for crit in criteria_categories.get("Essential", []) if crit in assessment
+        crit for crit in criteria_types.get("Essential", []) if crit in assessment
     ]
 
     # Professional excludes essential
     professional_criteria = [
         crit
-        for crit in criteria_categories.get("Professional", [])
+        for crit in criteria_types.get("Professional", [])
         if crit in assessment and crit not in essential_criteria
     ]
 
     # Elite excludes both essential and professional
     elite_criteria = [
         crit
-        for crit in criteria_categories.get("Elite", [])
+        for crit in criteria_types.get("Elite", [])
         if crit in assessment
         and crit not in essential_criteria
         and crit not in professional_criteria

@@ -60,9 +60,7 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
     directory_structure = get_repo_tree(repo_dir_path)
     script_lengths = get_script_lengths(repo_dir_path)
 
-    readme_content = (
-        get_readme_content(repo_dir_path) if has_readme(repo_dir_path) else None
-    )
+    readme_content = get_readme_content(repo_dir_path) if readme_exists else None
 
     return {
         "readme_exists": readme_exists,
@@ -88,7 +86,7 @@ def format_criterion(criterion: dict) -> str:
 if __name__ == "__main__":
     prompts = read_yaml_file(paths.PROMPTS_FPATH)
     config = read_json_file(paths.CONFIG_FPATH)
-    criteria_categories = get_criteria_by_type()
+    criteria_types = get_criteria_by_type()
 
     prompt_template = prompts["scoring_v0"]
 
@@ -167,7 +165,7 @@ if __name__ == "__main__":
         generate_markdown_report(
             assessment=results,
             output_file=os.path.join(output_dir, "report.md"),
-            criteria_categories=criteria_categories,
+            criteria_types=criteria_types,
             criteria_names=get_criteria_names(),
             category_criteria=get_category_criteria(),
         )

@@ -34,4 +34,4 @@ ignored_names:
   - .git
   - .ipynb_checkpoints
   - __pycache__
-  - __init__.py
+  - .github

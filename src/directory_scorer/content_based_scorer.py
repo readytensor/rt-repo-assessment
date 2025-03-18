@@ -76,7 +76,11 @@ def score_file(
     tokens = count_tokens(combined_text, model_name="gpt-4o")
     if tokens > max_token_count:
         print(f"Skipping document as it is too long {file_path} ({tokens} tokens)")
-        return ""
+        return {}
+
+    if tokens == 0:
+        print(f"Skipping document as it is empty {file_path}")
+        return {}
 
     # Define custom prompts for map and reduce steps
     prompts = [
@@ -193,7 +197,8 @@ def score_directory_based_on_files(
         for future in concurrent.futures.as_completed(future_to_file):
             try:
                 score = future.result()
-                all_scores.append(score)
+                if score != {}:
+                    all_scores.append(score)
             except Exception as exc:
                 node = future_to_file[future]
                 print(f"Error scoring {node.name}: {exc}")

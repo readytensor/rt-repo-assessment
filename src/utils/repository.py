@@ -1,8 +1,6 @@
 import os
 import zipfile
 import shutil
-from git import Repo
-from git.exc import GitCommandError
 from fnmatch import fnmatch
 from typing import Optional, List
 
@@ -38,6 +36,9 @@ def download_and_extract_repo(
             repo_url = repo_url[:-4]
         if repo_url.endswith("/"):
             repo_url = repo_url[:-1]
+
+        # Extract repo name from URL
+        repo_name = os.path.basename(repo_url)
         download_url = f"{repo_url}/archive/refs/heads/main.zip"
 
         # Download and extract the repository
@@ -47,17 +48,37 @@ def download_and_extract_repo(
         response = requests.get(download_url, stream=True)
         response.raise_for_status()
 
-        temp_zip = os.path.join(output_dir, "repo.zip")
+        # Create a temporary directory for initial extraction
+        temp_dir = os.path.join(output_dir, "_temp_extract")
+        os.makedirs(temp_dir, exist_ok=True)
+
+        temp_zip = os.path.join(temp_dir, "repo.zip")
         with open(temp_zip, "wb") as f:
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
 
-        # Extract the downloaded zip
+        # Extract the downloaded zip to the temporary directory
         with zipfile.ZipFile(temp_zip, "r") as zip_ref:
-            zip_ref.extractall(output_dir)
+            zip_ref.extractall(temp_dir)
 
-        # Remove the temporary zip file
-        os.remove(temp_zip)
+        # Find the nested directory (it's usually named 'repo-name-main')
+        nested_dirs = [
+            d for d in os.listdir(temp_dir) if os.path.isdir(os.path.join(temp_dir, d))
+        ]
+        if nested_dirs:
+            nested_dir = os.path.join(temp_dir, nested_dirs[0])
+
+            # Move all contents from the nested directory to the output directory
+            for item in os.listdir(nested_dir):
+                source = os.path.join(nested_dir, item)
+                destination = os.path.join(output_dir, item)
+                if os.path.isdir(source):
+                    shutil.copytree(source, destination)
+                else:
+                    shutil.copy2(source, destination)
+
+        # Clean up temporary files
+        shutil.rmtree(temp_dir)
 
         # Extract additional zip file if provided
         if zip_path:

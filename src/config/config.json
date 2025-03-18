@@ -1,7 +1,6 @@
 {
     "urls": [
-        "https://github.com/XingangPan/DragGAN"
-
+        "https://github.com/facebookresearch/detectron2"
     ],
     "max_workers": 12
 }

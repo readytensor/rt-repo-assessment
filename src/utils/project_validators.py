@@ -15,6 +15,7 @@ def has_readme(directory_path: str) -> bool:
         bool: True if README.md exists, False otherwise
     """
     readme_path = os.path.join(directory_path, "README.md")
+    print(readme_path)
     return os.path.exists(readme_path)
 
 
@@ -162,6 +163,8 @@ def get_script_lengths(directory_path: str) -> Dict[str, int]:
     for root, _, files in os.walk(directory_path):
         for file in files:
             if any(file.endswith(ext) for ext in SCRIPT_EXTENSIONS):
-                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
+                with open(
+                    os.path.join(root, file), "r", encoding="utf-8", errors="ignore"
+                ) as f:
                     script_lengths[file] = len(f.readlines())
     return script_lengths
