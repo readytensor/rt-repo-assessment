@@ -1,5 +1,8 @@
 import os
 from typing import Dict, List, Any
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def generate_markdown_report(
@@ -131,4 +134,4 @@ def generate_markdown_report(
 
             f.write("\n")
 
-    print(f"Report generated successfully at {output_file}")
+    logger.info(f"Report generated successfully at {output_file}")

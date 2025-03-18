@@ -5,6 +5,9 @@ import shutil
 import requests
 from fnmatch import fnmatch
 from typing import Optional, List
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def download_and_extract_repo(
@@ -27,7 +30,7 @@ def download_and_extract_repo(
 
     try:
         if os.path.exists(output_dir):
-            print(f"Repository already exists in {output_dir}, removing it")
+            logger.info(f"Repository already exists in {output_dir}, removing it")
             shutil.rmtree(output_dir)
 
         # Create target directory
@@ -44,7 +47,7 @@ def download_and_extract_repo(
         download_url = f"{repo_url}/archive/refs/heads/main.zip"
 
         # Download and extract the repository
-        print(f"Downloading repository from {download_url}")
+        logger.info(f"Downloading repository from {download_url}")
         import requests
 
         response = requests.get(download_url, stream=True)
@@ -85,35 +88,35 @@ def download_and_extract_repo(
         # Extract additional zip file if provided
         if zip_path:
             if not os.path.exists(zip_path):
-                print(f"Zip file not found: {zip_path}")
+                logger.error(f"Zip file not found: {zip_path}")
                 return False
 
-            print(f"Extracting additional zip file: {zip_path}")
+            logger.info(f"Extracting additional zip file: {zip_path}")
             with zipfile.ZipFile(zip_path, "r") as zip_ref:
                 zip_ref.extractall(output_dir)
 
         return True
 
     except requests.exceptions.RequestException as e:
-        print(f"Failed to download repository: {str(e)}")
+        logger.error(f"Failed to download repository: {str(e)}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
 
     except zipfile.BadZipFile as e:
-        print(f"Invalid zip file: {str(e)}")
+        logger.error(f"Invalid zip file: {str(e)}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
 
     except OSError as e:
-        print(f"OS error occurred: {str(e)}")
+        logger.error(f"OS error occurred: {str(e)}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
 
     except Exception as e:
-        print(f"Unexpected error occurred: {str(e)}")
+        logger.error(f"Unexpected error occurred: {str(e)}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
@@ -161,7 +164,7 @@ def is_repo_public(repo_url: str) -> bool:
         return response.status_code == 200
 
     except Exception as e:
-        print(f"Error checking repository visibility: {str(e)}")
+        logger.error(f"Error checking repository visibility: {str(e)}")
         return False
 
 
@@ -182,7 +185,7 @@ def clone_repo(repo_url: str, output_dir: str, branch: str = "main") -> bool:
     """
     try:
         if os.path.exists(output_dir):
-            print(f"Repository already exists in {output_dir}, removing it")
+            logger.info(f"Repository already exists in {output_dir}, removing it")
             shutil.rmtree(output_dir)
 
         # Create parent directory if it doesn't exist
@@ -191,7 +194,7 @@ def clone_repo(repo_url: str, output_dir: str, branch: str = "main") -> bool:
             os.makedirs(parent_dir, exist_ok=True)
 
         # Clone the repository
-        print(f"Cloning repository from {repo_url} to {output_dir}")
+        logger.info(f"Cloning repository from {repo_url} to {output_dir}")
 
         # Use git clone command with specified branch
         result = subprocess.run(
@@ -201,23 +204,23 @@ def clone_repo(repo_url: str, output_dir: str, branch: str = "main") -> bool:
             text=True,
         )
 
-        print(f"Successfully cloned repository: {result.stdout}")
+        logger.info(f"Successfully cloned repository: {result.stdout}")
         return True
 
     except subprocess.CalledProcessError as e:
-        print(f"Git clone failed: {e.stderr}")
+        logger.error(f"Git clone failed: {e.stderr}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
 
     except OSError as e:
-        print(f"OS error occurred: {str(e)}")
+        logger.error(f"OS error occurred: {str(e)}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
 
     except Exception as e:
-        print(f"Unexpected error occurred: {str(e)}")
+        logger.error(f"Unexpected error occurred: {str(e)}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
@@ -230,7 +233,7 @@ def get_readme_content(repo_path: str) -> Optional[str]:
         # Try readme.md if README.md not found
         readme_path = os.path.join(repo_path, "readme.md")
         if not os.path.exists(readme_path):
-            print(f"No README.md or readme.md found in {repo_path}")
+            logger.warning(f"No README.md or readme.md found in {repo_path}")
             return None
 
     ## Try multiple encodings
@@ -241,12 +244,14 @@ def get_readme_content(repo_path: str) -> Optional[str]:
             with open(readme_path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
-            print(
+            logger.warning(
                 f"Error decoding the file with {encoding} encoding. Trying next encoding."
             )
 
     # If all encodings fail, return None
-    print(f"Failed to decode the file with available encodings: {encodings_to_try}")
+    logger.error(
+        f"Failed to decode the file with available encodings: {encodings_to_try}"
+    )
     return None
 
 
@@ -301,5 +306,5 @@ def get_repo_tree(repo_path: str, ignore_patterns: Optional[List[str]] = None) -
         tree_structure = generate_tree(repo_path)
         return f"{os.path.basename(repo_path)}\n{tree_structure}"
     except Exception as e:
-        print(f"Error generating repository tree: {str(e)}")
+        logger.error(f"Error generating repository tree: {str(e)}")
         return ""

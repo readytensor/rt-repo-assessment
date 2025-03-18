@@ -1,5 +1,6 @@
 import os
 from typing import Dict, Any
+from logger import get_logger
 from config import paths
 from utils.llm import get_llm, GPT_4O_MINI
 from utils.general import read_yaml_file, write_json_file, read_json_file
@@ -38,6 +39,7 @@ from report import generate_markdown_report
 from generators import get_criteria_args
 
 criteria_args = get_criteria_args()
+logger = get_logger(__name__)
 
 
 def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
@@ -52,7 +54,7 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
                 clone_repo(repo_url=repo_url, output_dir=repo_dir_path)
             break
         except Exception as e:
-            print(f"Error cloning and extracting repo {repo_url}: {e}")
+            logger.error(f"Error cloning and extracting repo {repo_url}: {e}")
             retry_attempts += 1
 
     readme_exists = has_readme(repo_dir_path)
@@ -127,7 +129,7 @@ if __name__ == "__main__":
             readme_content,
             llm,
         ):
-            print(f"Scoring criterion: {criterion_id}")
+            logger.info(f"Scoring criterion: {criterion_id}")
             prompt = prompt_template.format(
                 project_info=metadata,
                 directory_structure=directory_structure,

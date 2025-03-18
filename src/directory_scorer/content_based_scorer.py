@@ -1,5 +1,6 @@
 import os
 import tiktoken
+from logger import get_logger
 import concurrent.futures
 from config import paths
 from dotenv import load_dotenv
@@ -19,6 +20,8 @@ from langchain_community.document_loaders import (
 )
 
 load_dotenv()
+
+logger = get_logger(__name__)
 
 dir_path = os.path.dirname((os.path.abspath(__file__)))
 extensions = read_yaml_file(paths.TRACKED_FILES_FPATH)
@@ -86,11 +89,13 @@ def score_file(
     combined_text = "".join([split.page_content for split in splits])
     tokens = count_tokens(combined_text, model_name="gpt-4o")
     if tokens > max_token_count:
-        print(f"Skipping document as it is too long {file_path} ({tokens} tokens)")
+        logger.warning(
+            f"Skipping document as it is too long {file_path} ({tokens} tokens)"
+        )
         return {}
 
     if tokens == 0:
-        print(f"Skipping document as it is empty {file_path}")
+        logger.warning(f"Skipping document as it is empty {file_path}")
         return {}
 
     prompts = [
@@ -185,7 +190,7 @@ def score_directory_based_on_files(
     )
 
     if root.is_dir and not root.children:
-        print(f"Skipping directory as it is empty {directory_path}")
+        logger.warning(f"Skipping directory as it is empty {directory_path}")
         raise ValueError("Cannot summarize an empty directory.")
 
     # Collect all non-directory nodes to process
@@ -198,7 +203,7 @@ def score_directory_based_on_files(
 
     # Define a worker function to score a single file
     def score_file_worker(node):
-        print(f"Scoring {node.name}")
+        logger.info(f"Scoring {node.name}")
         return score_file(
             node.full_path,
             llm=llm,
@@ -220,7 +225,7 @@ def score_directory_based_on_files(
                     all_scores.append(score)
             except Exception as exc:
                 node = future_to_file[future]
-                print(f"Error scoring {node.name}: {exc}")
+                logger.error(f"Error scoring {node.name}: {exc}")
 
     directory_scores = combine_scores(all_scores, aggregation_logic)
     return directory_scores, all_scores

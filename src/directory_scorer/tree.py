@@ -1,6 +1,9 @@
 import os
 from pathlib import Path
 from typing import Generator, List, Optional
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 
 class TreeNode:
@@ -167,7 +170,7 @@ def print_tree(node: TreeNode) -> None:
         node (TreeNode): The root node to print from.
     """
     prefix = "📁 " if node.is_dir else "📄 "
-    print("  " + f"{prefix}{node.name} ({node.full_path})")
+    logger.info("  " + f"{prefix}{node.name} ({node.full_path})")
 
     for child in node.children:
         print_tree(child)

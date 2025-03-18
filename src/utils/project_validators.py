@@ -2,6 +2,9 @@ import os
 from typing import Dict, List
 from fnmatch import fnmatch
 from utils import IGNORED_PATTERNS, SCRIPT_EXTENSIONS
+from logger import get_logger
+
+logger = get_logger(__name__)
 
 
 def has_readme(directory_path: str) -> bool:
@@ -15,7 +18,7 @@ def has_readme(directory_path: str) -> bool:
         bool: True if README.md exists, False otherwise
     """
     readme_path = os.path.join(directory_path, "README.md")
-    print(readme_path)
+    logger.debug(readme_path)
     return os.path.exists(readme_path)
 
 
