@@ -15,6 +15,19 @@ llms = {
 
 
 def get_llm(llm: str) -> BaseChatModel:
+    """
+    Retrieves a language model instance based on the provided identifier.
+
+    Args:
+        llm (str): The identifier for the language model to retrieve.
+            Should be one of the keys in the `llms` dictionary.
+
+    Returns:
+        BaseChatModel: A copy of the requested language model instance.
+
+    Raises:
+        ValueError: If the provided identifier is not found in the `llms` dictionary.
+    """
     if llm not in llms:
         raise ValueError(f"LLM not found for ID: {llm}")
     return llms[llm].model_copy()

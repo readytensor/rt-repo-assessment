@@ -2,52 +2,51 @@ License and Legal:
   License:
     license_presence:
       name: License Presence
-      description: "Repository includes a recognized license file (LICENSE, LICENSE.md,\
-        \ LICENSE.txt) in the root directory, explicitly stating the terms of use,\
-        \ modification, and distribution. If no separate file exists, the README or\
-        \ documentation must contain clear licensing terms.\t"
+      description: Repository includes a recognized license file (LICENSE, LICENSE.md,
+        LICENSE.txt) in the root directory, explicitly stating the terms of use, modification,
+        and distribution. If no separate file exists, the README or documentation
+        must contain clear licensing terms.
       essential: true
       professional: true
       elite: true
     license_appropriateness:
       name: License Appropriateness
-      description: "The repository’s chosen license is suitable for its purpose, dependencies,\
-        \ and intended use, ensuring clarity on permissions and restrictions. Repositories\
-        \ with unclear or conflicting licenses do not meet this criterion.\t"
+      description: The repository’s chosen license is suitable for its purpose, dependencies,
+        and intended use, ensuring clarity on permissions and restrictions. Repositories
+        with unclear or conflicting licenses do not meet this criterion.
       essential: true
       professional: true
       elite: true
   Rights and Permissions:
-    copyright_notice:
+    copyright_notice_mentioned:
       name: Copyright Notice
-      description: "The repository includes explicit copyright statements in source\
-        \ files and documentation, indicating ownership and rights. This helps prevent\
-        \ ambiguity in legal rights and attribution.\t"
+      description: The repository includes explicit copyright statements in source
+        files and documentation, indicating ownership and rights. This helps prevent
+        ambiguity in legal rights and attribution.
       essential: false
       professional: false
       elite: true
-    data_usage_rights:
+    data_usage_rights_mentioned:
       name: Data Usage Rights
-      description: "For repositories handling datasets, clear documentation must state\
-        \ data ownership, licensing, usage rights, compliance requirements, and any\
-        \ restrictions.\t"
+      description: For repositories handling datasets, clear documentation must state
+        data ownership, licensing, usage rights, compliance requirements, and any
+        restrictions.
       essential: false
       professional: true
       elite: true
-    model_usage_rights:
+    model_usage_rights_mentioned:
       name: Model Usage Rights
-      description: "If the repository includes or references ML models, documentation\
-        \ must specify model ownership, licensing, usage terms, and redistribution\
-        \ policies.\t"
+      description: If the repository includes or references ML models, documentation
+        must specify model ownership, licensing, usage terms, and redistribution policies.
       essential: false
       professional: true
       elite: true
   Community:
-    code_of_conduct:
+    code_of_conduct_mentioned:
       name: Code of Conduct
-      description: "The repository includes a Code of Conduct, outlining contributor\
-        \ behavior expectations, enforcement mechanisms, and reporting guidelines\
-        \ to foster an inclusive and respectful environment.\t"
+      description: The repository includes a Code of Conduct, outlining contributor
+        behavior expectations, enforcement mechanisms, and reporting guidelines to
+        foster an inclusive and respectful environment.
       essential: false
       professional: false
       elite: true

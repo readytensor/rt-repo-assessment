@@ -32,6 +32,17 @@ instructions = get_instructions(content_based_only=True)
 
 
 def count_tokens(text: str, model_name: str = "gpt-4") -> int:
+    """
+    Count the number of tokens in a text string for a specific model.
+
+    Args:
+        text (str): The text to count tokens for.
+        model_name (str): The name of the model to use for token counting.
+            Defaults to "gpt-4".
+
+    Returns:
+        int: The number of tokens in the text.
+    """
     encoding = tiktoken.encoding_for_model(model_name)
     tokens = encoding.encode(text)
     return len(tokens)
@@ -103,6 +114,15 @@ def score_file(
 def load_document(file_path) -> List[Document]:
     """
     Load the document based on file type.
+
+    Args:
+        file_path (str): The path to the file to load.
+
+    Returns:
+        List[Document]: A list of Document objects containing the file content.
+
+    Raises:
+        ValueError: If the file type is not supported.
     """
     ext = os.path.splitext(file_path)[-1].lower()
 
@@ -211,6 +231,18 @@ def combine_scores(
 ) -> Dict[str, Any]:
     """
     Combine individual file scores into an overall score based on aggregation logic.
+
+    Args:
+        file_scores (List[Dict[str, Any]]): List of individual file scores.
+        aggregation_logic (Dict[str, str]): Dictionary mapping criteria to aggregation logic.
+            Supported values are "OR" and "AND".
+
+    Returns:
+        Dict[str, Any]: Combined scores across all files.
+
+    Notes:
+        - "OR" logic: If any file satisfies the criterion, the combined score is 1.
+        - "AND" logic: All files must satisfy the criterion for the combined score to be 1.
     """
     # Collect all unique criteria from all files
     all_criteria = set()

@@ -35,3 +35,9 @@ ignored_names:
   - .ipynb_checkpoints
   - __pycache__
   - .github
+  - .DS_Store
+
+
+script_extensions:
+  - .py
+  - .ipynb

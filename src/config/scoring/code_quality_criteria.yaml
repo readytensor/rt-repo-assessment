@@ -11,7 +11,6 @@ Code Quality:
       - .ipynb
       aggregation: OR
       based_on: file_content
-      
     script_length:
       name: Script Length Control
       description: Individual scripts/modules have reasonable length (< 500 lines)
@@ -21,7 +20,6 @@ Code Quality:
       based_on: custom_logic
       args:
         max_script_length: 500
-
     function_length:
       name: Function Length Control
       description: Functions and methods are reasonably sized (< 100 lines)
@@ -113,12 +111,12 @@ Code Quality:
       include_extensions:
       - .py
       - .ipynb
-      aggregation: AND
+      aggregation: OR
       based_on: file_content
-      instructions: |
-       If the script is guaranteed to not raise an exception, this criterion should be scored 1. 
-       For example, a file that only contains print statements should be scored 1.
-       A file that only cntains constant variables should be scored 1.
+      # instructions: |
+      #  If the script is guaranteed to not raise an exception, this criterion should be scored 1. 
+      #  For example, a file that only contains print statements should be scored 1.
+      #  A file that only cntains constant variables should be scored 1.
 
     error_handling_advanced:
       name: Custom Exception Classes
@@ -199,7 +197,6 @@ Code Quality:
       aggregation: AND
       based_on: file_content
       instructions: If the file does not contain functions and classes, this criterion should be satisfied.
-
   Style:
     code_style_tools:
       name: Style Checker Configuration
@@ -220,7 +217,7 @@ Code Quality:
   Complexity:
     class_size:
       name: Class Size Control
-      description: Classes have reasonable number of methods (< 20). If no classes are present, this criterion should be satisfied.
+      description: Classes have reasonable number of methods (< 20)
       essential: false
       professional: true
       elite: true
@@ -229,6 +226,7 @@ Code Quality:
       - .ipynb
       aggregation: AND
       based_on: file_content
+      instructions: If the file does not contain classes, this criterion should be satisfied.
   AI/ML Specific:
     seed_setting:
       name: Random Seed Setting
@@ -241,6 +239,10 @@ Code Quality:
       - .ipynb
       aggregation: OR
       based_on: file_content
+      instructions: |
+       If the script is deterministic, this criterion should be satisfied.
+       Only check for random seed setting if the script is not deterministic.
+       For example, code that contains random sampling, train/test split, etc. should be checked for random seed setting.
     data_quality_checks:
       name: Data Validation Code
       description: Input data validation logic present

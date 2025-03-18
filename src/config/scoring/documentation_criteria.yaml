@@ -7,10 +7,9 @@ Documentation:
       professional: true
       elite: true
       based_on: custom_logic
-
     descriptive_title:
       name: Descriptive Project Title
-      description: Repository has a clear, descriptive title near the top that accurately
+      description: README has a clear, descriptive title near the top that accurately
         represents the project's purpose and content. The title should be concise
         yet informative, avoiding uncommon acronyms or jargon without explanation.
       essential: true
@@ -20,13 +19,6 @@ Documentation:
       name: Concise Project Summary
       description: Clear statement of project or concise project summary near top
         of README
-      essential: true
-      professional: true
-      elite: true
-    target_audience_identified:
-      name: Target Audience Defined
-      description: Clear identification of the target audience who can benefit from
-        this project
       essential: true
       professional: true
       elite: true
@@ -40,24 +32,24 @@ Documentation:
       elite: true
     readme_structure:
       name: Well-Structured README
-      description: 'Well-structured readme with clear headings and logical organization
+      description: Well-structured readme with clear headings and logical organization
         of information into distinct sections such as overview, installation, usage,
-        etc. '
+        etc.
       essential: true
       professional: true
       elite: true
   Repository Structure Documentation:
     project_structure_explained_basic:
       name: Basic Repo Structure Overview
-      description: 'Explanation of at least the main directories and usage scripts
-        (such as /src, /data, /models, etc.). '
+      description: Explanation of at least the main directories and usage scripts
+        (such as /src, /data, /models, etc.).
       essential: true
       professional: true
       elite: true
     project_structure_explained_all:
       name: Comprehensive Repo Structure Documentation
       description: Comprehensive explanation of all directories and files
-      essential: true
+      essential: false
       professional: true
       elite: true
   Setup Documentation:
@@ -67,7 +59,7 @@ Documentation:
         and system compatibility information before installation. This does not include
         software dependencies (e.g., Python libraries), which are covered under Environment
         & Dependency Management.
-      essential: true
+      essential: false
       professional: true
       elite: true
     installation_instructions_basic:
@@ -79,7 +71,7 @@ Documentation:
     installation_step_by_step:
       name: Detailed Installation Instructions
       description: Detailed installation instructions for repo and prerequisites
-      essential: true
+      essential: false
       professional: true
       elite: true
     environment_dependency_information:
@@ -89,7 +81,7 @@ Documentation:
         reproducibility (e.g., Docker, Conda, virtual environments). Does not cover
         hardware requirements or system compatibility, which are listed under Prerequisites
         Clearly Stated.
-      essential: true
+      essential: false
       professional: true
       elite: true
   Usage Documentation:
@@ -103,14 +95,14 @@ Documentation:
       name: Step-by-Step Usage Guide
       description: Detailed step-by-step usage instructions (data prep, execution,
         outputs)
-      essential: true
+      essential: false
       professional: true
       elite: true
     usage_examples:
       name: Practical Code Examples
       description: Concrete, executable code examples that demonstrate key functionality
         in a clear, concise manner.
-      essential: true
+      essential: false
       professional: true
       elite: true
     testing_documentation:
@@ -123,19 +115,13 @@ Documentation:
     data_requirements_explained:
       name: Data Requirements Specified
       description: Documentation of expected data formats and setup
-      essential: true
-      professional: true
-      elite: true
-    methodology_description:
-      name: Methodology Documentation
-      description: Basic methodology information or reference to external documentation
-      essential: true
+      essential: false
       professional: true
       elite: true
     key_parameters_explained:
       name: Parameter Documentation
       description: Documentation of key modeling parameters and considerations
-      essential: true
+      essential: false
       professional: true
       elite: true
       based_on: file_content
@@ -143,7 +129,13 @@ Documentation:
     key_config_explained:
       name: Configuration Options Explained
       description: Information on key configuration options
-      essential: true
+      essential: false
+      professional: true
+      elite: true
+    methodology_description_provided:
+      name: Methodology Documentation
+      description: Basic methodology information or reference to external documentation
+      essential: false
       professional: true
       elite: true
   License Identification:
@@ -154,22 +146,22 @@ Documentation:
       professional: true
       elite: true
   Community Documentation:
-    contributing_guidelines:
+    contributing_guidelines_provided:
       name: Contribution Guidelines
       description: Guidelines for project contribution
-      essential: true
+      essential: false
       professional: true
       elite: true
-    changelog:
+    changelog_documented:
       name: Change History
       description: Repository includes changelog information either in README or in
         a dedicated file (like CHANGELOG.md), documenting significant version changes.
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
-    contact_info:
+    contact_info_provided:
       name: Maintainer Contact Information
       description: Clear contact information for maintainers
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true

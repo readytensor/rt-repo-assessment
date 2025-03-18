@@ -7,17 +7,15 @@ Environment and Dependencies:
       essential: true
       professional: true
       elite: true
-
     pinned_dependencies:
       name: Pinned Dependencies
-      description: "Dependencies have specific versions to ensure reproducibility\
-        \ (preferably production dependencies pinned)."
+      description: Dependencies have specific versions to ensure reproducibility (preferably
+        production dependencies pinned).
       essential: false
       professional: true
       elite: true
       based_on: file_content
       aggregation: OR
-
     dependency_groups:
       name: Dependency Groups
       description: Dependencies organized into logical groups (core, dev, test) via

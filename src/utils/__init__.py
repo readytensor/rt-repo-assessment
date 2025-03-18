@@ -1,14 +1,11 @@
-IGNORED_PATTERNS = [
-    ".git",
-    ".DS_Store",
-    "__pycache__",
-    ".pytest_cache",
-    "*.pyc",
-    ".venv",
-    "venv",
-]
+from config import paths
+from utils.general import read_yaml_file
 
-SCRIPT_EXTENSIONS = [".py", ".ipynb", ".java", ".js", ".ts", ".cpp"]
+TRACKED_FILES = read_yaml_file(paths.TRACKED_FILES_FPATH)
+
+IGNORED_PATTERNS = TRACKED_FILES["ignored_names"]
+
+SCRIPT_EXTENSIONS = TRACKED_FILES["script_extensions"]
 
 
-__all__ = ["IGNORED_PATTERNS"]
+__all__ = ["IGNORED_PATTERNS", "SCRIPT_EXTENSIONS"]

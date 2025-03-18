@@ -7,32 +7,11 @@ Repository Structure:
       essential: true
       professional: true
       elite: true
-    specific_code_separation:
-      name: Specific Code Separation
-      description: Modeling/application code is organized in dedicated module structure
-        (e.g., src/ directory with submodules)
-      essential: false
-      professional: true
-      elite: true
-    specific_data_separation:
-      name: Specific Data Separation
-      description: Data is organized in dedicated directory (e.g., /data, /inputs,
-        etc.)
-      essential: false
-      professional: true
-      elite: true
-    specific_config_separation:
-      name: Specific Config Separation
-      description: Configuration is properly separated from code in dedicated files/directories
-      essential: false
-      professional: true
-      elite: true
     organized_notebooks:
       name: Organized Notebooks
       description: If Jupyter notebooks are present, they are organized in a logical
         manner (e.g., in dedicated directories) with names that reflect their purpose
-        and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb").
-        If no notebooks are present, this criterion should be satisfied.
+        and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb")
       essential: false
       professional: true
       elite: true
@@ -43,21 +22,17 @@ Repository Structure:
       essential: false
       professional: true
       elite: true
-      instructions: If the repository does not contain any documents, this criterion should be satisfied. It should score 0 only if there are documents scattered across the repository.
+      instructions: If the repository does not contain any documents, this criterion
+        should be satisfied. It should score 0 only if there are documents scattered
+        across the repository.
     asset_organization:
       name: Asset Organization
       description: Non-code assets (images, models, etc.) are organized in dedicated
-        directories with clear purpose. If no assets are present, this criterion should be satisfied. If assets are scattered across the repository, this criterion should not be satisfied.
+        directories with clear purpose
       essential: false
       professional: true
       elite: true
-    test_directory_structure:
-      name: Test Directory Structure
-      description: Tests are organized in a dedicated structure (e.g., tests/ directory
-        mirroring the main code structure)
-      essential: false
-      professional: true
-      elite: true
+      instructions: If the repository contains non-code directories such as `data` or `images`, this criterion should be satisfied.
     logical_repository_root:
       name: Logical Repository Root
       description: Repository root is clean with only essential files (README, license,
@@ -73,6 +48,33 @@ Repository Structure:
       essential: true
       professional: true
       elite: true
+    code_separation:
+      name: Specific Code Separation
+      description: Modeling/application code is organized in dedicated module structure
+        (e.g., src/ directory with submodules)
+      essential: false
+      professional: true
+      elite: true
+    data_separation:
+      name: Specific Data Separation
+      description: Data is organized in dedicated directory (e.g., /data, /inputs,
+        etc.)
+      essential: false
+      professional: true
+      elite: true
+    config_separation:
+      name: Specific Config Separation
+      description: Configuration is properly separated from code in dedicated files/directories
+      essential: false
+      professional: true
+      elite: true
+    test_directory_organized:
+      name: Test Directory Structure
+      description: Tests are organized in a dedicated structure (e.g., tests/ directory
+        mirroring the main code structure)
+      essential: false
+      professional: true
+      elite: true
   Naming Practices:
     consistent_file_dir_naming_convention:
       name: Consistent File and Dir Naming Convention
@@ -81,13 +83,18 @@ Repository Structure:
       essential: true
       professional: true
       elite: true
-      instructions: |
-       Python files should be named in snake_case. Other files may have different naming conventions. For example Dockerfile and docker-compose.yml may not follow snake_case.
-       Treat each file using the convention that is most appropriate for the file type.
+      instructions: 'Python files should be named in snake_case. Other files may have
+        different naming conventions. For example Dockerfile and docker-compose.yml
+        may not follow snake_case.
+
+        Treat each file using the convention that is most appropriate for the file
+        type.
+
+        '
     descriptive_file_dir_naming:
       name: Descriptive File and Dir Naming
       description: Files and directories have descriptive names that clearly indicate
-        their purpose or content (no gener"c names like notebook1.ipynb)
+        their purpose or content (no generic names like notebook1.ipynb)
       essential: true
       professional: true
       elite: true
@@ -125,12 +132,12 @@ Repository Structure:
   Environment & Dependencies:
     environment_config_isolation:
       name: Environment Configuration Isolation
-      description: Environment-specific configuration files (.env.example, .env.template,
-        .gitconfig, docker-compose.yml, Dockerfile, etc.) are properly placed and organized
+      description: Environment-specific configuration files (.env, .env.example, .env.template,
+        .gitconfig, docker-compose.yml, etc.) are properly placed and organized
       essential: false
       professional: true
       elite: true
-    dependency_management_structure:
+    organized_dependency_management:
       name: Dependency Management Structure
       description: Package dependency files (requirements.txt, pyproject.toml, etc.)
         are properly placed at repository root or in designated dependency directories.
