@@ -5,8 +5,10 @@ tracked_extensions:
   - .yaml
   - .txt
   - .toml
-  - pdf
+  -  pdf
   - .md
+  - .yml
+  - .lock
   
 
 text_extensions:
@@ -19,11 +21,15 @@ text_extensions:
   - .py
   - .ipynb
   - .toml
+  - .cfg
+  - .yml
+  - .lock
 
 ignored_names:
   - .env
   - .venv
   - venv
+  - env
   - model_inputs_outputs
   - .git
   - .ipynb_checkpoints

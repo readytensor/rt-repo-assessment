@@ -162,6 +162,6 @@ def get_script_lengths(directory_path: str) -> Dict[str, int]:
     for root, _, files in os.walk(directory_path):
         for file in files:
             if any(file.endswith(ext) for ext in SCRIPT_EXTENSIONS):
-                with open(os.path.join(root, file), "r") as f:
+                with open(os.path.join(root, file), "r", encoding="utf-8", errors="ignore") as f:
                     script_lengths[file] = len(f.readlines())
     return script_lengths

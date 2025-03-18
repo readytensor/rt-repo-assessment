@@ -1,6 +1,7 @@
 {
     "urls": [
-        "https://github.com/readytensor/rt_forecasting_xgb"
+        "https://github.com/XingangPan/DragGAN"
+
     ],
     "max_workers": 12
 }

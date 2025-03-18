@@ -11,20 +11,20 @@ Repository Structure:
       name: Specific Code Separation
       description: Modeling/application code is organized in dedicated module structure
         (e.g., src/ directory with submodules)
-      essential: true
+      essential: false
       professional: true
       elite: true
     specific_data_separation:
       name: Specific Data Separation
       description: Data is organized in dedicated directory (e.g., /data, /inputs,
         etc.)
-      essential: true
+      essential: false
       professional: true
       elite: true
     specific_config_separation:
       name: Specific Config Separation
       description: Configuration is properly separated from code in dedicated files/directories
-      essential: true
+      essential: false
       professional: true
       elite: true
     organized_notebooks:
@@ -33,14 +33,14 @@ Repository Structure:
         manner (e.g., in dedicated directories) with names that reflect their purpose
         and sequence (e.g., "01_data_exploration.ipynb", "02_feature_engineering.ipynb").
         If no notebooks are present, this criterion should be satisfied.
-      essential: true
+      essential: false
       professional: true
       elite: true
     docs_refs_separation:
       name: Documentation and References Separation
       description: Documents and external materials such as pdfs, papers, etc. are
         properly organized in dedicated locations (e.g., docs/ directory)
-      essential: true
+      essential: false
       professional: true
       elite: true
       instructions: If the repository does not contain any documents, this criterion should be satisfied. It should score 0 only if there are documents scattered across the repository.
@@ -48,7 +48,7 @@ Repository Structure:
       name: Asset Organization
       description: Non-code assets (images, models, etc.) are organized in dedicated
         directories with clear purpose. If no assets are present, this criterion should be satisfied. If assets are scattered across the repository, this criterion should not be satisfied.
-      essential: true
+      essential: false
       professional: true
       elite: true
     test_directory_structure:
@@ -62,7 +62,7 @@ Repository Structure:
       name: Logical Repository Root
       description: Repository root is clean with only essential files (README, license,
         .gitignore, setup files) with detailed content in subdirectories
-      essential: true
+      essential: false
       professional: true
       elite: true
       instructions: Docker files can exist in the root
@@ -87,7 +87,7 @@ Repository Structure:
     descriptive_file_dir_naming:
       name: Descriptive File and Dir Naming
       description: Files and directories have descriptive names that clearly indicate
-        their purpose or content (no generic names like notebook1.ipynb)
+        their purpose or content (no gener"c names like notebook1.ipynb)
       essential: true
       professional: true
       elite: true
@@ -105,14 +105,14 @@ Repository Structure:
       description: Directories contain a reasonable number of files and dirs (should
         be under 15 directories and files in single directories); does not apply to
         data directories
-      essential: true
+      essential: false
       professional: true
       elite: true
     reasonable_directory_depth:
       name: Reasonable Directory Depth
       description: Repository structure avoids excessive nesting of directories (typically
         no more than 5 levels deep)
-      essential: true
+      essential: false
       professional: true
       elite: true
     clear_entry_points:
@@ -125,9 +125,9 @@ Repository Structure:
   Environment & Dependencies:
     environment_config_isolation:
       name: Environment Configuration Isolation
-      description: Environment-specific configuration files (.env, .env.example, .env.template,
+      description: Environment-specific configuration files (.env.example, .env.template,
         .gitconfig, docker-compose.yml, Dockerfile, etc.) are properly placed and organized
-      essential: true
+      essential: false
       professional: true
       elite: true
     dependency_management_structure:
@@ -136,6 +136,6 @@ Repository Structure:
         are properly placed at repository root or in designated dependency directories.
         Multiple dependency files (if present) follow logical organization (e.g.,
         base_requirements.txt, dev_requirements.txt).
-      essential: true
+      essential: false
       professional: true
       elite: true

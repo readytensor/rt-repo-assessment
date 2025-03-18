@@ -3,7 +3,7 @@ name = "rt-repo-assessment"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.12,<4.0"  # Explicit range, if not already set
 dependencies = [
     "gitpython>=3.1.44",
     "langchain>=0.3.20",
