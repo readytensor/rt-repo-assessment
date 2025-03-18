@@ -7,6 +7,8 @@ from utils.repository import (
     get_readme_content,
     get_repo_tree,
     download_and_extract_repo,
+    clone_repo,
+    is_repo_public,
 )
 from generators import (
     get_aggregation_logic,
@@ -44,7 +46,10 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
     retry_attempts = 0
     while retry_attempts < 3:
         try:
-            download_and_extract_repo(repo_url=repo_url, output_dir=repo_dir_path)
+            if is_repo_public(repo_url):
+                download_and_extract_repo(repo_url=repo_url, output_dir=repo_dir_path)
+            else:
+                clone_repo(repo_url=repo_url, output_dir=repo_dir_path)
             break
         except Exception as e:
             print(f"Error cloning and extracting repo {repo_url}: {e}")

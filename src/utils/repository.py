@@ -1,6 +1,8 @@
 import os
+import subprocess
 import zipfile
 import shutil
+import requests
 from fnmatch import fnmatch
 from typing import Optional, List
 
@@ -100,6 +102,110 @@ def download_and_extract_repo(
 
     except zipfile.BadZipFile as e:
         print(f"Invalid zip file: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
+        return False
+
+    except OSError as e:
+        print(f"OS error occurred: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
+        return False
+
+    except Exception as e:
+        print(f"Unexpected error occurred: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
+        return False
+
+
+def is_repo_public(repo_url: str) -> bool:
+    """
+    Check if a GitHub repository is public.
+
+    Args:
+        repo_url (str): URL of the GitHub repository to check
+
+    Returns:
+        bool: True if the repository is public, False otherwise
+    """
+    try:
+        # Clean up the URL to get the API endpoint
+        if repo_url.endswith(".git"):
+            repo_url = repo_url[:-4]
+        if repo_url.endswith("/"):
+            repo_url = repo_url[:-1]
+
+        # Extract owner and repo name from URL
+        # Example: https://github.com/owner/repo
+        parts = repo_url.split("/")
+        if "github.com" in parts:
+            github_index = parts.index("github.com")
+            if len(parts) >= github_index + 3:
+                owner = parts[github_index + 1]
+                repo = parts[github_index + 2]
+
+                # Use GitHub API to check repo visibility
+                api_url = f"https://api.github.com/repos/{owner}/{repo}"
+                response = requests.get(api_url)
+
+                if response.status_code == 200:
+                    repo_data = response.json()
+                    return not repo_data.get("private", True)
+                else:
+                    # If we get a 404, the repo doesn't exist or is private
+                    return False
+
+        # For non-GitHub URLs or malformed URLs, try to access the repo directly
+        response = requests.head(repo_url)
+        return response.status_code == 200
+
+    except Exception as e:
+        print(f"Error checking repository visibility: {str(e)}")
+        return False
+
+
+def clone_repo(repo_url: str, output_dir: str, branch: str = "main") -> bool:
+    """
+    Clone a git repository using git command.
+
+    Args:
+        repo_url (str): URL of the git repository to clone
+        output_dir (str): Directory where to clone the repository
+        branch (str, optional): Branch to clone, defaults to 'main'
+
+    Returns:
+        bool: True if successful, False otherwise
+
+    Raises:
+        OSError: If there are file system related errors
+    """
+    try:
+        if os.path.exists(output_dir):
+            print(f"Repository already exists in {output_dir}, removing it")
+            shutil.rmtree(output_dir)
+
+        # Create parent directory if it doesn't exist
+        parent_dir = os.path.dirname(output_dir)
+        if parent_dir and not os.path.exists(parent_dir):
+            os.makedirs(parent_dir, exist_ok=True)
+
+        # Clone the repository
+        print(f"Cloning repository from {repo_url} to {output_dir}")
+
+        # Use git clone command with specified branch
+        result = subprocess.run(
+            ["git", "clone", "--branch", branch, repo_url, output_dir],
+            check=True,
+            capture_output=True,
+            text=True,
+        )
+
+        print(f"Successfully cloned repository: {result.stdout}")
+        return True
+
+    except subprocess.CalledProcessError as e:
+        print(f"Git clone failed: {e.stderr}")
         if os.path.exists(output_dir):
             shutil.rmtree(output_dir)
         return False
