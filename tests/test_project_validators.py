@@ -2,6 +2,7 @@ import os
 import pytest
 import tempfile
 import shutil
+from typing import Generator
 from src.utils.project_validators import (
     has_readme,
     has_requirements_txt,
@@ -12,7 +13,7 @@ from src.utils.project_validators import (
 
 
 @pytest.fixture
-def temp_repo_dir():
+def temp_repo_dir() -> Generator[str, None, None]:
     """Create a temporary directory for testing repository validators"""
     temp_dir = tempfile.mkdtemp()
     yield temp_dir
@@ -20,7 +21,7 @@ def temp_repo_dir():
     shutil.rmtree(temp_dir)
 
 
-def test_has_readme(temp_repo_dir):
+def test_has_readme(temp_repo_dir: str) -> None:
     """Test detection of README.md file"""
     # Initially should return False
     assert not has_readme(temp_repo_dir)
@@ -33,7 +34,7 @@ def test_has_readme(temp_repo_dir):
     assert has_readme(temp_repo_dir)
 
 
-def test_has_requirements_txt(temp_repo_dir):
+def test_has_requirements_txt(temp_repo_dir: str) -> None:
     """Test detection of requirements.txt file"""
     # Initially should return False
     assert not has_requirements_txt(temp_repo_dir)
@@ -46,7 +47,7 @@ def test_has_requirements_txt(temp_repo_dir):
     assert has_requirements_txt(temp_repo_dir)
 
 
-def test_has_setup_py(temp_repo_dir):
+def test_has_setup_py(temp_repo_dir: str) -> None:
     """Test detection of setup.py file"""
     # Initially should return False
     assert not has_setup_py(temp_repo_dir)
@@ -59,7 +60,7 @@ def test_has_setup_py(temp_repo_dir):
     assert has_setup_py(temp_repo_dir)
 
 
-def test_has_license_file(temp_repo_dir):
+def test_has_license_file(temp_repo_dir: str) -> None:
     """Test detection of LICENSE file"""
     # Initially should return False
     assert not has_license_file(temp_repo_dir)
@@ -72,7 +73,7 @@ def test_has_license_file(temp_repo_dir):
     assert has_license_file(temp_repo_dir)
 
 
-def test_has_gitignore_file(temp_repo_dir):
+def test_has_gitignore_file(temp_repo_dir: str) -> None:
     """Test detection of .gitignore file"""
     # Initially should return False
     assert not has_gitignore_file(temp_repo_dir)
@@ -85,7 +86,7 @@ def test_has_gitignore_file(temp_repo_dir):
     assert has_gitignore_file(temp_repo_dir)
 
 
-def test_multiple_validators(temp_repo_dir):
+def test_multiple_validators(temp_repo_dir: str) -> None:
     """Test multiple validators together"""
     # Create all files
     with open(os.path.join(temp_repo_dir, "README.md"), "w") as f:

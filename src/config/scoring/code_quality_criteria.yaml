@@ -136,11 +136,7 @@ Code Quality:
       essential: false
       professional: true
       elite: true
-      include_extensions:
-      - .py
-      - .ipynb
-      aggregation: OR
-      based_on: file_content
+
     testing_comprehensive:
       name: Test Coverage
       description: Test coverage metrics available (e.g., .coverage file)
@@ -160,6 +156,8 @@ Code Quality:
       - .ipynb
       aggregation: OR
       based_on: file_content
+      instructions: |
+       Focus on the content of testing files. Files that do not contain any testing code should be scored 0.
   Documentation:
     uses_docstrings:
       name: Docstring Presence
