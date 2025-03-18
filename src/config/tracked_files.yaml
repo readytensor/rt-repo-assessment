@@ -22,9 +22,6 @@ text_extensions:
   - .ipynb
   - .toml
   - .cfg
-  - .gif
-  - .png
-  - .zip
   - .yml
   - .lock
 
