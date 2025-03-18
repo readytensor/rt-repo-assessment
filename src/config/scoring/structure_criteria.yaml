@@ -15,6 +15,7 @@ Repository Structure:
       essential: false
       professional: true
       elite: true
+      instructions: If the repository does not contain any notebooks, this criterion should be scored 1.
     docs_refs_separation:
       name: Documentation and References Separation
       description: Documents and external materials such as pdfs, papers, etc. are

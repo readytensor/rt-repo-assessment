@@ -184,7 +184,7 @@ Code Quality:
       - .ipynb
       aggregation: AND
       based_on: file_content
-      instructions: If the file does not contain functions and classes, this criterion should be satisfied.
+      instructions: If the file does not contain functions and classes, this criterion should be satisfied. Do not look for return values in classes docstrings.
     type_hints:
       name: Type Hint Usage
       description: Presence of type hints in function signatures
