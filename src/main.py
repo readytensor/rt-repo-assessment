@@ -3,7 +3,11 @@ from typing import Dict, Any
 from config import paths
 from utils.llm import get_llm, GPT_4O_MINI
 from utils.general import read_yaml_file, write_json_file, read_json_file
-from utils.repository import get_readme_content, get_repo_tree, clone_and_extract_repo
+from utils.repository import (
+    get_readme_content,
+    get_repo_tree,
+    download_and_extract_repo,
+)
 from generators import (
     get_aggregation_logic,
     get_criteria_by_type,
@@ -40,7 +44,7 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
     retry_attempts = 0
     while retry_attempts < 3:
         try:
-            clone_and_extract_repo(repo_url=repo_url, output_dir=repo_dir_path)
+            download_and_extract_repo(repo_url=repo_url, output_dir=repo_dir_path)
             break
         except Exception as e:
             print(f"Error cloning and extracting repo {repo_url}: {e}")

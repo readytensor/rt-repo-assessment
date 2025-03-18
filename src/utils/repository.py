@@ -7,81 +7,93 @@ from fnmatch import fnmatch
 from typing import Optional, List
 
 
-def clone_and_extract_repo(
+def download_and_extract_repo(
     repo_url: str, output_dir: str, zip_path: Optional[str] = None
 ) -> bool:
     """
-    Clone a git repository or pull latest changes if it exists, and optionally extract a zip file.
+    Download a git repository and extract it.
 
     Args:
-        repo_url (str): URL of the git repository to clone
-        output_dir (str): Directory where to clone the repository
-        zip_path (str, optional): Path to zip file to extract after cloning
+        repo_url (str): URL of the git repository to download
+        output_dir (str): Directory where to extract the repository
+        zip_path (str, optional): Path to zip file to extract after downloading
 
     Returns:
         bool: True if successful, False otherwise
 
     Raises:
-        GitCommandError: If there's an error cloning the repository
-        zipfile.BadZipFile: If the zip file is corrupted
         OSError: If there are file system related errors
     """
-    # Convert HTTPS URL to SSH URL if necessary
-    if repo_url.startswith("https://github.com/"):
-        repo_url = repo_url.replace("https://github.com/", "git@github.com:")
 
     try:
         if os.path.exists(output_dir):
-            print(f"Repository already exists in {output_dir}, pulling latest changes")
+            print(f"Repository already exists in {output_dir}, removing it")
+            shutil.rmtree(output_dir)
 
-            try:
-                repo = Repo(output_dir)
-                origin = repo.remotes.origin
-                origin.pull()
-                print(f"Successfully pulled latest changes for {repo_url}")
-            except GitCommandError as e:
-                print(f"Failed to pull latest changes: {str(e)}")
-                return False
-        else:
-            # Create target directory if it doesn't exist
-            os.makedirs(output_dir, exist_ok=True)
+        # Create target directory
+        os.makedirs(output_dir, exist_ok=True)
 
-            # Clone the repository
-            print(f"Cloning repository from {repo_url} to {output_dir}")
-            Repo.clone_from(repo_url, output_dir)
+        # Convert repo URL to zip download URL
+        if repo_url.endswith(".git"):
+            repo_url = repo_url[:-4]
+        if repo_url.endswith("/"):
+            repo_url = repo_url[:-1]
+        download_url = f"{repo_url}/archive/refs/heads/main.zip"
 
-        # Extract zip file if provided
+        # Download and extract the repository
+        print(f"Downloading repository from {download_url}")
+        import requests
+
+        response = requests.get(download_url, stream=True)
+        response.raise_for_status()
+
+        temp_zip = os.path.join(output_dir, "repo.zip")
+        with open(temp_zip, "wb") as f:
+            for chunk in response.iter_content(chunk_size=8192):
+                f.write(chunk)
+
+        # Extract the downloaded zip
+        with zipfile.ZipFile(temp_zip, "r") as zip_ref:
+            zip_ref.extractall(output_dir)
+
+        # Remove the temporary zip file
+        os.remove(temp_zip)
+
+        # Extract additional zip file if provided
         if zip_path:
             if not os.path.exists(zip_path):
                 print(f"Zip file not found: {zip_path}")
                 return False
 
-            print(f"Extracting zip file: {zip_path}")
+            print(f"Extracting additional zip file: {zip_path}")
             with zipfile.ZipFile(zip_path, "r") as zip_ref:
                 zip_ref.extractall(output_dir)
 
         return True
 
-    except GitCommandError as e:
-        print(f"Git operation failed: {str(e)}")
-        # Clean up target directory if it was just created
-        if not os.path.exists(output_dir) or not os.listdir(output_dir):
-            if os.path.exists(output_dir):
-                shutil.rmtree(output_dir)
+    except requests.exceptions.RequestException as e:
+        print(f"Failed to download repository: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
         return False
 
     except zipfile.BadZipFile as e:
         print(f"Invalid zip file: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
         return False
 
     except OSError as e:
         print(f"OS error occurred: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
         return False
 
     except Exception as e:
         print(f"Unexpected error occurred: {str(e)}")
+        if os.path.exists(output_dir):
+            shutil.rmtree(output_dir)
         return False
-
 
 
 def get_readme_content(repo_path: str) -> Optional[str]:
@@ -96,14 +108,16 @@ def get_readme_content(repo_path: str) -> Optional[str]:
 
     ## Try multiple encodings
     encodings_to_try = ["utf-8", "ISO-8859-1", "cp1252"]
-    
+
     for encoding in encodings_to_try:
         try:
             with open(readme_path, "r", encoding=encoding) as file:
                 return file.read()
         except UnicodeDecodeError:
-            print(f"Error decoding the file with {encoding} encoding. Trying next encoding.")
-    
+            print(
+                f"Error decoding the file with {encoding} encoding. Trying next encoding."
+            )
+
     # If all encodings fail, return None
     print(f"Failed to decode the file with available encodings: {encodings_to_try}")
     return None
