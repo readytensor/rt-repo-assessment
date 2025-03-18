@@ -24,7 +24,7 @@ Code Quality:
 
     function_length:
       name: Function Length Control
-      description: Functions and methods are reasonably sized (< 50 lines)
+      description: Functions and methods are reasonably sized (< 100 lines)
       essential: false
       professional: true
       elite: true
@@ -33,6 +33,9 @@ Code Quality:
       - .ipynb
       aggregation: AND
       based_on: file_content
+      instructions: |
+       If the file does not contain functions, this criterion should be satisfied.
+       The criteria may be violated if at least one function exists in the file and exceeds the defined limit.
     code_duplication:
       name: Code Duplication Check
       description: Limited code duplication (< 10% duplicate code)
@@ -110,8 +113,13 @@ Code Quality:
       include_extensions:
       - .py
       - .ipynb
-      aggregation: OR
+      aggregation: AND
       based_on: file_content
+      instructions: |
+       If the script is guaranteed to not raise an exception, this criterion should be scored 1. 
+       For example, a file that only contains print statements should be scored 1.
+       A file that only cntains constant variables should be scored 1.
+
     error_handling_advanced:
       name: Custom Exception Classes
       description: Definition of project-specific exception classes

@@ -82,7 +82,6 @@ def score_file(
         print(f"Skipping document as it is empty {file_path}")
         return {}
 
-    # Define custom prompts for map and reduce steps
     prompts = [
         scoring_file_prompt.format(
             file_content=split.page_content, instructions=instructions

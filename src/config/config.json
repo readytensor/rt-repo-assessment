@@ -1,6 +1,6 @@
 {
     "urls": [
-        "https://github.com/facebookresearch/detectron2"
+        "https://github.com/readytensor/rt_img_class_jn_resnet18"
     ],
     "max_workers": 12
 }

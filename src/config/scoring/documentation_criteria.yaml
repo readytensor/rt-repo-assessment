@@ -116,7 +116,7 @@ Documentation:
     testing_documentation:
       name: Testing Instructions
       description: Instructions for running tests
-      essential: true
+      essential: false
       professional: true
       elite: true
   Technical Documentation:
@@ -138,6 +138,8 @@ Documentation:
       essential: true
       professional: true
       elite: true
+      based_on: file_content
+      aggregation: OR
     key_config_explained:
       name: Configuration Options Explained
       description: Information on key configuration options

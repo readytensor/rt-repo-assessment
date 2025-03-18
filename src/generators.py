@@ -175,7 +175,7 @@ def get_instructions(
                 }
 
             # Filter based on content_based or logic_based parameters
-            is_content_based = criterion.get("content_based", False)
+            is_content_based = criterion.get("based_on", "metadata") == "file_content"
 
             # Skip if content_based_only is True but criterion is not content-based
             if content_based_only and not is_content_based:
