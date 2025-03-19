@@ -37,12 +37,18 @@ This project is powered by the following technologies:
 - Python 3.12 or higher
 - `uv` package for package management
 
-### Installation
+### Installation Guide
 
-#### Using `uv` for Package & Project Management  
-This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Python package management.
+#### Package & Project Management with `uv`
+This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)) for efficient package and dependency management, ensuring seamless setup and environment consistency.
 
-1. **Install `uv`**  
+1. **Clone the Repository**  
+   Begin by cloning the repository to your local environment:
+   ```bash
+   git clone https://github.com/readytensor/rt-repo-assessment.git
+   cd rt-repo-assessment
+   ```
+2. **Install `uv`**  
    Run the following command to install `uv`:
    ```bash
    pip install uv
@@ -50,13 +56,13 @@ This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Pyt
 
    [How to install uv](https://docs.astral.sh/uv/getting-started/installation/)
 
-2. **Install Python & Dependencies**
+3. **Install Python & Dependencies**
    Set up Python and install all dependencies in a virtual environment using:  
    ```bash
    make install
    ```
 
-3. **Adding New Packages**  
+4 . **Adding New Packages**  
    To add a package to the project, use the following command:
    ```bash
    uv add <package>
@@ -64,7 +70,7 @@ This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Pyt
 
 ## Usage  
 
- 1.**Run the Assessment** 
+1.**Run the Assessment** 
     Execute the repository assessment tool using:  
     ```bash
     python main.py 
@@ -81,6 +87,7 @@ This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Pyt
     ```
 3.**View Assessment Results**
     The assessment results can be found in the `Output/Repo name/report.md` file.
+
 ### Overall Summary
 
 - **Total Criteria**: [Total Number of Criteria]
