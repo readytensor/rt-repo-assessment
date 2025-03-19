@@ -1,4 +1,4 @@
-## GitHub Repository Assessment
+# GitHub Repository Assessment
 
 ## Overview
 
