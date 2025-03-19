@@ -56,7 +56,7 @@ This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Pyt
   ```bash
   {
   "urls": [
-    "https://github.com/XingangPan/DragGAN"
+    "https://github.com/repo name"
   ],
   "max_workers": 12
   }
