@@ -62,7 +62,7 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
    make install
    ```
 
-4 . **Adding New Packages**  
+4. **Adding New Packages**  
    To add a package to the project, use the following command:
    ```bash
    uv add <package>
@@ -70,12 +70,12 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 
 ## Usage  
 
-1.**Run the Assessment** 
+1. **Run the Assessment** 
     Execute the repository assessment tool using:  
     ```bash
     python main.py 
     ```
-2.**Configure Repository URLs & Max Workers**
+2. **Configure Repository URLs & Max Workers**
     Modify config.json to specify repository URLs:
     ```bash
     {
@@ -85,7 +85,7 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
     "max_workers": 12
     }
     ```
-3.**View Assessment Results**
+3. **View Assessment Results**
     The assessment results can be found in the `Output/Repo name/report.md` file.
 
 ### Overall Summary
