@@ -17,11 +17,29 @@ This framework structured into three progressive tiers:
 
 - **Essential** – Establishes foundational repository standards and ensures minimal compliance.  
 - **Professional** – Implements structured, maintainable, and scalable repository practices.  
-- **Elite** – Adopts best-in-class methodologies, including advanced documentation, automation, and security enforcement.  
+- **Elite** – Adopts best-in-class methodologies, including advanced documentation, automation, and security enforcement. 
 
-## Installation
+## Built With
+This project is powered by the following technologies:
 
-### Using `uv` for Package & Project Management  
+- **Python (>=3.12)** - The core language for this project.
+- **GitPython (>=3.1.44)** - For Git repository interactions.
+- **Langchain (>=0.3.20)** - Framework for LLM-powered assessments.
+- **Langchain-Community (>=0.3.19)** - Community-driven extensions to Langchain.
+- **Langchain-OpenAI (>=0.3.8)** - OpenAI integration for advanced LLM tasks.
+- **Pandas (>=2.2.3)** - Data manipulation and analysis.
+- **python-dotenv (>=1.0.1)** - Manages environment variables.
+- **PyYAML (>=6.0.2)** - Handles YAML files for configuration.
+- **Mypy (>=1.15.0)** - Static type checker for Python.
+
+## Getting Started
+### Prerequisites
+- Python 3.12 or higher
+- `uv` package for package management
+
+### Installation
+
+#### Using `uv` for Package & Project Management  
 This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Python package management.
 
 1. **Install `uv`**  
@@ -46,23 +64,23 @@ This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Pyt
 
 ## Usage  
 
-1.**Run the Assessment** 
-  Execute the repository assessment tool using:  
-  ```bash
-  python main.py --config config.json
-  ```
+ 1.**Run the Assessment** 
+    Execute the repository assessment tool using:  
+    ```bash
+    python main.py 
+    ```
 2.**Configure Repository URLs & Max Workers**
-  Modify config.json to specify repository URLs:
-  ```bash
-  {
-  "urls": [
-    "https://github.com/repo name"
-  ],
-  "max_workers": 12
-  }
- ```
+    Modify config.json to specify repository URLs:
+    ```bash
+    {
+    "urls": [
+        "https://github.com/repo_name"
+    ],
+    "max_workers": 12
+    }
+    ```
 3.**View Assessment Results**
- The assessment results can be found in the `Output/Repo name/report.md` file.
+    The assessment results can be found in the `Output/Repo name/report.md` file.
 ### Overall Summary
 
 - **Total Criteria**: [Total Number of Criteria]
@@ -70,25 +88,43 @@ This project uses `uv`[uv](https://docs.astral.sh/uv) for fast and efficient Pyt
 
 ### Category Breakdown
 
-| Category      | Criteria Met | Total Criteria | Percentage |
-|---------------|--------------|----------------|------------|
-| Essential     | [Criteria Met for Essential] | [Total Criteria for Essential] | [Percentage] |
-| Professional  | [Criteria Met for Professional] | [Total Criteria for Professional] | [Percentage] |
-| Elite         | [Criteria Met for Elite] | [Total Criteria for Elite] | [Percentage] |
+| Category      | Criteria Met | Total Criteria | Percentage   |
+|---------------|--------------|----------------|--------------|
+| Essential     | [Criteria Met for Essential] | [Total Criteria for Essential] | % |
+| Professional  | [Criteria Met for Professional] | [Total Criteria for Professional] | % |
+| Elite         | [Criteria Met for Elite] | [Total Criteria for Elite] | % |
 
----
 
 ### Detailed Results
 
 | Category            | Criterion                         | Status | Explanation |
 |---------------------|-----------------------------------|--------|-------------|
-| **Code Quality**     | Modular Code Organization         | ✅     | The project demonstrates well-organized code that is divided into functions and/or classes, promoting clarity and reusability. |
+| **Code Quality**     | Modular Code Organization         | ✅     | This criterion is satisfied in the project by file 'utils.py'. The code is organized into functions and a class, which is a good practice. |. |
 | **Documentation**    | README Completeness               | ✅     | The README provides all necessary information for understanding, setting up, and using the project effectively. |
-| **Repository Structure** | Clear Folder Organization       | ✅     | The repository follows a logical structure with clear divisions for source code, documentation, and other assets. |
-| **Environment & Dependencies** | Dependency Management      | ✅     | The project manages dependencies effectively, with a clear environment setup (e.g., `uv.lock`, `pyproject.toml`). |
-| **License & Legal**  | License Information               | ✅     | The project includes a valid license file, outlining the terms of use and legal conditions for the code and related assets. |
+| **Repository Structure** | Clear Folder Organization     | ✅     | The repository follows a logical structure with clear divisions for source code, documentation, and other assets. |
+| **Environment & Dependencies** |Test Directory Structure | ❌   | The project directory does not contain a dedicated 'tests/' directory or any other structure that organizes tests in a way that mirrors the main code structure. There is no indication of any testing files or directories present. | |
+| License and Legal     | License Presence                  | ✅ | The project directory includes a recognized license file named 'LICENSE.txt' in the root directory, which explicitly states the terms of use, modification, and distribution. |
 
 ---
+## Target Audience
+
+- **Primary Focus**: AI/ML and data science projects.
+- **Broader Applicability**: The principles of good documentation, organization, and reproducibility are beneficial for all software repositories.
+
+## Maintenance Status
+
+- **Current Status**: Actively maintained. New features, improvements, and bug fixes are regularly implemented.
+- **Future Plans**: The framework will expand to support additional languages like R and JavaScript.
+- **Focus of the Framework**: This guide emphasizes the structure and sharing practices of repositories, rather than the specific methodologies or technologies used within the project.
+- **Goal**: To ensure your project is understandable, trusted, and easy to use by others, fostering community adoption and collaboration.
+
+## Contributing
+Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+
+## Contact
+For any inquiries, feel free to reach out to [Ready_Tensor](...@readytensor.com).
+
+## Acknowledgments
 
 
 
