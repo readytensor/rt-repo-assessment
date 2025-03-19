@@ -1,5 +1,7 @@
 # GitHub Repository Assessment
 
+![Project Overview](file:///C:/Users/Addisu/Downloads/pexels-realtoughcandy-11035544.png)
+
 ## Overview  
 This project implements an **AI-driven assessment framework** to analyze GitHub repositories using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
 
@@ -86,7 +88,7 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
     }
     ```
 3. **View Assessment Results**
-    The assessment results can be found in the `Output/Repo name/report.md` file.
+    The assessment results can be found in the `Output/repo_name/report.md` file.
 
 ### Overall Summary
 
@@ -102,14 +104,14 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 | Elite         | [Criteria Met for Elite] | [Total Criteria for Elite] | % |
 
 
-### Detailed Results
+### Sample Detailed Results
 
 | Category            | Criterion                         | Status | Explanation |
 |---------------------|-----------------------------------|--------|-------------|
-| **Code Quality**     | Modular Code Organization         | ✅     | This criterion is satisfied in the project by file 'utils.py'. The code is organized into functions and a class, which is a good practice. |. |
-| **Documentation**    | README Completeness               | ✅     | The README provides all necessary information for understanding, setting up, and using the project effectively. |
-| **Repository Structure** | Clear Folder Organization     | ✅     | The repository follows a logical structure with clear divisions for source code, documentation, and other assets. |
-| **Environment & Dependencies** |Test Directory Structure | ❌   | The project directory does not contain a dedicated 'tests/' directory or any other structure that organizes tests in a way that mirrors the main code structure. There is no indication of any testing files or directories present. | |
+| Code Quality    | Modular Code Organization         | ✅     | This criterion is satisfied in the project by file 'utils.py'. The code is organized into functions and a class, which is a good practice. |. |
+| Documentation    | README Completeness               | ✅     | The README provides all necessary information for understanding, setting up, and using the project effectively. |
+| Repository Structure | Clear Folder Organization     | ✅     | The repository follows a logical structure with clear divisions for source code, documentation, and other assets. |
+| Environment & Dependencies|Test Directory Structure | ❌   | The project directory does not contain a dedicated 'tests/' directory or any other structure that organizes tests in a way that mirrors the main code structure. There is no indication of any testing files or directories present. | |
 | License and Legal     | License Presence                  | ✅ | The project directory includes a recognized license file named 'LICENSE.txt' in the root directory, which explicitly states the terms of use, modification, and distribution. |
 
 ---
@@ -122,16 +124,18 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 
 - **Current Status**: Actively maintained. New features, improvements, and bug fixes are regularly implemented.
 - **Future Plans**: The framework will expand to support additional languages like R and JavaScript.
-- **Focus of the Framework**: This guide emphasizes the structure and sharing practices of repositories, rather than the specific methodologies or technologies used within the project.
-- **Goal**: To ensure your project is understandable, trusted, and easy to use by others, fostering community adoption and collaboration.
 
 ## Contributing
-Contributions are welcome! Please fork the repository and submit a pull request with your changes.
+We welcome contributions to improve the framework. Please refer to the guidelines below for how you can contribute:
+1. Fork the repository.
+2. Create a new branch for your changes.
+3. Submit a pull request with a detailed description of your modifications.
 
 ## Contact
 For any inquiries, feel free to reach out to [Ready_Tensor](...@readytensor.com).
 
 ## Acknowledgments
+
 
 
 
