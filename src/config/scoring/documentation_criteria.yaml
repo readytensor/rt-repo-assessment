@@ -177,3 +177,5 @@ Documentation:
       essential: false
       professional: false
       elite: true
+      instructions: |
+        The contact information should be provided in the README file. A presence of an email address is enough for passing the criterion.

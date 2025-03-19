@@ -70,6 +70,8 @@ Code Quality:
       - .ipynb
       aggregation: AND
       based_on: file_content
+      instructions: |
+       Storing fixed values in variables such as Pi, e, names of llms or api keys is allowed and should not be considered as hardcoded constants.
     env_variables:
       name: Environment Variable Usage
       description: References to environment variables for sensitive configurations
