@@ -115,10 +115,10 @@ Code Quality:
       - .ipynb
       aggregation: OR
       based_on: file_content
-      # instructions: |
-      #  If the script is guaranteed to not raise an exception, this criterion should be scored 1. 
-      #  For example, a file that only contains print statements should be scored 1.
-      #  A file that only cntains constant variables should be scored 1.
+      instructions: |
+       If the script is guaranteed to not raise an exception, this criterion should be scored 1. 
+       For example, a file that only contains print statements should be scored 1.
+       A file that only cntains constant variables should be scored 1.
 
     error_handling_advanced:
       name: Custom Exception Classes
@@ -131,6 +131,8 @@ Code Quality:
       - .ipynb
       aggregation: OR
       based_on: file_content
+      instructions: |
+       Look for any custom exception classes that are defined in the codebase. If one is found, the criterion is satisfied.
   Testing:
     testing_basic:
       name: Test File Presence

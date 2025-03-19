@@ -147,7 +147,7 @@ Repository Architecture:
       professional: true
       elite: true
       instructions: |
-       The presence of any of the mentioned files or files that are used for the same purpose in the tree structure should be satisfy the criterion.
+       Look for any environment-specific configuration files such as .env.example, docker-compose.yml, etc. that are used for the same purpose in the tree structure. If one is found, the criterion is satisfied.
     organized_dependency_management:
       name: Dependency Management Structure
       description: Package dependency files (requirements.txt, pyproject.toml, etc.)

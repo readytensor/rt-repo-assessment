@@ -52,11 +52,11 @@ Environment and Dependencies:
        If any such files are present, this criterion should be satisfied.
     reproducible_environment:
       name: Reproducible Environment
-      description: Lockfiles or exact environment specifications provided (poetry.lock,
-        conda-lock, etc.).
+      description: Lockfiles or exact environment specifications provided.
       essential: false
       professional: false
       elite: true
+      instructions: Look for any lockfiles or exact environment specifications provided. If one is found, the criterion is satisfied.
     gpu_requirements_documented:
       name: GPU Requirements Documented
       description: GPU-specific dependencies or requirements indicated in configuration
