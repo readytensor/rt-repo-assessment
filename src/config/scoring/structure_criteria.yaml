@@ -137,6 +137,8 @@ Repository Structure:
       essential: false
       professional: true
       elite: true
+      instructions: |
+       The presence of any of the mentioned files or files that are used for the same purpose in the tree structure should be satisfy the criterion.
     organized_dependency_management:
       name: Dependency Management Structure
       description: Package dependency files (requirements.txt, pyproject.toml, etc.)

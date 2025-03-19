@@ -35,9 +35,20 @@ For full dependencies, see [`pyproject.toml`](./pyproject.toml).
 - **Broader Applicability**: The principles of good documentation, organization, and reproducibility are beneficial for all software repositories.
 
 
- ## Project Structure
+## Project Structure
  
- This repository follows a well-organized directory structure designed for clarity, maintainability, and extensibility. Below is an overview of the key components:
++ This repository follows a well-organized directory structure designed for clarity, maintainability, and extensibility. Each folder serves a specific purpose within the assessment framework:
+
++ - **`data/`**: Stores all input repositories and output assessment results, providing clear separation between source data and analysis results.
+    - **`inputs/`**: Contains cloned GitHub repositories that will be analyzed by the assessment tool.
+    - **`outputs/`**: Stores assessment reports, JSON results, and other artifacts generated during evaluation.
+  - **`src/`**: Houses all source code for the repository assessment tool, organized into logical modules.
+    - **`config/`**: Contains configuration files that control the behavior of the assessment tool.
+      - **`scoring/`**: Stores YAML definition files for all scoring criteria across the five assessment categories.
+     - **`directory_scorer/`**: Implements algorithms for analyzing directory file contents.
+     - **`utils/`**: Provides utility functions for repository management, validation, and general helper functions.
+ 
+ - **`tests/`**: Contains all unit tests and test fixtures to ensure code quality and reliability.
  
  ```
  root/
