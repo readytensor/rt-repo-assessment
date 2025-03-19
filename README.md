@@ -1,7 +1,5 @@
 # GitHub Repository Assessment
 
-![Project Overview](file:///C:/Users/Addisu/Downloads/pexels-realtoughcandy-11035544.png)
-
 ## Overview  
 This project implements an **AI-driven assessment framework** to analyze GitHub repositories using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
 
@@ -33,6 +31,11 @@ This project is powered by the following technologies:
 - **python-dotenv (>=1.0.1)** - Manages environment variables.
 - **PyYAML (>=6.0.2)** - Handles YAML files for configuration.
 - **Mypy (>=1.15.0)** - Static type checker for Python.
+
+## Target Audience
+
+- **Primary Focus**: AI/ML and data science projects.
+- **Broader Applicability**: The principles of good documentation, organization, and reproducibility are beneficial for all software repositories.
 
 ## Getting Started
 ### Prerequisites
@@ -115,10 +118,87 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 | License and Legal     | License Presence                  | ✅ | The project directory includes a recognized license file named 'LICENSE.txt' in the root directory, which explicitly states the terms of use, modification, and distribution. |
 
 ---
-## Target Audience
+## Data Requirements
 
-- **Primary Focus**: AI/ML and data science projects.
-- **Broader Applicability**: The principles of good documentation, organization, and reproducibility are beneficial for all software repositories.
+### Expected Data Sources and Setup
+
+This project analyzes GitHub repositories by fetching data from the provided repository links. The expected data sources include:
+- **GitHub Repository Links**: A list of GitHub repository URLs that the framework will analyze.
+  
+The repository data consists of:
+- **README Files**: To evaluate documentation quality.
+- **Repository Metadata**: To assess repository structure, dependencies, and license information.
+- **Code Files**: For evaluating code quality and enforcing coding standards.
+
+Ensure your GitHub repositories are public, or that you have the necessary access rights for private repositories. The project will automatically fetch the data from these repositories when provided with their URLs.
+
+For example:
+```json
+{
+  "repository_urls": [
+    "https://github.com/readytensor/rt-repo-assessment",
+    "https://github.com/another-user/sample-repo"
+  ]
+}
+```
+## Testing
+
+## Configuration
+
+The configuration is managed through the `config.json` file and YAML files for scoring.
+
+### `config.json` 
+
+As detailed in lines 85-92, the `config.json` file defines key parameters like repository URLs and the max number of workers.
+
+### Scoring Criteria (YAML)
+
+Scoring is based on five key areas: **Documentation**, **Repository Structure**, **Environment & Dependencies**, **License & Legal**, and **Code Quality**. Each criterion is assessed at three levels: **Essential**, **Professional**, and **Elite**.
+
+#### Example: `modular_code_organization.yaml`
+
+```yaml
+modular_code_organization:
+  name: Modular Code Organization
+  description: Code organized into functions/methods.
+  essential: true
+  professional: true
+  elite: true
+  include_extensions:
+    - .py
+    - .ipynb
+  aggregation: OR
+  based_on: file_content
+  prompt: "Ensure code is modular for maintainability."
+  ```
+#### Logic-based Scoring
+
+Scoring relies on predefined logic through functions that validate, calculate, and measure specific aspects like code length, ensuring consistency in evaluation across repositories.
+
+## Methodology
+
+This project leverages **GPT-4** to provide an advanced, AI-driven framework for GitHub repository assessment. The approach is structured to deliver precise evaluations, blending automated data analysis with intelligent scoring mechanisms.
+
+- **Automated Repository Analysis**: Fetches key data (README, code, metadata) for in-depth quality assessment.
+  
+- **AI-Enhanced Evaluation**: **GPT-4** augments traditional metrics, delivering context-aware evaluations of code quality, documentation, and structure.
+
+- **Dynamic Scoring Model**: Employs YAML-configured criteria across **Documentation**, **Repository Structure**, **Environment**, **License**, and **Code Quality**, ensuring a tiered evaluation system (Essential, Professional, Elite).
+
+- **Precision with Real-Time Validation**: Real-time logic-based scoring, validated by AI prompts, ensures high accuracy in evaluation.
+
+For more on GPT-4, refer to [OpenAI’s GPT-4](https://openai.com/research/gpt-4).
+
+## Performance
+
+Optimized for **speed** and **scalability**:
+
+- **Fast Analysis**: Evaluations typically complete within **1 minute**, depending on repo size and network conditions.
+- **Parallel Processing**: Supports up to **12 workers** for efficient, simultaneous analysis.
+- **Scalable**: Handles large volumes of repositories with minimal latency.
+- **GPT-4 Accuracy**: Real-time, high-quality scoring.
+
+Expect **rapid** and **accurate** evaluations even under heavy loads.
 
 ## Maintenance Status
 
@@ -130,6 +210,16 @@ We welcome contributions to improve the framework. Please refer to the guideline
 1. Fork the repository.
 2. Create a new branch for your changes.
 3. Submit a pull request with a detailed description of your modifications.
+
+## License
+
+This project is licensed under the [MIT License](https://github.com/readytensor/rt-repo-assessment/blob/main/LICENSE).
+
+For more details, you can view the full [MIT License](https://opensource.org/licenses/MIT).
+
+## Citation
+
+Ready Tensor, Inc. (2025). *Best Practices for AI Project Code Repositories*. Retrieved from [https://app.readytensor.ai/publications/best-practices-for-ai-project-code-repositories-0llldKKtn8Xb]
 
 ## Contact
 For any inquiries, feel free to reach out to [Ready_Tensor](...@readytensor.com).
