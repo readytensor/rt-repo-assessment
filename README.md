@@ -31,9 +31,8 @@ For full dependencies, see [`pyproject.toml`](./pyproject.toml).
 
 ## Target Audience
 
-- **Primary Focus**: AI/ML and data science projects.
-- **Broader Applicability**: The principles of good documentation, organization, and reproducibility are beneficial for all software repositories.
-
+- **AI/ML Practitioners**: Researchers and developers sharing technical projects with the community.
+- **Engineering Teams**: Teams and organizations establishing quality standards for repository management.
 
 ## Project Structure
  
