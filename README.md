@@ -151,7 +151,7 @@ As detailed in the usage section, the config.json defines key parameters like re
 
 Scoring is based on five key areas: Documentation, Repository Structure, Environment & Dependencies, License & Legal, and Code Quality. Each criterion is assessed at three levels: **Essential**, **Professional**, and **Elite**.
 
-#### Example: `modular_code_organization.yaml`
+#### Example: `code_quality_criteria.yaml`
 
 ```yaml
 modular_code_organization:
