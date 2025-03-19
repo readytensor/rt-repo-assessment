@@ -1,4 +1,7 @@
+import os
 from functools import wraps
+from config import paths
+from utils.general import get_dir_size_mb
 from typing import Dict, Any, Callable, TypeVar, Protocol
 
 
@@ -110,7 +113,97 @@ def script_length(metadata: Dict[str, Any], max_script_length: int) -> Dict[str,
     }
 
 
+@scoring_function
+def secret_management(metadata: Dict[str, Any]) -> Dict[str, Any]:
+    """Check if secrets are properly managed and stored in a secure manner.
+
+    Args:
+        metadata (Dict[str, Any]): Repository metadata containing secret management information.
+
+    Returns:
+        Dict[str, Any]: Dictionary containing score (1 if secrets are properly managed, 0 otherwise) and an explanation.
+    """
+    repo_name = metadata["repository_name"]
+    repo_path = os.path.join(paths.INPUTS_DIR, repo_name)
+
+    # List of common secret files to check
+    secret_files = [
+        ".env",
+        "credentials.json",
+        "secrets.yaml",
+        "secrets.yml",
+        "secrets.json",
+        "config.ini",  # Often contains credentials
+        "aws_credentials",
+        "gcp_credentials.json",
+        "service-account.json",
+        ".aws/credentials",
+        ".netrc",  # Contains login credentials
+        "id_rsa",  # Private SSH key
+        "id_dsa",  # Private SSH key
+    ]
+
+    found_secrets = []
+
+    # Walk through the repository to find secret files
+    for root, dirs, files in os.walk(repo_path):
+        # Check for secret files in the current directory
+        for file in files:
+            if file in secret_files:
+                # Get the relative path from the repo root
+                rel_path = os.path.relpath(os.path.join(root, file), repo_path)
+                found_secrets.append(rel_path)
+
+            # Check for SSH private keys
+            if root.endswith(".ssh") and not file.endswith(".pub"):
+                rel_path = os.path.relpath(os.path.join(root, file), repo_path)
+                found_secrets.append(rel_path)
+
+    if found_secrets:
+        score = 0
+        explanation = f"The repository contains the following sensitive files that should not be shared publicly: {', '.join(found_secrets)}. Consider using environment variables, .gitignore, or example files instead."
+    else:
+        score = 1
+        explanation = "No sensitive credential files were found in the repository."
+
+    return {
+        "score": score,
+        "explanation": explanation,
+    }
+
+
+@scoring_function
+def repository_size(metadata: Dict[str, Any], max_size: int) -> Dict[str, Any]:
+    """Check if the repository size is reasonable and does not exceed 100MB.
+
+    Args:
+        metadata (Dict[str, Any]): Repository metadata containing repository size information.
+        max_size (int): Maximum allowed size for the repository in MB.
+
+    Returns:
+        Dict[str, Any]: Dictionary containing score (1 if repository size is reasonable, 0 otherwise) and an explanation.
+    """
+    repo_name = metadata["repository_name"]
+    repo_path = os.path.join(paths.INPUTS_DIR, repo_name)
+    size = get_dir_size_mb(repo_path)
+    if size > max_size:
+        score = 0
+        explanation = f"The repository size is {size:.2f} MB. It should be less than {max_size} MB."
+    else:
+        score = 1
+        explanation = (
+            f"The repository size is {size:.2f} MB. It is less than {max_size} MB."
+        )
+
+    return {
+        "score": score,
+        "explanation": explanation,
+    }
+
+
 logic_based_scoring = {
     "readme_presence": readme_presence,
     "script_length": script_length,
+    "secret_management": secret_management,
+    "repository_size": repository_size,
 }

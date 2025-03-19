@@ -70,6 +70,7 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
     readme_content = get_readme_content(repo_dir_path) if readme_exists else None
 
     return {
+        "repository_name": os.path.basename(repo_url),
         "readme_exists": readme_exists,
         "requirements_txt_exists": requirements_txt_exists,
         "pyproject_toml_exists": pyproject_toml_exists,

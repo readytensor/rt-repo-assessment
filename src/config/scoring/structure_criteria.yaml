@@ -1,4 +1,4 @@
-Repository Structure:
+Repository Architecture:
   Core Organization:
     basic_modular_organization:
       name: Basic Modular Organization
@@ -75,6 +75,16 @@ Repository Structure:
       essential: false
       professional: true
       elite: true
+    repository_size:
+      name: Repository Size
+      description: Repository size is reasonable and does not exceed 50MB
+      essential: true
+      professional: true
+      elite: true
+      based_on: custom_logic
+      args:
+        max_size: 50
+      
   Naming Practices:
     consistent_file_dir_naming_convention:
       name: Consistent File and Dir Naming Convention
@@ -132,8 +142,7 @@ Repository Structure:
   Environment & Dependencies:
     environment_config_isolation:
       name: Environment Configuration Isolation
-      description: Environment-specific configuration files (.env.example, .env.template,
-        .gitconfig, docker-compose.yml, etc.) are properly placed and organized
+      description: Environment-specific configuration files (.env.example, docker-compose.yml, etc.) are properly placed and organized
       essential: false
       professional: true
       elite: true
@@ -148,3 +157,14 @@ Repository Structure:
       essential: false
       professional: true
       elite: true
+      instructions: The presence of one file satisfies the criterion.
+
+    secret_management:
+      name: Secret Management
+      description: Secrets are properly managed and stored in a secure manner.
+      essential: true
+      professional: true
+      elite: true
+      based_on: custom_logic
+      
+      

@@ -1,3 +1,4 @@
+import os
 import json
 import yaml
 from typing import Dict, List, Union, Any
@@ -37,3 +38,18 @@ def write_json_file(file_path: str, data: Union[Dict, List]):
     """Write data to a JSON file."""
     with open(file_path, "w", encoding="utf-8") as file:
         json.dump(data, file, indent=4, ensure_ascii=False)
+
+
+def get_dir_size_mb(directory):
+    """Get the total size of a directory in megabytes."""
+    total_size = 0
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for f in filenames:
+            fp = os.path.join(dirpath, f)
+            # Skip if it's a symbolic link
+            if not os.path.islink(fp):
+                total_size += os.path.getsize(fp)
+
+    # Convert bytes to megabytes
+    size_in_mb = total_size / (1024 * 1024)
+    return size_in_mb

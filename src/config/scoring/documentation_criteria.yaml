@@ -64,6 +64,8 @@ Documentation:
       essential: false
       professional: true
       elite: true
+      instructions: |
+        The prerequisites should be listed in the README file. If one prerequisite is listed, the criterion is met.
     installation_instructions_basic:
       name: Basic Installation Guide
       description: Basic installation information (dependencies)

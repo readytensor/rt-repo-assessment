@@ -9,7 +9,7 @@ This project implements an **AI-driven assessment framework** to analyze GitHub 
 Each repository is assessed across five **critical dimensions** to guarantee excellence:
 
 - **Documentation** – Comprehensive, well-structured, and user-centric guidance for seamless adoption.
-- **Repository Structure** – Intuitive, standardized organization that enhances collaboration and scalability.
+- **Repository Architecture** – Intuitive, standardized organization that enhances collaboration and scalability.
 - **Environment & Dependencies** – Robust dependency management ensuring reproducibility and seamless execution.
 - **License & Legal** – Clear governance of intellectual property, permissions, and compliance.
 - **Code Quality** – Enforced coding standards ensuring efficiency, maintainability, and technical integrity.
