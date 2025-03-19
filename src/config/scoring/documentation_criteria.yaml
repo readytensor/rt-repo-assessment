@@ -27,7 +27,7 @@ Documentation:
       name: Target Audience Defined
       description: Clear identification of the target audience who can benefit from
         this project
-      essential: true
+      essential: false
       professional: true
       elite: true
     detailed_project_overview:
@@ -57,7 +57,7 @@ Documentation:
     project_structure_explained_all:
       name: Comprehensive Repo Structure Documentation
       description: Comprehensive explanation of all directories and files
-      essential: true
+      essential: false
       professional: true
       elite: true
   Setup Documentation:
@@ -67,7 +67,7 @@ Documentation:
         and system compatibility information before installation. This does not include
         software dependencies (e.g., Python libraries), which are covered under Environment
         & Dependency Management.
-      essential: true
+      essential: false
       professional: true
       elite: true
     installation_instructions_basic:
@@ -79,7 +79,7 @@ Documentation:
     installation_step_by_step:
       name: Detailed Installation Instructions
       description: Detailed installation instructions for repo and prerequisites
-      essential: true
+      essential: false
       professional: true
       elite: true
     environment_dependency_information:
@@ -89,7 +89,7 @@ Documentation:
         reproducibility (e.g., Docker, Conda, virtual environments). Does not cover
         hardware requirements or system compatibility, which are listed under Prerequisites
         Clearly Stated.
-      essential: true
+      essential: false
       professional: true
       elite: true
   Usage Documentation:
@@ -103,45 +103,45 @@ Documentation:
       name: Step-by-Step Usage Guide
       description: Detailed step-by-step usage instructions (data prep, execution,
         outputs)
-      essential: true
+      essential: false
       professional: true
       elite: true
     usage_examples:
       name: Practical Code Examples
       description: Concrete, executable code examples that demonstrate key functionality
         in a clear, concise manner.
-      essential: true
+      essential: false
       professional: true
       elite: true
     testing_documentation:
       name: Testing Instructions
       description: Instructions for running tests
-      essential: true
+      essential: false
       professional: true
       elite: true
   Technical Documentation:
     data_requirements_explained:
       name: Data Requirements Specified
       description: Documentation of expected data formats and setup
-      essential: true
+      essential: false
       professional: true
       elite: true
     methodology_description:
       name: Methodology Documentation
       description: Basic methodology information or reference to external documentation
-      essential: true
+      essential: false
       professional: true
       elite: true
     key_parameters_explained:
       name: Parameter Documentation
       description: Documentation of key modeling parameters and considerations
-      essential: true
+      essential: false
       professional: true
       elite: true
     key_config_explained:
       name: Configuration Options Explained
       description: Information on key configuration options
-      essential: true
+      essential: false
       professional: true
       elite: true
   License Identification:
@@ -155,19 +155,19 @@ Documentation:
     contributing_guidelines:
       name: Contribution Guidelines
       description: Guidelines for project contribution
-      essential: true
+      essential: false
       professional: true
       elite: true
     changelog:
       name: Change History
       description: Repository includes changelog information either in README or in
         a dedicated file (like CHANGELOG.md), documenting significant version changes.
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
     contact_info:
       name: Maintainer Contact Information
       description: Clear contact information for maintainers
-      essential: true
-      professional: true
+      essential: false
+      professional: false
       elite: true
