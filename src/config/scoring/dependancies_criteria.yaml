@@ -24,6 +24,13 @@ Environment and Dependencies:
       essential: false
       professional: true
       elite: true
+      based_on: file_content
+      aggregation: OR
+      include_extensions:
+        - .txt
+        - .toml
+        - .py
+        - .lock
   Environment Configuration:
     python_version_specified:
       name: Python Version Specified
@@ -40,6 +47,9 @@ Environment and Dependencies:
       essential: false
       professional: true
       elite: true
+      instructions: |
+       Environment configuration files can be any of the well-known environment management files even if they are not specifically mentioned in the prompt.
+       If any such files are present, this criterion should be satisfied.
     reproducible_environment:
       name: Reproducible Environment
       description: Lockfiles or exact environment specifications provided (poetry.lock,

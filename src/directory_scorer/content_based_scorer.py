@@ -106,6 +106,8 @@ def score_file(
     ]
 
     file_extension = os.path.splitext(file_path)[-1].lower()
+    if file_extension == "":
+        file_extension = os.path.basename(file_path)
 
     CodeQualityFileScoring = get_content_based_scoring_model(file_extension)
 

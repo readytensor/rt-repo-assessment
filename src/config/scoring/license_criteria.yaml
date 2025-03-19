@@ -26,6 +26,14 @@ License and Legal:
       essential: false
       professional: false
       elite: true
+      based_on: file_content
+      aggregation: OR
+      include_extensions:
+        - .txt
+        - .md
+        - LICENSE
+        - license
+        
     data_usage_rights_mentioned:
       name: Data Usage Rights
       description: For repositories handling datasets, clear documentation must state
@@ -34,6 +42,8 @@ License and Legal:
       essential: false
       professional: true
       elite: true
+      instructions: |
+        If the repository does not handle datasets, this criterion should be satisfied.
     model_usage_rights_mentioned:
       name: Model Usage Rights
       description: If the repository includes or references ML models, documentation
@@ -41,6 +51,8 @@ License and Legal:
       essential: false
       professional: true
       elite: true
+      instructions: |
+        If the repository does not include or reference ML models, this criterion should be satisfied.
   Community:
     code_of_conduct_mentioned:
       name: Code of Conduct

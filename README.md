@@ -34,6 +34,61 @@ For full dependencies, see [`pyproject.toml`](./pyproject.toml).
 - **Primary Focus**: AI/ML and data science projects.
 - **Broader Applicability**: The principles of good documentation, organization, and reproducibility are beneficial for all software repositories.
 
+
+ ## Project Structure
+ 
+ This repository follows a well-organized directory structure designed for clarity, maintainability, and extensibility. Below is an overview of the key components:
+ 
+ ```
+ root/
+ ├── data/                      # Data directory for inputs and outputs
+ │   ├── inputs/                # Directory for storing cloned repositories
+ │   └── outputs/               # Directory for assessment results
+ │
+ ├── src/                       # Source code
+ │   ├── config/                # Configuration files and scoring criteria
+ │   │   ├── scoring/           # YAML files defining criteria for each category
+ │   │   │   ├── code_quality_criteria.yaml
+ │   │   │   ├── dependancies_criteria.yaml
+ │   │   │   ├── documentation_criteria.yaml
+ │   │   │   ├── license_criteria.yaml
+ │   │   │   └── structure_criteria.yaml
+ │   │   ├── config.json        # Configuration settings (URLs, workers)
+ │   │   ├── logic_based_scoring.py # Logic-based scoring functions
+ │   │   ├── paths.py           # Path definitions for the project
+ │   │   ├── prompts.yaml       # LLM prompts for assessment
+ │   │   └── tracked_files.yaml # File tracking configuration
+ │   │
+ │   ├── directory_scorer/      # Directory and file content scoring
+ │   │   ├── content_based_scorer.py # File content evaluation
+ │   │   └── tree.py            # Directory tree management
+ │   │
+ │   ├── utils/                 # Utility functions
+ │   │   ├── general.py         # General utility functions
+ │   │   ├── llm.py             # LLM integration
+ │   │   ├── project_validators.py # Repository validation functions
+ │   │   └── repository.py      # Repository management functions
+ │   │
+ │   ├── generators.py          # Criteria generation functions
+ │   ├── logger.py              # Logging configuration
+ │   ├── main.py                # Main entry point
+ │   ├── output_parsers.py      # Output formatting and parsing
+ │   └── report.py              # Report generation
+ │
+ ├── tests/                     # Test directory
+ │   ├── conftest.py            # Pytest configuration
+ │   └── test_project_validators.py # Tests for project validators
+ │
+ ├── .env.example               # Example environment variables
+ ├── .gitignore                 # Git ignore file
+ ├── LICENSE                    # MIT License
+ ├── Makefile                   # Build commands
+ ├── README.md                  # Project documentation
+ ├── pyproject.toml             # Project metadata and dependencies
+ ├── pytest.ini                 # Pytest configuration
+ └── uv.lock                    # Dependency lock file
+ ```
+
 ## Getting Started
 
 ### Prerequisites

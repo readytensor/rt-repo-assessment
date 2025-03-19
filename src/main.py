@@ -111,6 +111,9 @@ if __name__ == "__main__":
         del metadata["directory_structure"]
         del metadata["readme_content"]
 
+        print(directory_structure)
+        exit()
+
         llm = get_llm(llm=GPT_4O_MINI).with_structured_output(CriterionScoring)
 
         results = {}

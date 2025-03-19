@@ -71,8 +71,7 @@ Repository Structure:
       elite: true
     test_directory_organized:
       name: Test Directory Structure
-      description: Tests are organized in a dedicated structure (e.g., tests/ directory
-        mirroring the main code structure)
+      description: Tests are organized in a dedicated structure 
       essential: false
       professional: true
       elite: true

@@ -84,6 +84,16 @@ Documentation:
       essential: false
       professional: true
       elite: true
+      based_on: file_content
+      aggregation: OR
+      include_extensions:
+        - .txt
+        - .toml
+        - .py
+        - .lock
+        - .json
+        - .md
+        
   Usage Documentation:
     usage_instructions_basic:
       name: Basic Usage Instructions
