@@ -19,18 +19,16 @@ This framework structured into three progressive tiers:
 - **Professional** – Implements structured, maintainable, and scalable repository practices.  
 - **Elite** – Adopts best-in-class methodologies, including advanced documentation, automation, and security enforcement. 
 
-## Built With
-This project is powered by the following technologies:
+## Built With  
+This project is powered by:  
 
-- **Python (>=3.12)** - The core language for this project.
-- **GitPython (>=3.1.44)** - For Git repository interactions.
-- **Langchain (>=0.3.20)** - Framework for LLM-powered assessments.
-- **Langchain-Community (>=0.3.19)** - Community-driven extensions to Langchain.
-- **Langchain-OpenAI (>=0.3.8)** - OpenAI integration for advanced LLM tasks.
-- **Pandas (>=2.2.3)** - Data manipulation and analysis.
-- **python-dotenv (>=1.0.1)** - Manages environment variables.
-- **PyYAML (>=6.0.2)** - Handles YAML files for configuration.
-- **Mypy (>=1.15.0)** - Static type checker for Python.
+- **Python (>=3.12)** – Core language.  
+- **GitPython (>=3.1.44)** – Git repository interactions.  
+- **LangChain (>=0.3.20)** – LLM-driven framework.  
+- **Pandas (>=2.2.3)** – Data handling.  
+- **PyYAML (>=6.0.2)** – Configuration parsing.  
+
+For full dependencies, see [`pyproject.toml`](./pyproject.toml).  
 
 ## Target Audience
 
@@ -76,12 +74,12 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 ## Usage  
 
 1. **Run the Assessment** 
-    Execute the repository assessment tool using:  
+   Execute the repository assessment tool using:  
     ```bash
     python main.py 
     ```
 2. **Configure Repository URLs & Max Workers**
-    Modify config.json to specify repository URLs:
+   Modify config.json to specify repository URLs:
     ```bash
     {
     "urls": [
@@ -91,14 +89,14 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
     }
     ```
 3. **View Assessment Results**
-    The assessment results can be found in the `Output/repo_name/report.md` file.
+   The assessment results can be found in the `Output/repo_name/report.md` file.
 
-### Overall Summary
+**Overall Summary**
 
 - **Total Criteria**: [Total Number of Criteria]
 - **Criteria Met**: [Percentage of Criteria Met]
 
-### Category Breakdown
+ **Category Breakdown**
 
 | Category      | Criteria Met | Total Criteria | Percentage   |
 |---------------|--------------|----------------|--------------|
@@ -149,7 +147,7 @@ The configuration is managed through the `config.json` file and YAML files for s
 
 ### `config.json` 
 
-As detailed in lines 85-92, the `config.json` file defines key parameters like repository URLs and the max number of workers.
+As detailed in the config.json section, the file defines key parameters like repository URLs and the maximum number of concurrent workers.
 
 ### Scoring Criteria (YAML)
 
@@ -193,7 +191,7 @@ For more on GPT-4, refer to [OpenAI’s GPT-4](https://openai.com/research/gpt-4
 
 Optimized for **speed** and **scalability**:
 
-- **Fast Analysis**: Evaluations typically complete within **1 minute**, depending on repo size and network conditions.
+- **Fast Analysis**: Evaluations typically complete within **few minute**, depending on repo size and network conditions.
 - **Parallel Processing**: Supports up to **12 workers** for efficient, simultaneous analysis.
 - **Scalable**: Handles large volumes of repositories with minimal latency.
 - **GPT-4 Accuracy**: Real-time, high-quality scoring.
@@ -219,7 +217,20 @@ For more details, you can view the full [MIT License](https://opensource.org/lic
 
 ## Citation
 
-Ready Tensor, Inc. (2025). *Best Practices for AI Project Code Repositories*. Retrieved from [https://app.readytensor.ai/publications/best-practices-for-ai-project-code-repositories-0llldKKtn8Xb]
+### Research & Best Practices  
+- **Ready Tensor, Inc. (2025).** *Best Practices for AI Project Code Repositories.* Retrieved from [Ready Tensor](https://app.readytensor.ai/publications/best-practices-for-ai-project-code-repositories-0llldKKtn8Xb)  
+- **LangChain** – [Official Citation](https://docs.langchain.com/docs/citation)  
+- **Pandas** – McKinney, W. (2010). *Data Structures for Statistical Computing in Python*. *Proceedings of the 9th Python in Science Conference (SciPy 2010)*, 56–61.  
+
+### Libraries & Tools  
+- **GitPython** – Sebastian Thiel et al. (2007). *GitPython: Python Library for Interacting with Git Repositories.* [GitHub](https://github.com/gitpython-developers/GitPython)  
+- **LangChain-Community** – Open-source extensions to LangChain. [GitHub](https://github.com/langchain-ai/langchain)  
+- **LangChain-OpenAI** – OpenAI integration for LangChain. [Docs](https://python.langchain.com/docs/integrations/llms/openai)  
+- **PyYAML** – Kirill Simonov (2006). *PyYAML: YAML Parser and Emitter for Python.* [PyYAML Documentation](https://pyyaml.org/)  
+- **python-dotenv** – *Manage environment variables easily.* [GitHub](https://github.com/theskumar/python-dotenv)  
+- **Mypy** – *Static type checker for Python.* [GitHub](https://github.com/python/mypy)  
+
+For a full list of dependencies, see [`pyproject.toml`](./pyproject.toml).  
 
 ## Contact
 For any inquiries, feel free to reach out to [Ready_Tensor](...@readytensor.com).
