@@ -2,7 +2,7 @@
 
 ## Overview
 
-This project implements an **AI-driven assessment framework** to analyze GitHub repositories using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
+This project implements an **AI-driven assessment framework** to analyze GitHub repositories for AI/ML and data science projects using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
 
 ### Core Evaluation Categories
 
