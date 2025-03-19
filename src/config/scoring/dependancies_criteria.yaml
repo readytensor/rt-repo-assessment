@@ -42,7 +42,7 @@ Environment and Dependencies:
     environment_managed:
       name: Environment Management
       description: Repository contains configuration for virtual environments such
-        as environment.yml (conda), Pipfile (pipenv), poetry.lock (poetry), .venv
+        as environment.yml (conda), Pipfile (pipenv), poetry.lock (poetry), uv.lock (uv), or similar environment management files.
         configurations, or similar environment management files.
       essential: false
       professional: true

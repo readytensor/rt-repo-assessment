@@ -48,10 +48,12 @@ Documentation:
       elite: true
     project_structure_explained_all:
       name: Comprehensive Repo Structure Documentation
-      description: Comprehensive explanation of all directories and files
+      description: Explanation of all directories in the repository.
       essential: false
       professional: true
       elite: true
+      instructions: |
+        A brief explanation of the purpose of the directory is enough for passing the criterion.
   Setup Documentation:
     prerequisites_declared:
       name: Prerequisites Clearly Stated
