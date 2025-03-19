@@ -1,4 +1,4 @@
-# GitHub Repository Assessment
+## GitHub Repository Assessment
 
 ## Overview  
 This project implements an **AI-driven assessment framework** to analyze GitHub repositories using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
@@ -145,11 +145,11 @@ For example:
 
 The configuration is managed through the `config.json` and scoring files.
 
-As detailed in the config.json section, the file defines key parameters like repository URLs and the maximum number of concurrent workers.
+As detailed in the usage section, the config.json defines key parameters like repository URLs and the maximum number of concurrent workers.
 
-### Scoring Criteria (YAML)
+### Scoring Criteria 
 
-Scoring is based on five key areas: **Documentation**, **Repository Structure**, **Environment & Dependencies**, **License & Legal**, and **Code Quality**. Each criterion is assessed at three levels: **Essential**, **Professional**, and **Elite**.
+Scoring is based on five key areas: Documentation, Repository Structure, Environment & Dependencies, License & Legal, and Code Quality. Each criterion is assessed at three levels: **Essential**, **Professional**, and **Elite**.
 
 #### Example: `modular_code_organization.yaml`
 
