@@ -133,7 +133,7 @@ Repository Structure:
   Environment & Dependencies:
     environment_config_isolation:
       name: Environment Configuration Isolation
-      description: Environment-specific configuration files (.env, .env.example, .env.template,
+      description: Environment-specific configuration files (.env.example, .env.template,
         .gitconfig, docker-compose.yml, etc.) are properly placed and organized
       essential: false
       professional: true
