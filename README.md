@@ -145,8 +145,6 @@ For example:
 
 The configuration is managed through the `config.json` and scoring files.
 
-### `config.json` 
-
 As detailed in the config.json section, the file defines key parameters like repository URLs and the maximum number of concurrent workers.
 
 ### Scoring Criteria (YAML)
