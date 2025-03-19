@@ -105,7 +105,7 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 | Elite         | [Criteria Met for Elite] | [Total Criteria for Elite] | % |
 
 
-### Sample Detailed Results
+ **Sample Detailed Results**
 
 | Category            | Criterion                         | Status | Explanation |
 |---------------------|-----------------------------------|--------|-------------|
@@ -143,8 +143,7 @@ For example:
 
 ## Configuration
 
-The configuration is managed through the `config.json` file and YAML files for scoring.
-
+The configuration is managed through the `config.json` and scoring files.
 ### `config.json` 
 
 As detailed in the config.json section, the file defines key parameters like repository URLs and the maximum number of concurrent workers.
@@ -181,7 +180,7 @@ This project leverages **GPT-4** to provide an advanced, AI-driven framework for
   
 - **AI-Enhanced Evaluation**: **GPT-4** augments traditional metrics, delivering context-aware evaluations of code quality, documentation, and structure.
 
-- **Dynamic Scoring Model**: Employs YAML-configured criteria across **Documentation**, **Repository Structure**, **Environment**, **License**, and **Code Quality**, ensuring a tiered evaluation system (Essential, Professional, Elite).
+- **Dynamic Scoring Model**: Employs YAML-configured criteria across Documentation, Repository Structure, Environment, License, and Code Quality, ensuring a tiered evaluation system (Essential, Professional, Elite).
 
 - **Precision with Real-Time Validation**: Real-time logic-based scoring, validated by AI prompts, ensures high accuracy in evaluation.
 
@@ -196,7 +195,6 @@ Optimized for **speed** and **scalability**:
 - **Scalable**: Handles large volumes of repositories with minimal latency.
 - **GPT-4 Accuracy**: Real-time, high-quality scoring.
 
-Expect **rapid** and **accurate** evaluations even under heavy loads.
 
 ## Maintenance Status
 
@@ -230,7 +228,6 @@ For more details, you can view the full [MIT License](https://opensource.org/lic
 - **python-dotenv** – *Manage environment variables easily.* [GitHub](https://github.com/theskumar/python-dotenv)  
 - **Mypy** – *Static type checker for Python.* [GitHub](https://github.com/python/mypy)  
 
-For a full list of dependencies, see [`pyproject.toml`](./pyproject.toml).  
 
 ## Contact
 For any inquiries, feel free to reach out to [Ready_Tensor](...@readytensor.com).
