@@ -4,6 +4,8 @@
 
 This project implements an **AI-driven assessment framework** to analyze GitHub repositories for AI/ML and data science projects using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
 
+See [this](https://app.readytensor.ai/publications/best-practices-for-ai-project-code-repositories-0llldKKtn8Xb) article for more information on the Assessment framework. 
+
 ### Core Evaluation Categories
 
 Each repository is assessed across five **critical dimensions** to guarantee excellence:
