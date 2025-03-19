@@ -161,7 +161,7 @@ def secret_management(metadata: Dict[str, Any]) -> Dict[str, Any]:
 
     if found_secrets:
         score = 0
-        explanation = f"The repository contains the following sensitive files that should not be shared publicly: {', '.join(found_secrets)}. Consider using environment variables, .gitignore, or example files instead."
+        explanation = f"The repository contains the following sensitive files that should not be shared publicly: {', '.join(found_secrets)}. Consider using .gitignore, or example files instead."
     else:
         score = 1
         explanation = "No sensitive credential files were found in the repository."
