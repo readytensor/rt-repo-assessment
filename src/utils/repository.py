@@ -42,18 +42,13 @@ def download_and_extract_repo(
         if repo_url.endswith("/"):
             repo_url = repo_url[:-1]
 
-        # Extract repo name from URL
-        repo_name = os.path.basename(repo_url)
         download_url = f"{repo_url}/archive/refs/heads/main.zip"
 
-        # Download and extract the repository
         logger.info(f"Downloading repository from {download_url}")
-        import requests
 
         response = requests.get(download_url, stream=True)
         response.raise_for_status()
 
-        # Create a temporary directory for initial extraction
         temp_dir = os.path.join(output_dir, "_temp_extract")
         os.makedirs(temp_dir, exist_ok=True)
 
@@ -62,7 +57,6 @@ def download_and_extract_repo(
             for chunk in response.iter_content(chunk_size=8192):
                 f.write(chunk)
 
-        # Extract the downloaded zip to the temporary directory
         with zipfile.ZipFile(temp_zip, "r") as zip_ref:
             zip_ref.extractall(temp_dir)
 
@@ -73,7 +67,6 @@ def download_and_extract_repo(
         if nested_dirs:
             nested_dir = os.path.join(temp_dir, nested_dirs[0])
 
-            # Move all contents from the nested directory to the output directory
             for item in os.listdir(nested_dir):
                 source = os.path.join(nested_dir, item)
                 destination = os.path.join(output_dir, item)
@@ -82,10 +75,8 @@ def download_and_extract_repo(
                 else:
                     shutil.copy2(source, destination)
 
-        # Clean up temporary files
         shutil.rmtree(temp_dir)
 
-        # Extract additional zip file if provided
         if zip_path:
             if not os.path.exists(zip_path):
                 logger.error(f"Zip file not found: {zip_path}")

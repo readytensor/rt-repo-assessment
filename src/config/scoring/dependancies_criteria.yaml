@@ -3,10 +3,13 @@ Environment and Dependencies:
     dependencies_listed:
       name: Dependencies Listed
       description: Repository clearly lists all project dependencies in standard formats
-        (requirements.txt, setup.py, pyproject.toml, etc.).
+        (requirements.txt, setup.py, pyproject.toml,Pipfile.lock, setup.py, environment.yml etc.).
       essential: true
       professional: true
       elite: true
+      instructions: |
+       Look for any dependency management files such as requirements.txt, setup.py, pyproject.toml, Pipfile, poetry.lock, uv.lock, etc.
+       The criterion is satisfied if there is at least one such file.
     pinned_dependencies:
       name: Pinned Dependencies
       description: Dependencies have specific versions to ensure reproducibility (preferably

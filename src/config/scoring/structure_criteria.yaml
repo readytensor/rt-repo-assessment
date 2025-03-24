@@ -41,7 +41,12 @@ Repository Architecture:
       essential: false
       professional: true
       elite: true
-      instructions: Docker files can exist in the root
+      instructions: |
+        The criterion is not restricted to the files mentioned above. 
+        Files that are commonly placed in the root directory such as 
+        .gitignore, README, LICENSE, Dockerfile, .env, venv, and requirements can exist in the root.
+        The criterion should be scored 0 if there are any files in the root directory that are not essential and not commonly placed in the root directory.
+
     appropriate_gitignore:
       name: Appropriate .gitignore
       description: Repository includes a .gitignore file appropriate for the project
@@ -139,6 +144,9 @@ Repository Architecture:
       essential: true
       professional: true
       elite: true
+      instructions: |
+       Look for any main execution entry points such as main.py, app.py, server.py, start.py, launch.py, index.py, etc.
+       The criterion is satisfied if there is at least one such entry point.
   Environment & Dependencies:
     environment_config_isolation:
       name: Environment Configuration Isolation
