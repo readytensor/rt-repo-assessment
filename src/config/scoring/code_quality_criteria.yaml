@@ -80,6 +80,8 @@ Code Quality:
       elite: true
       aggregation: OR
       based_on: file_content
+      instructions: |
+        Look for any references to environment variables in the codebase. For example, os.getenv('API_KEY') or load_dotenv() or any other function that loads/uses environment variables.
   Logging:
     logging_basic:
       name: Logging Import Detection
