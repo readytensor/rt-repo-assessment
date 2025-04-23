@@ -146,7 +146,7 @@ def secret_management(metadata: Dict[str, Any]) -> Dict[str, Any]:
     found_secrets = []
 
     # Walk through the repository to find secret files
-    for root, dirs, files in os.walk(repo_path):
+    for root, _, files in os.walk(repo_path):
         # Check for secret files in the current directory
         for file in files:
             if file in secret_files:

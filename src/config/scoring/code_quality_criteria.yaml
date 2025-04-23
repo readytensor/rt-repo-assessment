@@ -241,7 +241,7 @@ Code Quality:
       include_extensions:
       - .py
       - .ipynb
-      aggregation: OR
+      aggregation: AND
       based_on: file_content
       instructions: |
        If the script is deterministic, this criterion should be satisfied.

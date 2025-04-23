@@ -6,11 +6,13 @@ load_dotenv()
 
 GPT_4O_MINI = "gpt-4o-mini"
 GPT_4O = "gpt-4o"
+GPT_4_1_MINI = "gpt-4.1-mini"
 
 
 llms = {
     GPT_4O_MINI: ChatOpenAI(model_name="gpt-4o-mini", temperature=0),
     GPT_4O: ChatOpenAI(model_name="gpt-4o", temperature=0, top_p=0),
+    GPT_4_1_MINI: ChatOpenAI(model_name="gpt-4.1-mini", temperature=0),
 }
 
 

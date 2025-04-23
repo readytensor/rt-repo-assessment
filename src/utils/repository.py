@@ -46,8 +46,21 @@ def download_and_extract_repo(
 
         logger.info(f"Downloading repository from {download_url}")
 
-        response = requests.get(download_url, stream=True)
-        response.raise_for_status()
+        retires = 3
+        i = 0
+        while i < retires:
+            response = requests.get(download_url, stream=True)
+            if response.status_code == 404:
+                download_url = f"{repo_url}/archive/refs/heads/master.zip"
+                response = requests.get(download_url, stream=True)
+
+            if response.status_code != 200:
+                logger.error(f"Failed to download repository: {response.status_code}")
+                i += 1
+                continue
+
+            response.raise_for_status()
+            break
 
         temp_dir = os.path.join(output_dir, "_temp_extract")
         os.makedirs(temp_dir, exist_ok=True)
