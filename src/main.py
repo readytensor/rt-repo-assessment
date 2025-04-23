@@ -42,7 +42,7 @@ criteria_args = get_criteria_args()
 logger = get_logger(__name__)
 
 
-def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
+def download_project(repo_url: str) -> str:
     repo_dir_name = os.path.basename(repo_url)
     repo_dir_path = os.path.join(paths.INPUTS_DIR, repo_dir_name)
     retry_attempts = 0
@@ -56,7 +56,10 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
         except Exception as e:
             logger.error(f"Error cloning and extracting repo {repo_url}: {e}")
             retry_attempts += 1
+    return repo_dir_path
 
+
+def get_repo_metadata(repo_dir_path: str) -> Dict[str, Any]:
     readme_exists = has_readme(repo_dir_path)
     requirements_txt_exists = has_requirements_txt(repo_dir_path)
     pyproject_toml_exists = has_pyproject_toml(repo_dir_path)
@@ -70,7 +73,7 @@ def get_repo_metadata(repo_url: str) -> Dict[str, Any]:
     readme_content = get_readme_content(repo_dir_path) if readme_exists else None
 
     return {
-        "repository_name": os.path.basename(repo_url),
+        "repository_name": os.path.basename(repo_dir_path),
         "readme_exists": readme_exists,
         "requirements_txt_exists": requirements_txt_exists,
         "pyproject_toml_exists": pyproject_toml_exists,
@@ -101,11 +104,28 @@ if __name__ == "__main__":
     repo_urls = config["urls"]
     max_workers = config["max_workers"]
 
-    for repo_url in repo_urls:
-        output_dir = os.path.join(paths.OUTPUTS_DIR, os.path.basename(repo_url))
+    from_inputs_directory = config["from_inputs_directory"]
+
+    if from_inputs_directory:
+        project_name = config["project_name"]
+        project_path = os.path.join(paths.INPUTS_DIR, project_name)
+        if not os.path.exists(project_path):
+            raise NotADirectoryError(f"Project directory {project_path} does not exist")
+        projects = [project_name]
+    else:
+        projects = repo_urls
+
+    for project in projects:
+        if not from_inputs_directory:
+            project_path = download_project(project)
+        else:
+            project_path = os.path.join(paths.INPUTS_DIR, project)
+
+        output_dir = os.path.join(paths.OUTPUTS_DIR, os.path.basename(project_path))
         os.makedirs(output_dir, exist_ok=True)
 
-        metadata = get_repo_metadata(repo_url=repo_url)
+        metadata = get_repo_metadata(project_path)
+
         directory_structure = metadata["directory_structure"]
         readme_content = metadata["readme_content"]
 
@@ -143,7 +163,7 @@ if __name__ == "__main__":
 
         aggregation_logic = get_aggregation_logic()
         dir_score, file_scores = score_directory_based_on_files(
-            os.path.join(paths.INPUTS_DIR, os.path.basename(repo_url)),
+            project_path,
             llm=get_llm(llm=GPT_4O_MINI),
             aggregation_logic=aggregation_logic,
             max_workers=max_workers,

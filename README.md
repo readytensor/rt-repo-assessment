@@ -149,15 +149,22 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
    ```
 2. **Configure Repository URLs & Max Workers**
    Configurations are specified in `/src/config/config.json`
-   Modify config.json to specify repository URLs:
+   Modify config.json to specify repository URLs and other parameters:
    ```bash
    {
+   "from_inputs_directory": false,
+   "project_name": "my-first-ai-project",
    "urls": [
        "https://github.com/repo_name"
    ],
    "max_workers": 12
    }
    ```
+
+   - **from_inputs_directory**: If set to `true`, the tool will run on a local folder present in the `/data/inputs` directory, and the `urls` parameter will be ignored. If set to `false`, the tool will download remote repositories specified in the `urls` parameter, and the `project_name` will be ignored.
+   - **project_name**: Used to specify the name of the project when `from_inputs_directory` is `true`.
+   - **urls**: A list of repository URLs to download when `from_inputs_directory` is `false`.
+   - **max_workers**: Specifies the maximum number of workers to use for processing.
 3. **View Assessment Results**
    The assessment results can be found in the `data/outputs/repo_name/report.md` file.
 

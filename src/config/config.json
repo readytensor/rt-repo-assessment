@@ -1,6 +1,8 @@
 {
+    "from_inputs_directory": false,
+    "project_name": "my-first-ai-project",
     "urls": [
         "https://github.com/readytensor/rt-repo-assessment"
     ],
-    "max_workers": 12
+    "max_workers": 30
 }
