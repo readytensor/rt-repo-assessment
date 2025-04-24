@@ -133,7 +133,6 @@ def secret_management(metadata: Dict[str, Any]) -> Dict[str, Any]:
         "secrets.yaml",
         "secrets.yml",
         "secrets.json",
-        "config.ini",  # Often contains credentials
         "aws_credentials",
         "gcp_credentials.json",
         "service-account.json",

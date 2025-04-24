@@ -8,8 +8,9 @@ Environment and Dependencies:
       professional: true
       elite: true
       instructions: |
-       Look for any dependency management files such as requirements.txt, setup.py, pyproject.toml, Pipfile, poetry.lock, uv.lock, etc.
+       Look for any dependency management files such as requirements.txt, setup.py, pyproject.toml, Pipfile, poetry.lock, uv.lock, package.json, etc.
        The criterion is satisfied if there is at least one such file.
+       There might be dependency management files that are not mentioned in the prompt. If any such files are present, this criterion should be satisfied.
     pinned_dependencies:
       name: Pinned Dependencies
       description: Dependencies have specific versions to ensure reproducibility (preferably
