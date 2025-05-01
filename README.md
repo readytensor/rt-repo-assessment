@@ -107,6 +107,7 @@ For full dependencies, see [`pyproject.toml`](./pyproject.toml).
 
 - Python 3.12 or higher
 - `uv` package for package management
+- OpenAI API Key
 
 ### Installation Guide
 
@@ -142,12 +143,14 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 
 ## Usage
 
-1. **Run the Assessment**
+1. Create **`.env`** in the root directory and place your OpenAI API in it. See the [example](https://github.com/readytensor/rt-repo-assessment/blob/main/.env.example) file.
+
+2. **Run the Assessment**
    Execute the repository assessment tool using:
    ```bash
    python main.py 
    ```
-2. **Configure Repository URLs & Max Workers**
+3. **Configure Repository URLs & Max Workers**
    Configurations are specified in `/src/config/config.json`
    Modify config.json to specify repository URLs and other parameters:
    ```bash
@@ -165,7 +168,7 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
    - **project_name**: Used to specify the name of the project when `from_inputs_directory` is `true`.
    - **urls**: A list of repository URLs to download when `from_inputs_directory` is `false`.
    - **max_workers**: Specifies the maximum number of workers to use for processing.
-3. **View Assessment Results**
+4. **View Assessment Results**
    The assessment results can be found in the `data/outputs/repo_name/report.md` file.
 
 **Overall Summary**
