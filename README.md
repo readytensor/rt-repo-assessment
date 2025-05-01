@@ -4,7 +4,7 @@
 
 This project implements an **AI-driven assessment framework** to analyze GitHub repositories for AI/ML and data science projects using **Large Language Models (LLMs)** and **rule-based techniques**. It evaluates key software quality dimensions to ensure adherence to **best practices** and industry standards.
 
-See [this](https://app.readytensor.ai/publications/best-practices-for-ai-project-code-repositories-0llldKKtn8Xb) article for more information on the Assessment framework. 
+See [this](https://app.readytensor.ai/publications/best-practices-for-ai-project-code-repositories-0llldKKtn8Xb) article for more information on the Assessment framework.
 
 ### Core Evaluation Categories
 
@@ -37,21 +37,20 @@ For full dependencies, see [`pyproject.toml`](./pyproject.toml).
 - **Engineering Teams**: Teams and organizations establishing quality standards for repository management.
 
 ## Project Structure
- 
-+ This repository follows a well-organized directory structure designed for clarity, maintainability, and extensibility. Each folder serves a specific purpose within the assessment framework:
 
++ This repository follows a well-organized directory structure designed for clarity, maintainability, and extensibility. Each folder serves a specific purpose within the assessment framework:
 + - **`data/`**: Stores all input repositories and output assessment results, providing clear separation between source data and analysis results.
     - **`inputs/`**: Contains cloned GitHub repositories that will be analyzed by the assessment tool.
     - **`outputs/`**: Stores assessment reports, JSON results, and other artifacts generated during evaluation.
   - **`src/`**: Houses all source code for the repository assessment tool, organized into logical modules.
     - **`config/`**: Contains configuration files that control the behavior of the assessment tool.
       - **`scoring/`**: Stores YAML definition files for all scoring criteria across the five assessment categories.
-     - **`directory_scorer/`**: Implements algorithms for analyzing directory file contents.
-     - **`utils/`**: Provides utility functions for repository management, validation, and general helper functions.
- 
- - **`tests/`**: Contains all unit tests and test fixtures to ensure code quality and reliability.
- 
- ```
+    - **`directory_scorer/`**: Implements algorithms for analyzing directory file contents.
+    - **`utils/`**: Provides utility functions for repository management, validation, and general helper functions.
+
+- **`tests/`**: Contains all unit tests and test fixtures to ensure code quality and reliability.
+
+```
  root/
  ├── data/                      # Data directory for inputs and outputs
  │   ├── inputs/                # Directory for storing cloned repositories
@@ -99,7 +98,7 @@ For full dependencies, see [`pyproject.toml`](./pyproject.toml).
  ├── pyproject.toml             # Project metadata and dependencies
  ├── pytest.ini                 # Pytest configuration
  └── uv.lock                    # Dependency lock file
- ```
+```
 
 ## Getting Started
 
@@ -143,16 +142,17 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 
 ## Usage
 
-1. Create **`.env`** in the root directory and place your OpenAI API in it. See the [example](https://github.com/readytensor/rt-repo-assessment/blob/main/.env.example) file.
-
+1. Create **`.env`** in the root directory and place your OpenAI API key in it. See the [example](https://github.com/readytensor/rt-repo-assessment/blob/main/.env.example) file.
 2. **Run the Assessment**
    Execute the repository assessment tool using:
+
    ```bash
    python main.py 
    ```
 3. **Configure Repository URLs & Max Workers**
    Configurations are specified in `/src/config/config.json`
    Modify config.json to specify repository URLs and other parameters:
+
    ```bash
    {
    "from_inputs_directory": false,
@@ -275,7 +275,7 @@ def script_length(metadata: Dict[str, Any], max_script_length: int) -> Dict[str,
     long_scripts = []
     score = 1
     explanation = "All scripts are less than 500 lines."
-    
+  
     for script, length in script_lengths.items():
         if length > max_script_length:
             score = 0
@@ -337,14 +337,14 @@ metadata = {
     "license_file_exists": True,
     "gitignore_file_exists": True,
     "ignored_files_exist": True,
-    
+  
     # Script length information
     "script_lengths": {
         "src/main.py": 178,
         "src/utils/repository.py": 309,
         "src/utils/project_validators.py": 171
     },
-    
+  
     # Repository directory structure as a formatted string
     "directory_structure": 
         repo_name
@@ -380,4 +380,3 @@ This project is licensed under the [MIT License](https://github.com/readytensor/
 ## Contact
 
 For any inquiries, feel free to reach out to support@readytensor.com
-
