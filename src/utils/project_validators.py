@@ -18,7 +18,6 @@ def has_readme(directory_path: str) -> bool:
         bool: True if README.md exists, False otherwise
     """
     readme_path = os.path.join(directory_path, "README.md")
-    logger.debug(readme_path)
     return os.path.exists(readme_path)
 
 

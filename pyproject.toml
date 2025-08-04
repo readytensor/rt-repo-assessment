@@ -1,23 +1,15 @@
 [project]
-name = "rt-repo-assessment"
+name = "repo-assessment"
 version = "0.1.0"
 description = "Add your description here"
 readme = "README.md"
-requires-python = ">=3.12,<4.0"  # Explicit range, if not already set
+requires-python = ">=3.12"
 dependencies = [
-    "gitpython>=3.1.44",
-    "langchain>=0.3.20",
-    "langchain-community>=0.3.19",
-    "langchain-openai>=0.3.8",
-    "pandas>=2.2.3",
-    "pypdf>=5.4.0",
-    "pytest>=8.3.5",
-    "python-dotenv>=1.0.1",
+    "openai>=1.98.0",
+    "pypdf2>=3.0.1",
+    "python-docx>=1.2.0",
+    "python-dotenv>=1.1.1",
     "pyyaml>=6.0.2",
-    "types-pyyaml>=6.0.12.20241230",
-]
-
-[dependency-groups]
-dev = [
-    "mypy>=1.15.0",
+    "requests>=2.32.4",
+    "tiktoken>=0.9.0",
 ]

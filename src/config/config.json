@@ -4,5 +4,6 @@
     "urls": [
         "https://github.com/readytensor/rt-repo-assessment"
     ],
-    "max_workers": 30
+    "max_workers": 30,
+    "model": "gpt-4o-mini"
 }

@@ -2,7 +2,7 @@ import os
 from typing import Dict, Any
 from logger import get_logger
 from config import paths
-from utils.llm import get_llm, GPT_4O_MINI
+from utils.llm import get_llm
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import (
     get_readme_content,
@@ -97,6 +97,7 @@ def format_criterion(criterion: dict) -> str:
 if __name__ == "__main__":
     prompts = read_yaml_file(paths.PROMPTS_FPATH)
     config = read_json_file(paths.CONFIG_FPATH)
+    model = config.get("model", "gpt-4o-mini")
     criteria_types = get_criteria_by_type()
 
     prompt_template = prompts["scoring_v0"]
@@ -132,7 +133,7 @@ if __name__ == "__main__":
         del metadata["directory_structure"]
         del metadata["readme_content"]
 
-        llm = get_llm(llm=GPT_4O_MINI).with_structured_output(CriterionScoring)
+        llm = get_llm(llm=model)
 
         results = {}
 
@@ -158,13 +159,13 @@ if __name__ == "__main__":
                 criterion=format_criterion(criterion),
                 instructions=get_instructions(criterion_id=criterion_id),
             )
-            response = llm.invoke(prompt).model_dump()
+            response = llm.invoke(prompt, response_format=CriterionScoring).model_dump()
             return criterion_id, response
 
         aggregation_logic = get_aggregation_logic()
         dir_score, file_scores = score_directory_based_on_files(
             project_path,
-            llm=get_llm(llm=GPT_4O_MINI),
+            llm=get_llm(llm=model),
             aggregation_logic=aggregation_logic,
             max_workers=max_workers,
         )

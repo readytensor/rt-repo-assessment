@@ -1,23 +1,18 @@
 import os
 import tiktoken
 from logger import get_logger
-import concurrent.futures
+from concurrent.futures import ThreadPoolExecutor, as_completed
 from config import paths
 from dotenv import load_dotenv
-from typing import List, Dict, Any, Tuple, Union
+from typing import List, Dict, Any, Tuple
 from utils.general import read_yaml_file
-from langchain_core.documents import Document
 from generators import get_instructions
 from output_parsers import get_content_based_scoring_model
 from directory_scorer.tree import build_tree, post_order_generator
-from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain_core.language_models.chat_models import BaseChatModel
-from langchain_community.document_loaders import (
-    NotebookLoader,
-    PyPDFLoader,
-    Docx2txtLoader,
-    TextLoader,
-)
+from chat.base import BaseChatModel
+from documents.loaders import load_document
+from chat.messages import HumanMessage
+from text_splitters.recursive import RecursiveCharacterTextSplitter
 
 load_dotenv()
 
@@ -72,21 +67,20 @@ def score_file(
 
     Returns:
         str: The summarized content."""
-    documents = load_document(file_path)
+    document = load_document(file_path)
 
     # add global context as the first document in the list
     if global_context:
-        documents.insert(0, Document(page_content=global_context))
+        document.content = global_context + "\n\n" + document.content
 
     text_splitter = RecursiveCharacterTextSplitter(
         chunk_size=chunk_size,
         chunk_overlap=chunk_overlap,
-        length_function=len,
     )
-    splits = text_splitter.split_documents(documents)
+    splits = text_splitter.split_text(document.content)
 
     # check if the document is too long using max_str_length
-    combined_text = "".join([split.page_content for split in splits])
+    combined_text = "".join(splits)
     tokens = count_tokens(combined_text, model_name="gpt-4o")
     if tokens > max_token_count:
         logger.warning(
@@ -99,8 +93,8 @@ def score_file(
         return {}
 
     prompts = [
-        scoring_file_prompt.format(
-            file_content=split.page_content, instructions=instructions
+        HumanMessage(
+            scoring_file_prompt.format(file_content=split, instructions=instructions)
         )
         for split in splits
     ]
@@ -111,44 +105,9 @@ def score_file(
 
     CodeQualityFileScoring = get_content_based_scoring_model(file_extension)
 
-    results = (
-        llm.with_structured_output(CodeQualityFileScoring).invoke(prompts).model_dump()
-    )
+    results = llm.invoke(prompts, response_format=CodeQualityFileScoring).model_dump()
     results["file_path"] = file_path
     return results
-
-
-def load_document(file_path) -> List[Document]:
-    """
-    Load the document based on file type.
-
-    Args:
-        file_path (str): The path to the file to load.
-
-    Returns:
-        List[Document]: A list of Document objects containing the file content.
-
-    Raises:
-        ValueError: If the file type is not supported.
-    """
-    ext = os.path.splitext(file_path)[-1].lower()
-
-    # Initialize loader variable with correct type
-    loader: Union[PyPDFLoader, Docx2txtLoader, NotebookLoader, TextLoader]
-
-    if ext == ".pdf":
-        loader = PyPDFLoader(file_path)
-    elif ext == ".docx":
-        loader = Docx2txtLoader(file_path)
-    elif ext == ".ipynb":
-        loader = NotebookLoader(file_path)
-    elif ext in text_extensions:
-        loader = TextLoader(file_path)
-    else:
-        raise ValueError(f"Unsupported file type: {ext}")
-
-    documents = loader.load()
-    return documents
 
 
 def score_directory_based_on_files(
@@ -216,11 +175,11 @@ def score_directory_based_on_files(
         )
 
     # Process files in parallel
-    with concurrent.futures.ThreadPoolExecutor(max_workers=max_workers) as executor:
+    with ThreadPoolExecutor(max_workers=max_workers) as executor:
         future_to_file = {
             executor.submit(score_file_worker, node): node for node in files_to_score
         }
-        for future in concurrent.futures.as_completed(future_to_file):
+        for future in as_completed(future_to_file):
             try:
                 score = future.result()
                 if score != {}:
