@@ -2,7 +2,7 @@ import os
 from typing import Dict, Any
 from logger import get_logger
 from config import paths
-from utils.llm import get_llm, GPT_4O_MINI
+from utils.llm import get_llm, GPT_4O_MINI, GEMINI_1_5_FLASH
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import (
     get_readme_content,
@@ -37,6 +37,17 @@ from concurrent.futures import ThreadPoolExecutor
 from functools import partial
 from report import generate_markdown_report
 from generators import get_criteria_args
+from dotenv import load_dotenv
+
+load_dotenv()
+
+if "OPENAI_API_KEY" in os.environ:
+    llm_name = GPT_4O_MINI
+elif "GOOGLE_API_KEY" in os.environ:
+    llm_name = GEMINI_1_5_FLASH
+
+else:
+    raise ValueError("No API key found")
 
 criteria_args = get_criteria_args()
 logger = get_logger(__name__)
@@ -132,7 +143,7 @@ if __name__ == "__main__":
         del metadata["directory_structure"]
         del metadata["readme_content"]
 
-        llm = get_llm(llm=GPT_4O_MINI).with_structured_output(CriterionScoring)
+        llm = get_llm(llm=llm_name).with_structured_output(CriterionScoring)
 
         results = {}
 
@@ -164,7 +175,7 @@ if __name__ == "__main__":
         aggregation_logic = get_aggregation_logic()
         dir_score, file_scores = score_directory_based_on_files(
             project_path,
-            llm=get_llm(llm=GPT_4O_MINI),
+            llm=get_llm(llm=llm_name),
             aggregation_logic=aggregation_logic,
             max_workers=max_workers,
         )

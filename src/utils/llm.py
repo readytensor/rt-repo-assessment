@@ -1,6 +1,7 @@
 import os
 from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI
+from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.language_models.chat_models import BaseChatModel
 
 load_dotenv()
@@ -8,6 +9,8 @@ load_dotenv()
 GPT_4O_MINI = "gpt-4o-mini"
 GPT_4O = "gpt-4o"
 GPT_4_1_MINI = "gpt-4.1-mini"
+GEMINI_1_5_FLASH = "gemini-1.5-flash"
+GEMINI_1_5_PRO = "gemini-1.5-pro"
 
 params = {}
 if "OPEN_ROUTER_API_KEY" in os.environ:
@@ -18,11 +21,19 @@ if "OPEN_ROUTER_API_KEY" in os.environ:
 else:
     params = {}
 
-llms = {
-    GPT_4O_MINI: ChatOpenAI(model_name="gpt-4o-mini", temperature=0, **params),
-    GPT_4O: ChatOpenAI(model_name="gpt-4o", temperature=0, top_p=0, **params),
-    GPT_4_1_MINI: ChatOpenAI(model_name="gpt-4.1-mini", temperature=0, **params),
-}
+llms = {}
+
+if "OPENAI_API_KEY" in os.environ:
+    llms[GPT_4O_MINI] = ChatOpenAI(model="gpt-4o-mini", temperature=0, **params)
+    llms[GPT_4O] = ChatOpenAI(model="gpt-4o", temperature=0, top_p=0, **params)
+    llms[GPT_4_1_MINI] = ChatOpenAI(model="gpt-4.1-mini", temperature=0, **params)
+if "GOOGLE_API_KEY" in os.environ:
+    llms[GEMINI_1_5_FLASH] = ChatGoogleGenerativeAI(
+        model="gemini-1.5-flash", temperature=0, **params
+    )
+    llms[GEMINI_1_5_PRO] = ChatGoogleGenerativeAI(
+        model="gemini-1.5-pro", temperature=0, **params
+    )
 
 
 def get_llm(llm: str) -> BaseChatModel:

@@ -6,8 +6,11 @@ readme = "README.md"
 requires-python = ">=3.12,<4.0"  # Explicit range, if not already set
 dependencies = [
     "gitpython>=3.1.44",
+    "google-generativeai>=0.8.5",
     "langchain>=0.3.20",
     "langchain-community>=0.3.19",
+    "langchain-google-genai>=2.0.10",
+    "langchain-groq>=0.3.8",
     "langchain-openai>=0.3.8",
     "pandas>=2.2.3",
     "pypdf>=5.4.0",

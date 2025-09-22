@@ -2,7 +2,7 @@
     "from_inputs_directory": false,
     "project_name": "my-first-ai-project",
     "urls": [
-        "https://github.com/readytensor/rt-repo-assessment"
+        "https://github.com/Mo-Abdelhameed/AWS-SageMaker-LLM-FT"
     ],
-    "max_workers": 30
+    "max_workers": 3
 }
