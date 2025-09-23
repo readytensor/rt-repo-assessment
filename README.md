@@ -142,7 +142,7 @@ This project leverages `uv` ([official documentation](https://docs.astral.sh/uv)
 
 ## Usage
 
-1. Create **`.env`** in the root directory and place your OpenAI API key in it. See the [example](https://github.com/readytensor/rt-repo-assessment/blob/main/.env.example) file.
+1. Create **`.env`** in the root directory and place your OpenAI API, Groq, Gemini or OpenRouter key in it. See the [example](https://github.com/readytensor/rt-repo-assessment/blob/main/.env.example) file.
 2. **Run the Assessment**
    Execute the repository assessment tool using:
 
