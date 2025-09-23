@@ -2,7 +2,7 @@ import os
 from typing import Dict, Any
 from logger import get_logger
 from config import paths
-from utils.llm import get_llm, GPT_4O_MINI, GEMINI_1_5_FLASH
+from utils.llm import get_llm, GPT_4O_MINI, GEMINI_1_5_FLASH, LLAMA_3_1_8B_INSTANT
 from utils.general import read_yaml_file, write_json_file, read_json_file
 from utils.repository import (
     get_readme_content,
@@ -45,6 +45,8 @@ if "OPENAI_API_KEY" in os.environ:
     llm_name = GPT_4O_MINI
 elif "GOOGLE_API_KEY" in os.environ:
     llm_name = GEMINI_1_5_FLASH
+elif "GROQ_API_KEY" in os.environ:
+    llm_name = LLAMA_3_1_8B_INSTANT
 
 else:
     raise ValueError("No API key found")
